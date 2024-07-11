@@ -1,3 +1,7 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:tesing-library/react",
+    "plugin:jest-dom/recommended"
+  ]
 }
