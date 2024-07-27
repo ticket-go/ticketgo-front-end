@@ -1,16 +1,24 @@
 import { renderPageObjects } from "@/test-utils";
 import { screen } from "@testing-library/react";
-
-import { Typography } from ".";
+import { Typography, TypographyGroupProps } from ".";
 
 const TYPGRAPHY_TEXT_TEST_ID = "typography-text-value";
 
-export const content: string = "Hello, World!";
+export const initialProps: TypographyGroupProps = {
+  children: "Typography",
+  variant: "h2",
+  fontWeight: "bold",
+  color: "primary",
+};
 
-export const TypographyPageObjects = () => {
-  const render = () => {
+export const TypographyPageObjects = (props: TypographyGroupProps) => {
+  const render = (otherProps = initialProps) => {
     return renderPageObjects({
-      component: <Typography>{content}</Typography>,
+      component: (
+        <Typography {...props} {...otherProps}>
+          {props.children}
+        </Typography>
+      ),
     });
   };
 

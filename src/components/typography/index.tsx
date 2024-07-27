@@ -3,7 +3,8 @@ import { ReactNode } from "react";
 import { VariantProps } from "class-variance-authority";
 import { typographyVariants } from "./variants";
 
-interface TypographyGroupProps extends VariantProps<typeof typographyVariants> {
+export interface TypographyGroupProps
+  extends VariantProps<typeof typographyVariants> {
   children: ReactNode;
   className?: string;
 }
