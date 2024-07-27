@@ -22,15 +22,9 @@ export const typographyVariants = cva("", {
       black: "font-black",
     },
     color: {
-      primary: "text-primary",
-      secondary: "text-secondary",
-      tertiary: "text-tertiary",
-      success: "text-success",
-      warning: "text-warning",
-      danger: "text-danger",
-      white: "text-white",
-      black: "text-black",
-      gray: "text-gray",
+      primary: "text-black",
+      secondary: "text-white",
+      danger: "text-red-500",
     },
   },
   defaultVariants: {
