@@ -1,0 +1,21 @@
+export interface Event {
+{    "uuid": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "name": "string",
+    "date": "2024-07-30",
+    "time": "string",
+    "description": "string",
+    "category": "music",
+    "category_display": "string",
+    "status": "scheduled",
+    "status_display": "string",
+    "image": "string",
+    "ticket_value": "25392510.81",
+    "half_ticket_value": "",
+    "ticket_quantity": 2147483647,
+    "half_ticket_quantity": 2147483647,
+    "tickets_sold": 0,
+    "tickets_available": 0,
+    "half_tickets_available": 0,
+    "address": 0,
+    "organization": 0}
+}
