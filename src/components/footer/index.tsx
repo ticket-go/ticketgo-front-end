@@ -50,7 +50,7 @@ export function Footer() {
           />
         </div>
 
-        <Typography data-testid="footer-copyright-text" variant={"h5"}>
+        <Typography data-testid="footer-copyright-text" variant={"h6"}>
           Copyright &copy; 2024 TicketGO - Marketplace
         </Typography>
 

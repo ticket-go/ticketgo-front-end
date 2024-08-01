@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 import { CalendarIcon, MapPinIcon } from "lucide-react";
 
 export interface EventCardProps {
-  image: string;
+  image?: string;
   title: string;
   date: string;
   hour: string;
-  location: string;
+  location?: string;
 }
 
 export function EventCard({
@@ -22,11 +22,11 @@ export function EventCard({
   return (
     <Card
       data-testid="event-card-container"
-      className="w-full max-w-md h-full lg:w-[400px] lg:h-[400px]"
+      className="w-full max-w-xs h-full lg:w-[300px] lg:h-full"
     >
       <Image
         data-testid="event-card-image"
-        src={image}
+        src={""}
         alt={`Image do evento ${title}`}
         width={500}
         height={300}
@@ -37,7 +37,7 @@ export function EventCard({
         <div className="lg:flex lg:flex-col lg:gap-2">
           <Typography
             data-testid="event-card-title"
-            variant="h4"
+            variant="h5"
             fontWeight={"bold"}
           >
             {title}
@@ -45,7 +45,7 @@ export function EventCard({
 
           <Typography
             data-testid="event-card-date-hour"
-            variant="h5"
+            variant="h6"
             className="flex items-center gap-2"
           >
             <CalendarIcon />
@@ -61,10 +61,6 @@ export function EventCard({
             {location}
           </Typography>
         </div>
-
-        <Button data-testid="event-card-button" className="w-full">
-          Visualizar
-        </Button>
       </CardContent>
     </Card>
   );
