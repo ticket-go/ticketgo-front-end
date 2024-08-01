@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Typography } from "../typography";
 import { HeaderNavItems } from "./nav-items";
 import { SearchBar } from "../search-bar";
+import { ModeToggle } from "../theme-switch";
 
 export function Header() {
   return (
@@ -26,6 +27,7 @@ export function Header() {
         <HeaderNavItems children="Eventos" href="/" />
         <HeaderNavItems children="Eventos" href="/" />
         <HeaderNavItems children="Eventos" href="/" />
+        <ModeToggle />
 
         <div className="flex items-center h-fit space-x-4">
           <Button data-testid="header-button" variant={"secondary"} size={"lg"}>
