@@ -1,15 +1,14 @@
 import Link from "next/link";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Typography } from "../typography";
-import { SearchIcon } from "lucide-react";
 import { HeaderNavItems } from "./nav-items";
+import { SearchBar } from "../search-bar";
 
 export function Header() {
   return (
     <header
       data-testid="header-container"
-      className="absolute flex justify-between items-center w-full h-20 bg-background px-6 py-4 lg:px-8 lg:py-14"
+      className="fixed top-0 right-0 left-0 flex items-center justify-between bg-background px-6 py-4 lg:px-8 lg:py-8 z-10"
     >
       <Link href="/" className="flex items-center" prefetch={false}>
         <Typography
@@ -22,15 +21,7 @@ export function Header() {
       </Link>
 
       <nav className="md:flex items-center space-x-8">
-        <div className="relative w-full h-fit max-w-md hidden lg:flex">
-          <Input
-            data-testid="header-search-input"
-            type="search"
-            placeholder="Search..."
-            className="pr-10 lg:h-10"
-          />
-          <SearchIcon className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-        </div>
+        <SearchBar />
 
         <HeaderNavItems children="Eventos" href="/" />
         <HeaderNavItems children="Eventos" href="/" />
