@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
+import NextTopLoader from "nextjs-toploader";
+import { AuthProvider } from "@/hooks/useAuth";
+import { SessionWrapper } from "@/components/session-wrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,16 +21,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          inter.className
-        )}
-      >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-        </ThemeProvider>
-      </body>
+      <SessionWrapper>
+        <AuthProvider>
+          <body
+            className={cn(
+              "min-h-screen bg-background font-sans antialiased",
+              inter.className
+            )}
+          >
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              <NextTopLoader color="red" showSpinner={false} />
+
+              {children}
+            </ThemeProvider>
+          </body>
+        </AuthProvider>
+      </SessionWrapper>
     </html>
   );
 }

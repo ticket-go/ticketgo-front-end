@@ -17,7 +17,6 @@ export async function MainEvents() {
             <EventCard
               key={event.uuid}
               title={event.name}
-              image={event.image}
               date={event.date}
               hour={event.time}
               location={event.address.city}

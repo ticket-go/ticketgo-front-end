@@ -1,11 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Typography } from "../typography";
 import { HeaderNavItems } from "./nav-items";
 import { SearchBar } from "../search-bar";
 import { ModeToggle } from "../theme-switch";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export function Header() {
+  const router = useRouter();
+  const { data: session } = useSession();
+
   return (
     <header
       data-testid="header-container"
@@ -30,12 +37,27 @@ export function Header() {
         <ModeToggle />
 
         <div className="flex items-center h-fit space-x-4">
-          <Button data-testid="header-button" variant={"secondary"} size={"lg"}>
+          <Button
+            data-testid="header-button"
+            variant={"secondary"}
+            size={"lg"}
+            onClick={() => router.push("/register")}
+          >
             Criar conta
           </Button>
-          <Button data-testid="header-button" size={"lg"}>
-            Entrar
-          </Button>
+          {session ? (
+            <Typography variant="h6" fontWeight="bold">
+              {session?.user?.name}
+            </Typography>
+          ) : (
+            <Button
+              data-testid="header-button"
+              size={"lg"}
+              onClick={() => router.push("/login")}
+            >
+              Entrar
+            </Button>
+          )}
         </div>
       </nav>
     </header>

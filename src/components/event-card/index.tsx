@@ -26,7 +26,7 @@ export function EventCard({
     >
       <Image
         data-testid="event-card-image"
-        src={""}
+        src={"/assets/images/event.png"}
         alt={`Image do evento ${title}`}
         width={500}
         height={300}
