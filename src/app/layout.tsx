@@ -21,22 +21,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <SessionWrapper>
-        <AuthProvider>
-          <body
-            className={cn(
-              "min-h-screen bg-background font-sans antialiased",
-              inter.className
-            )}
-          >
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <NextTopLoader color="red" showSpinner={false} />
+      {/* <SessionWrapper> */}
+      <AuthProvider>
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased",
+            inter.className
+          )}
+        >
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <NextTopLoader color="red" showSpinner={false} />
 
-              {children}
-            </ThemeProvider>
-          </body>
-        </AuthProvider>
-      </SessionWrapper>
+            {children}
+          </ThemeProvider>
+        </body>
+      </AuthProvider>
+      {/* </SessionWrapper> */}
     </html>
   );
 }

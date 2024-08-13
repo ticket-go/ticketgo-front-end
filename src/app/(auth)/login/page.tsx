@@ -1,4 +1,3 @@
-import { GoogleButton } from "./_components/google-button";
 import { LoginForm } from "./_components/login-form";
 
 export default function Login() {
