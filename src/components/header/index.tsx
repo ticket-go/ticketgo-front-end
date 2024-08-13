@@ -9,10 +9,12 @@ import { ModeToggle } from "../theme-switch";
 import { useRouter } from "next/navigation";
 import { UserMenuOptions } from "../menu-user-options";
 import { useAuth } from "@/hooks/useAuth";
+import { useSession } from "next-auth/react";
 
 export function Header() {
   const router = useRouter();
   const { isAuthenticated, user } = useAuth();
+  const { data: session } = useSession();
 
   return (
     <header
@@ -43,7 +45,7 @@ export function Header() {
           >
             Criar conta
           </Button>
-          {isAuthenticated ? (
+          {isAuthenticated || session ? (
             <UserMenuOptions username={`${user?.username}`} />
           ) : (
             <Button
