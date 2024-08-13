@@ -7,7 +7,7 @@ import { HeaderNavItems } from "./nav-items";
 import { SearchBar } from "../search-bar";
 import { ModeToggle } from "../theme-switch";
 import { useRouter } from "next/navigation";
-import { UserMenuOptions } from "../menu-user-options";
+import { MenuUserOptions } from "../menu-user-options";
 import { useAuth } from "@/hooks/useAuth";
 
 export function Header() {
@@ -44,7 +44,7 @@ export function Header() {
             Criar conta
           </Button>
           {isAuthenticated ? (
-            <UserMenuOptions username={`${user?.username}`} />
+            <MenuUserOptions username={`${user?.username}`} />
           ) : (
             <Button
               data-testid="header-button"

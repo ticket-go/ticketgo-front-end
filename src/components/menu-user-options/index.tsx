@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { ModalLogout } from "../modal-logout";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -9,29 +7,37 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "../ui/dropdown-menu";
+import { ModalLogout } from "../modal-logout";
+import { useMenuUser } from "./useMenuUser";
 
-interface UserMenuOptionsProps {
+export interface MenuUserOptionsProps {
   username: string;
 }
 
-export function UserMenuOptions({ username }: UserMenuOptionsProps) {
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+export function MenuUserOptions({ username }: MenuUserOptionsProps) {
+  const { isModalOpen, handleModal } = useMenuUser();
 
   return (
     <>
-      <DropdownMenu modal={false}>
-        <DropdownMenuTrigger asChild className="rounded-2xl">
-          <Button size={"lg"}>{username}</Button>
+      <DropdownMenu data-testid="menu-user-container" modal={false}>
+        <DropdownMenuTrigger
+          data-testid="menu-user-button-trigger"
+          asChild
+          className="rounded-2xl"
+        >
+          <Button data-testid="menu-user-button-username" size={"lg"}>
+            {username}
+          </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent sideOffset={10}>
-          <DropdownMenuItem>
+        <DropdownMenuContent
+          data-testid="menu-user-content-options"
+          sideOffset={10}
+        >
+          <DropdownMenuItem data-testid="menu-user-options">
             <Button
               variant={"destructive"}
               className="w-full"
-              onClick={openModal} // Abre o modal quando clicado
+              onClick={handleModal}
             >
               Sair
             </Button>
@@ -39,7 +45,7 @@ export function UserMenuOptions({ username }: UserMenuOptionsProps) {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {isModalOpen && <ModalLogout closeModal={closeModal} />}
+      {isModalOpen && <ModalLogout closeModal={handleModal} />}
     </>
   );
 }
