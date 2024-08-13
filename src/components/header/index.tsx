@@ -7,11 +7,12 @@ import { HeaderNavItems } from "./nav-items";
 import { SearchBar } from "../search-bar";
 import { ModeToggle } from "../theme-switch";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { UserMenuOptions } from "../menu-user-options";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Header() {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { isAuthenticated, user } = useAuth();
 
   return (
     <header
@@ -32,9 +33,6 @@ export function Header() {
         <SearchBar />
 
         <HeaderNavItems children="Eventos" href="/" />
-        <HeaderNavItems children="Eventos" href="/" />
-        <HeaderNavItems children="Eventos" href="/" />
-        <ModeToggle />
 
         <div className="flex items-center h-fit space-x-4">
           <Button
@@ -45,10 +43,8 @@ export function Header() {
           >
             Criar conta
           </Button>
-          {session ? (
-            <Typography variant="h6" fontWeight="bold">
-              {session?.user?.name}
-            </Typography>
+          {isAuthenticated ? (
+            <UserMenuOptions username={`${user?.username}`} />
           ) : (
             <Button
               data-testid="header-button"
@@ -59,6 +55,8 @@ export function Header() {
             </Button>
           )}
         </div>
+
+        <ModeToggle />
       </nav>
     </header>
   );
