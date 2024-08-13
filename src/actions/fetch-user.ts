@@ -1,10 +1,9 @@
 "use server";
 
-import { Auth } from "@/types/auth";
 import { User } from "@/types/user";
 import { cookies } from "next/headers";
 
-export async function fetchUser(userId: string): Promise<any> {
+export async function fetchUser(userId: string): Promise<User | {}> {
   try {
     const cookiesStore = cookies();
     const token = cookiesStore.get("access_token")?.value;
@@ -28,6 +27,6 @@ export async function fetchUser(userId: string): Promise<any> {
     return data;
   } catch (error) {
     console.error(error);
-    return null;
+    return {};
   }
 }
