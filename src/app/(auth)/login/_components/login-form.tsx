@@ -1,8 +1,12 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -10,18 +14,33 @@ import { GoogleButton } from "./google-button";
 import { Typography } from "@/components/typography";
 import { authLogin } from "@/actions/auth-login";
 import { useAuth } from "@/hooks/useAuth";
+import { User, LockIcon } from "lucide-react";
 
-interface LoginFormSchema {
-  username: string;
-  password: string;
-}
+const loginFormSchema = z.object({
+  username: z
+    .string({ required_error: "Usuário é obrigatório" })
+    .trim()
+    .min(4, { message: "Usuário inválido, deve conter no mini 4 caracteres" })
+    .max(20, { message: "Usuário deve ter no máximo 20 caracteres" })
+    .regex(/^[a-zA-Z0-9_]+$/, {
+      message: "Usuário deve conter apenas letras, números e _",
+    }),
+  password: z.string({ required_error: "Senha é obrigatória" }).min(4, {
+    message: "Senha deve conter no mínimo 4 caracteres",
+  }),
+});
+
+type LoginFormSchema = z.infer<typeof loginFormSchema>;
 
 export function LoginForm() {
   const {
     register,
+
     handleSubmit,
-    formState: { isSubmitting, isLoading },
-  } = useForm<LoginFormSchema>();
+    formState: { isSubmitting, isLoading, errors },
+  } = useForm<LoginFormSchema>({
+    resolver: zodResolver(loginFormSchema),
+  });
 
   const { setUser, setIsAuthenticated } = useAuth();
   const [error, setError] = useState<string | null>(null);
@@ -29,12 +48,6 @@ export function LoginForm() {
 
   const onSubmit: SubmitHandler<LoginFormSchema> = async (data) => {
     const session = await authLogin(data.username, data.password);
-
-    if (session && session.errors) {
-      console.error(session.errors);
-      setError(session.errors[0].detail);
-      return;
-    }
 
     if (session) {
       setUser(session.user);
@@ -45,49 +58,93 @@ export function LoginForm() {
 
   return (
     <form
-      className="flex justify-center items-center w-full h-full"
+      className="flex justify-center items-center w-full h-full bg-background gap-10"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex flex-col items-center gap-4">
-        <Typography variant="h1" fontWeight={"bold"} className="w-full">
-          Entre na sua conta
-        </Typography>
+      <div className="flex items-center justify-center w-fit h-fit p-2.5 tab-port:hidden">
+        <Image
+          src={"/assets/images/left.svg"}
+          width={700}
+          height={700}
+          alt="Sessão de login"
+          className="max-w-[80%] max-h-[80%] object-contain"
+          style={{ aspectRatio: "800/800", objectFit: "cover" }}
+        />
+      </div>
 
-        <div className="flex flex-col w-[400px] gap-5">
-          <div className="flex flex-col gap-2 w-[400px]">
-            <Label htmlFor="username" className="text-lg">
-              Username
+      <div className="flex flex-col h-fit w-[600px] tab-port:w-full px-20">
+        <div className="flex flex-col gap-4 py-4 w-full h-fit">
+          <Typography variant="h3" fontWeight={"bold"} className="w-full">
+            Entrar
+          </Typography>
+          <Typography variant="h5" fontWeight={"regular"} className="w-full">
+            Vamos entrar na sua conta e começar.
+          </Typography>
+        </div>
+
+        <div className="flex flex-col max-w-[600px] gap-4">
+          <div className="flex flex-col gap-2 w-full">
+            <Label htmlFor="username" className="text-lg font-medium">
+              Usuário
             </Label>
-            <Input
-              id="username"
-              placeholder="Digite seu username"
-              className="h-14"
-              {...register("username", { required: true })}
-            />
+            <div className="relative flex items-center">
+              <Input
+                id="username"
+                placeholder="Digite seu usuário"
+                className="h-14 pl-12"
+                {...register("username")}
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                <User size={24} />
+              </div>
+            </div>
+            {errors.username && (
+              <p className="text-red-600 font-medium pl-2">
+                {errors.username.message}
+              </p>
+            )}
           </div>
 
-          <div className="flex flex-col gap-2 w-[400px]">
-            <Label htmlFor="password" className="text-lg">
+          <div className="flex flex-col w-full gap-2">
+            <Label htmlFor="password" className="text-lg font-medium">
               Senha
             </Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Digite sua senha"
-              className="h-14"
-              {...register("password", { required: true })}
-            />
+            <div className="relative flex items-center">
+              <Input
+                id="password"
+                type="password"
+                placeholder="Digite sua senha"
+                className="h-14 pl-12"
+                {...register("password")}
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                <LockIcon size={24} />
+              </div>
+            </div>
+            {errors.password && (
+              <p className="text-red-600 font-medium pl-2">
+                {errors.password.message}
+              </p>
+            )}
           </div>
-
-          <div className="flex flex-col justify-center items-center gap-2 w-full">
-            <Button
-              type="submit"
-              disabled={isSubmitting || isLoading}
-              className="w-full h-14"
-            >
+          <Button
+            type="submit"
+            disabled={isSubmitting || isLoading}
+            className="w-full h-14 bg-purple hover:bg-purple/60"
+          >
+            <Typography variant={"h5"} fontWeight={"semibold"}>
               {isSubmitting ? "Entrando..." : "Entrar"}
-            </Button>
-            <Separator />
+            </Typography>
+          </Button>
+
+          <div className="flex flex-col justify-center items-center gap-2 w-full h-[124px] py-8">
+            <Typography variant={"h5"}>
+              Não tem uma conta? <Span href={"/register"}>Inscrever-se</Span>
+            </Typography>
+
+            <Typography variant={"h5"} className="mb-4">
+              <Span href="/">Esqueceu sua senha?</Span>
+            </Typography>
             <GoogleButton />
           </div>
         </div>
@@ -96,12 +153,12 @@ export function LoginForm() {
   );
 }
 
-function Separator() {
+function Span({ children, href }: { href: string; children: React.ReactNode }) {
   return (
-    <div className="flex items-center w-fit gap-2">
-      <hr className="border-t border-gray-400 w-32" />
-      <span className="text-gray-300">ou</span>
-      <hr className="border-t border-gray-400 w-32" />
-    </div>
+    <Link href={href}>
+      <span className="font-semibold text-[18px] leading-[27px] text-purple underline hover:text-purple/80">
+        {children}
+      </span>
+    </Link>
   );
 }

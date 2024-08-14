@@ -1,7 +1,7 @@
 import { Carousel } from "@/components/carousel";
 import { MainEvents } from "./_components/main-events";
 
-export default async function Home() {
+export default function Home() {
   return (
     <main className="relative flex flex-col justify-center items-center min-h-screen bg-background">
       <Carousel />

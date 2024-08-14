@@ -1,37 +1,43 @@
 import NextAuth from "next-auth/next";
-import { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { createUser } from "@/actions/create-user";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
 
-const nextAuthOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
     }),
   ],
+
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async session({ session, token }) {
       session.user = token as any;
       return session;
     },
 
-    async signIn({ user, account, profile }) {
-      const { email, name } = user;
+    async signIn(params) {
+      const { account, user } = params;
 
-      const username = profile?.email?.split("@")[0];
-      const first_name = name?.split(" ")[0];
-      const last_name = name?.split(" ").slice(1).join(" ");
+      if (account?.provider === "google" && user.email) {
+      }
+      return true;
+    },
 
-      await createUser({ username, email, first_name, last_name });
+    async singOut(params) {
       return true;
     },
   },
+  pages: {
+    signIn: "/login",
+    newUser: "/register",
+  },
 };
 
-const handler = NextAuth(nextAuthOptions);
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
