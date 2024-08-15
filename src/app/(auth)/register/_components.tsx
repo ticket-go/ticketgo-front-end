@@ -1,6 +1,7 @@
 "use client";
 
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
+import type { User as UserType } from "@/types/user";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -11,26 +12,39 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/typography";
-import { User, LockIcon } from "lucide-react";
+import { User, Mail, Calendar, LockIcon } from "lucide-react";
 import { useState } from "react";
+import { createUser } from "@/actions/create-user";
 
 const RegisterFormSchema = z.object({
-  name: z
+  username: z
+    .string({ required_error: "Nome de usuário é obrigatório" })
+    .trim()
+    .min(4, { message: "Nome inválido, deve conter no min 4 caracteres" })
+    .max(20, { message: "Nome inválido, deve conter no máx 20 caracteres" })
+    .regex(/^[a-zA-Z0-9_]+$/, {
+      message: "Usuário deve conter apenas letras, números e _",
+    }),
+  first_name: z
     .string({ required_error: "Nome é obrigatório" })
     .trim()
     .min(4, { message: "Nome inválido, deve conter no mini 4 caracteres" })
     .regex(/^[a-zA-Z0-9_]+$/, {
       message: "Usuário deve conter apenas letras, números e _",
     }),
+  last_name: z
+    .string({ required_error: "Nome é obrigatório" })
+    .trim()
+    .min(4, { message: "Nome inválido, deve conter no mini 4 caracteres" })
+    .regex(/^[a-zA-Z0-9_]+$/, {
+      message: "Usuário deve conter apenas letras, números e _",
+    }),
+  cpf: z.string({ required_error: "CPF é obrigatório" }),
+  birth_date: z.string().date(),
   email: z.string({ required_error: "E-mail é obrigatório" }).email().trim(),
   password: z.string({ required_error: "Senha é obrigatória" }).min(4, {
     message: "Senha deve conter no mínimo 4 caracteres",
   }),
-  passwordConfirmation: z
-    .string({ required_error: "Senha é obrigatória" })
-    .min(4, {
-      message: "Senha deve conter no mínimo 4 caracteres",
-    }),
 });
 
 type RegisterFormSchema = z.infer<typeof RegisterFormSchema>;
@@ -46,13 +60,27 @@ export function RegisterForm() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirmation, setShowPasswordConfirmation] =
-    useState(false);
 
   const router = useRouter();
 
   const onSubmit: SubmitHandler<RegisterFormSchema> = async (data) => {
-    console.log("enviou");
+    console.log(errors);
+    const birthDate = new Date(data.birth_date);
+    console.log(birthDate);
+    const user: UserType = {
+      user_id: "",
+      username: data.username,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      birth_date: birthDate,
+      cpf: data.cpf,
+      email: data.email,
+      password: data.password,
+      privileged: false,
+    };
+
+    const response = await createUser(user);
+    console.log(response);
   };
 
   return (
@@ -84,22 +112,113 @@ export function RegisterForm() {
         <div className="flex flex-col max-w-[600px] gap-4">
           <div className="flex flex-col gap-2 w-full">
             <Label htmlFor="username" className="text-lg font-medium">
-              Nome
+              Usuário
             </Label>
             <div className="relative flex items-center">
               <Input
-                id="name"
+                id="username"
                 placeholder="Digite seu usuário"
                 className="h-14 pl-12"
-                {...register("name")}
+                {...register("username")}
               />
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
                 <User size={24} />
               </div>
             </div>
-            {errors.name && (
+            {errors.username && (
               <p className="text-red-600 font-medium pl-2">
-                {errors.name.message}
+                {errors.username.message}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-col max-w-[600px] gap-4">
+          <div className="flex flex-col gap-2 w-full">
+            <Label htmlFor="first_name" className="text-lg font-medium">
+              Nome
+            </Label>
+            <div className="relative flex items-center">
+              <Input
+                id="first_name"
+                placeholder="Digite seu nome"
+                className="h-14 pl-12"
+                {...register("first_name")}
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                <User size={24} />
+              </div>
+            </div>
+            {errors.first_name && (
+              <p className="text-red-600 font-medium pl-2">
+                {errors.first_name.message}
+              </p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-2 w-full">
+            <Label htmlFor="last_name" className="text-lg font-medium">
+              Sobrenome
+            </Label>
+            <div className="relative flex items-center">
+              <Input
+                id="last_name"
+                placeholder="Digite seu sobrenome"
+                className="h-14 pl-12"
+                {...register("last_name")}
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                <User size={24} />
+              </div>
+            </div>
+            {errors.last_name && (
+              <p className="text-red-600 font-medium pl-2">
+                {errors.last_name.message}
+              </p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-2 w-full">
+            <Label htmlFor="cpf" className="text-lg font-medium">
+              CPF
+            </Label>
+            <div className="relative flex items-center">
+              <Input
+                id="cpf"
+                placeholder="Digite seu CPF"
+                className="h-14 pl-12"
+                {...register("cpf")}
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                <User size={24} />
+              </div>
+            </div>
+            {errors.cpf && (
+              <p className="text-red-600 font-medium pl-2">
+                {errors.cpf.message}
+              </p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-2 w-full">
+            <Label htmlFor="birth_date" className="text-lg font-medium">
+              Data de Nascimento
+            </Label>
+            <div className="relative flex items-center">
+              <Input
+                id="birth_date"
+                type="date"
+                placeholder="Digite sua data de nascimento"
+                className="h-14 pl-12"
+                {...register("birth_date")}
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
+                <Calendar size={24} />
+              </div>
+            </div>
+            {errors.birth_date && (
+              <p className="text-red-600 font-medium pl-2">
+                {errors.birth_date.message}
               </p>
             )}
           </div>
@@ -117,7 +236,7 @@ export function RegisterForm() {
                   {...register("email")}
                 />
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
-                  <User size={24} />
+                  <Mail size={24} />
                 </div>
               </div>
               {errors.email && (
@@ -160,50 +279,13 @@ export function RegisterForm() {
               )}
             </div>
 
-            <div className="flex flex-col w-full gap-2">
-              <Label
-                htmlFor="passwordConfirmation"
-                className="text-lg font-medium"
-              >
-                Confirmação de Senha
-              </Label>
-              <div className="relative flex items-center">
-                <Input
-                  id="passwordConfirmation"
-                  type={showPasswordConfirmation ? "text" : "password"}
-                  placeholder="Digite sua senha novamente"
-                  className="h-14 pl-12"
-                  {...register("passwordConfirmation")}
-                />
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
-                  <LockIcon size={24} />
-                </div>
-                <div
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
-                  onClick={() =>
-                    setShowPasswordConfirmation(!showPasswordConfirmation)
-                  }
-                >
-                  {showPasswordConfirmation ? (
-                    <EyeClosedIcon className="h-4 w-4" />
-                  ) : (
-                    <EyeOpenIcon className="h-4 w-4" />
-                  )}
-                </div>
-              </div>
-              {errors.passwordConfirmation && (
-                <p className="text-red-600 font-medium pl-2">
-                  {errors.passwordConfirmation.message}
-                </p>
-              )}
-            </div>
             <Button
               type="submit"
               disabled={isSubmitting || isLoading}
               className="w-full h-14 bg-purple hover:bg-purple/60"
             >
               <Typography variant={"h5"} fontWeight={"semibold"}>
-                {isSubmitting ? "Entrando..." : "Entrar"}
+                {isSubmitting ? "Criando..." : "Criar"}
               </Typography>
             </Button>
           </div>
