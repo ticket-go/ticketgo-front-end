@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
+import { Header } from "@/components/header";
 import NextTopLoader from "nextjs-toploader";
 import { AuthProvider } from "@/hooks/useAuth";
 import SessionProvider from "@/components/session-wrapper";
@@ -32,8 +33,8 @@ export default async function RootLayout({
         >
           <SessionProvider session={session}>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <NextTopLoader color="red" showSpinner={false} />
-
+              <NextTopLoader color="#CB1EE8" showSpinner={false} />
+              <Header />
               {children}
             </ThemeProvider>
           </SessionProvider>
