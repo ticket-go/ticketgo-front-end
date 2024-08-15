@@ -7,7 +7,7 @@ export async function MainEvents() {
 
   return (
     <div className="flex flex-col gap-3">
-      <Typography color={"black"} fontWeight={"bold"} className="px-2">
+      <Typography fontWeight={"bold"} className="px-2">
         Eventos destaques
       </Typography>
       <div className="grid grid-cols-4 w-fit gap-6">

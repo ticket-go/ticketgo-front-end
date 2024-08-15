@@ -24,6 +24,8 @@ const config = {
         mobile: { max: "574px" },
       },
       colors: {
+        backgroundmain: "#04000f",
+        purple: "#CB1EE8",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
