@@ -10,7 +10,7 @@ export function GoogleButton() {
   const handleSignIn = async () => {
     try {
       setIsLoading(true);
-      await signIn("google", { callbackUrl: "http://localhost:3000/" });
+      await signIn("google", { callbackUrl: "/" });
       setIsLoading(false);
     } catch (error) {
       console.error(error);

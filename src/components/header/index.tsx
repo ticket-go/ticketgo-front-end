@@ -16,6 +16,8 @@ export function Header() {
   const { isAuthenticated, user } = useAuth();
   const { data: session } = useSession();
 
+  const displayName = session?.user?.name || user?.username;
+
   return (
     <header
       data-testid="header-container"
@@ -48,7 +50,7 @@ export function Header() {
             </Button>
           )}
           {isAuthenticated || session ? (
-            <UserMenuOptions username={`${user?.username}`} />
+            <UserMenuOptions username={`${displayName}`} />
           ) : (
             <Button
               data-testid="header-button"
