@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   CarouselContent,
   CarouselItem,
@@ -8,25 +9,24 @@ import {
   Carousel as CarouselWrapper,
 } from "@/components/ui/carousel";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import Image from "next/image";
 
 export function Carousel() {
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <CarouselWrapper className="h-[600px] w-full">
         <CarouselContent>
           <CarouselItem>
             <Image
-              src="/assets/images/image-12.png"
+              src="/assets/images/carousel.svg"
               alt="Banner"
-              width={1920}
-              height={600}
+              fill
+              objectFit="cover"
               className="h-[600px] w-full object-cover"
             />
           </CarouselItem>
           <CarouselItem>
             <Image
-              src="/assets/images/image-21.png"
+              src="/assets/images/carousel.svg"
               alt="Banner"
               width={1920}
               height={600}

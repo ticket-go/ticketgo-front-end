@@ -20,8 +20,13 @@ export function GoogleButton() {
     }
   };
   return (
-    <Button disabled={isLoading} onClick={handleSignIn}>
-      Google
+    <Button
+      variant={"outline"}
+      disabled={isLoading}
+      onClick={handleSignIn}
+      className="border-[0.5] h-14"
+    >
+      Entrar com Google
     </Button>
   );
 }

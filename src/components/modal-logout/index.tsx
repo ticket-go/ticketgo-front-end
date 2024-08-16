@@ -29,7 +29,7 @@ export function ModalLogout({ closeModal }: ModalLogoutProps) {
       <DialogTrigger asChild>
         <Button variant="destructive">Sair</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="bg-background">
         <DialogHeader>
           <DialogTitle>
             <Typography variant="h4">Sair</Typography>
