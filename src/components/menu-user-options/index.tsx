@@ -9,6 +9,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "../ui/dropdown-menu";
+import { Typography } from "../typography";
 
 interface UserMenuOptionsProps {
   username: string;
@@ -23,15 +24,19 @@ export function UserMenuOptions({ username }: UserMenuOptionsProps) {
   return (
     <>
       <DropdownMenu modal={false}>
-        <DropdownMenuTrigger asChild className="rounded-2xl">
-          <Button size={"lg"}>{username}</Button>
+        <DropdownMenuTrigger asChild>
+          <Button size={"lg"} className="bg-purple hover:bg-purple/90 ">
+            <Typography variant={"h5"} fontWeight={"semibold"}>
+              {username}
+            </Typography>
+          </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent sideOffset={10}>
           <DropdownMenuItem>
             <Button
               variant={"destructive"}
               className="w-full"
-              onClick={openModal} // Abre o modal quando clicado
+              onClick={() => openModal()}
             >
               Sair
             </Button>

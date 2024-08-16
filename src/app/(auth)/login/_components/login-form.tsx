@@ -2,19 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { GoogleButton } from "./google-button";
 import { Typography } from "@/components/typography";
 import { authLogin } from "@/actions/auth-login";
 import { useAuth } from "@/hooks/useAuth";
 import { User, LockIcon } from "lucide-react";
+import { ErrorMessage } from "../../_components/error-message";
+import { InputForm } from "@/components/input-form";
 
 const loginFormSchema = z.object({
   username: z
@@ -43,7 +42,6 @@ export function LoginForm() {
   });
 
   const { setUser, setIsAuthenticated } = useAuth();
-  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
   const onSubmit: SubmitHandler<LoginFormSchema> = async (data) => {
@@ -72,8 +70,8 @@ export function LoginForm() {
         />
       </div>
 
-      <div className="flex flex-col h-fit w-[600px] tab-port:w-full px-20">
-        <div className="flex flex-col gap-4 py-4 w-full h-fit">
+      <div className="flex flex-col h-fit w-[600px] tab-port:w-full px-20 gap-2">
+        <div className="flex flex-col gap-6 py-4 w-full h-fit">
           <Typography variant="h3" fontWeight={"bold"} className="w-full">
             Entrar
           </Typography>
@@ -82,51 +80,40 @@ export function LoginForm() {
           </Typography>
         </div>
 
-        <div className="flex flex-col max-w-[600px] gap-4">
-          <div className="flex flex-col gap-2 w-full">
-            <Label htmlFor="username" className="text-lg font-medium">
-              Usuário
-            </Label>
-            <div className="relative flex items-center">
-              <Input
+        <div className="flex flex-col max-w-[600px] gap-6">
+          <div className="flex flex-col gap-6">
+            <div>
+              <InputForm
+                label="Usuário"
+                name="username"
                 id="username"
                 placeholder="Digite seu usuário"
-                className="h-14 pl-12"
-                {...register("username")}
+                register={register("username")}
+                icon={<User size={24} />}
               />
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
-                <User size={24} />
-              </div>
+              {errors.username && (
+                <ErrorMessage error={errors.username.message} />
+              )}
             </div>
-            {errors.username && (
-              <p className="text-red-600 font-medium pl-2">
-                {errors.username.message}
-              </p>
-            )}
-          </div>
 
-          <div className="flex flex-col w-full gap-2">
-            <Label htmlFor="password" className="text-lg font-medium">
-              Senha
-            </Label>
-            <div className="relative flex items-center">
-              <Input
+            <div>
+              <InputForm
+                label="Senha"
                 id="password"
-                type="password"
+                name="password"
                 placeholder="Digite sua senha"
-                className="h-14 pl-12"
-                {...register("password")}
+                register={register("password")}
+                type="password"
+                icon={<LockIcon size={24} />}
               />
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground">
-                <LockIcon size={24} />
-              </div>
+              {errors.password && (
+                <ErrorMessage error={errors.password.message} />
+              )}
             </div>
-            {errors.password && (
-              <p className="text-red-600 font-medium pl-2">
-                {errors.password.message}
-              </p>
-            )}
           </div>
+        </div>
+
+        <div className="flex flex-col gap-4">
           <Button
             type="submit"
             disabled={isSubmitting || isLoading}
@@ -136,7 +123,6 @@ export function LoginForm() {
               {isSubmitting ? "Entrando..." : "Entrar"}
             </Typography>
           </Button>
-
           <div className="flex flex-col justify-center items-center gap-2 w-full h-[124px] py-8">
             <Typography variant={"h5"}>
               Não tem uma conta? <Span href={"/register"}>Inscrever-se</Span>

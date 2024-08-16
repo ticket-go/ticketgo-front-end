@@ -7,9 +7,14 @@ export function middleware(req: NextRequest, res: NextResponse) {
   if (accessToken && req.nextUrl.pathname === "/login") {
     return NextResponse.redirect(new URL("/", req.url));
   }
+
+  if (accessToken && req.nextUrl.pathname === "/register") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|favicon.ico).*)", "/login"],
+  matcher: ["/((?!api|_next/static|favicon.ico).*)", "/login", "/register"],
 };

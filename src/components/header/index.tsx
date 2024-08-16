@@ -37,20 +37,23 @@ export function Header() {
         <HeaderNavItems children="Eventos" href="/" />
 
         <div className="flex items-center h-fit space-x-4">
-          <Button
-            data-testid="header-button"
-            variant={"secondary"}
-            size={"lg"}
-            onClick={() => router.push("/register")}
-          >
-            Criar conta
-          </Button>
+          {!isAuthenticated && (
+            <Button
+              data-testid="header-button"
+              variant={"secondary"}
+              size={"lg"}
+              onClick={() => router.push("/register")}
+            >
+              Criar conta
+            </Button>
+          )}
           {isAuthenticated || session ? (
             <UserMenuOptions username={`${user?.username}`} />
           ) : (
             <Button
               data-testid="header-button"
               size={"lg"}
+              className="bg-purple hover:bg-purple/90 "
               onClick={() => router.push("/login")}
             >
               Entrar
