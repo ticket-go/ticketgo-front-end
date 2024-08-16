@@ -11,6 +11,7 @@ import {
 import { Typography } from "../typography";
 import { Button } from "../ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { signOut } from "next-auth/react";
 
 interface ModalLogoutProps {
   closeModal: () => void;
@@ -21,6 +22,7 @@ export function ModalLogout({ closeModal }: ModalLogoutProps) {
 
   const handleLogout = async () => {
     await logout();
+    await signOut();
     closeModal();
   };
 
