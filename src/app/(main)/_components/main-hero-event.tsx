@@ -17,5 +17,7 @@ const events: Event = {
 };
 
 export async function MainHeroEvent() {
-  return <div>{events && <HeroEvent event={events} />}</div>;
+  return (
+    <div className="w-fit h-full">{events && <HeroEvent event={events} />}</div>
+  );
 }
