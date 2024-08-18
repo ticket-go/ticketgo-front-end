@@ -6,10 +6,7 @@ export async function MainEvents() {
   const events = await fetchEvents();
 
   return (
-    <div className="flex flex-col gap-3">
-      <Typography fontWeight={"bold"} className="px-2">
-        Eventos destaques
-      </Typography>
+    <div className="flex flex-col w-full h-full gap-3">
       <div className="grid grid-cols-4 w-fit gap-6">
         {events &&
           events.length > 0 &&

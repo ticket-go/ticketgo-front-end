@@ -9,7 +9,7 @@ export interface HeroEventProps {
 
 export function HeroEvent({ event }: HeroEventProps) {
   return (
-    <div className="relative flex justify-start items-center w-full max-h-[614px] px-32 py-10 gap-4">
+    <div className="relative flex justify-start items-center w-full max-h-[614px] px-20 py-10 gap-4">
       {/* Image Hero */}
       <div className="absolute inset-0 z-0">
         <Image

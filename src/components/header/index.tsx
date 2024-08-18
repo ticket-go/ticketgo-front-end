@@ -1,15 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Typography } from "../typography";
 import { HeaderNavItems } from "./nav-items";
 import { SearchBar } from "../search-bar";
 import { ModeToggle } from "../theme-switch";
-import { useRouter } from "next/navigation";
 import { UserMenuOptions } from "../menu-user-options";
 import { useAuth } from "@/hooks/useAuth";
 import { useSession } from "next-auth/react";
+import { UserAvatar } from "./user-avatar";
 
 export function Header() {
   const router = useRouter();
@@ -39,7 +40,7 @@ export function Header() {
         <HeaderNavItems children="Eventos" href="/" />
 
         <div className="flex items-center h-fit space-x-4">
-          {!isAuthenticated && (
+          {!isAuthenticated && !session && (
             <Button
               data-testid="header-button"
               variant={"secondary"}
@@ -55,7 +56,7 @@ export function Header() {
             <Button
               data-testid="header-button"
               size={"lg"}
-              className="bg-purple hover:bg-purple/90 "
+              className="bg-purple hover:bg-purple/90 text-white"
               onClick={() => router.push("/login")}
             >
               Entrar
