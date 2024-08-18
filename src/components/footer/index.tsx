@@ -11,9 +11,9 @@ export function Footer() {
   return (
     <footer
       data-testid="footer-container"
-      className="bg-muted flex items-center py-8 md:py-12"
+      className="flex w-full items-center py-10"
     >
-      <div className="container flex justify-between items-center max-w-7xl md:grid-cols-3 gap-8">
+      <div className="container flex justify-between items-center w-full md:grid-cols-3 gap-8">
         <div className="grid gap-3">
           <Typography
             data-testid="footer-title"
