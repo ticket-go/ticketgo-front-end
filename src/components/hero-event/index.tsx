@@ -3,7 +3,7 @@ import { Typography } from "../typography";
 import { Button } from "@/components/ui/button";
 import { AlarmClockIcon, CalendarIcon, MapPinIcon } from "lucide-react";
 import type { HeroEvent as Event } from "@/types/event-hero";
-interface HeroEventProps {
+export interface HeroEventProps {
   event: Event;
 }
 
@@ -24,8 +24,11 @@ export function HeroEvent({ event }: HeroEventProps) {
       </div>
 
       {/* info */}
-      <div className="relative flex w-full h-full items-start gap-10 py-10 z-10">
-        <div>
+      <div
+        data-testid="hero-event-container"
+        className="relative flex w-full h-full items-start gap-10 py-10 z-10"
+      >
+        <div data-testid="hero-event-image">
           <Image
             src={event.image}
             alt="Logo"
@@ -36,6 +39,7 @@ export function HeroEvent({ event }: HeroEventProps) {
         </div>
         <div className="flex flex-col items-start w-fit h-full gap-4">
           <Typography
+            data-testid="hero-event-name"
             variant={"h3"}
             fontWeight={"extrabold"}
             className="text-white"
@@ -44,6 +48,7 @@ export function HeroEvent({ event }: HeroEventProps) {
           </Typography>
 
           <Typography
+            data-testid="hero-event-description"
             variant={"h5"}
             fontWeight={"regular"}
             className="leading-[24px] text-white"
@@ -55,6 +60,7 @@ export function HeroEvent({ event }: HeroEventProps) {
             <div className="flex w-fit h-fit items-center gap-3">
               <AlarmClockIcon size={28} color={"white"} />
               <Typography
+                data-testid="hero-event-time"
                 variant={"h5"}
                 fontWeight={"medium"}
                 className="leading-[33px] text-white"
@@ -75,6 +81,7 @@ export function HeroEvent({ event }: HeroEventProps) {
             <div className="flex w-fit h-fit items-center gap-3">
               <MapPinIcon size={28} color={"white"} />
               <Typography
+                data-testid="hero-event-address"
                 variant={"h5"}
                 fontWeight={"medium"}
                 className="leading-[33px] text-white"
@@ -86,7 +93,7 @@ export function HeroEvent({ event }: HeroEventProps) {
           </div>
 
           <Button
-            data-testid="event-card-button"
+            data-testid="hero-event-buy-button"
             className="min-w-[300px] h-16 bg-[#E85AFF] hover:bg-purple/80 rounded-sm"
           >
             <Typography
