@@ -1,25 +1,18 @@
 import { HeroEvent } from "@/components/hero-event";
-import type { HeroEvent as Event } from "@/types/event-hero";
-
-const events: Event = {
-  name: "FINECAP 2024 - Ingressos",
-  description:
-    "Prefeitura de Pau dos Ferros, através da Secretaria de Cultura e Turismo (SECULT), anunciou na noite deste domingo (26) as programações completas do São João da Princesinha e da FINECAP, que acontecem nos meses de junho e outubro de 2024, respectivamente.",
-  time: "00:00",
-  image: "/assets/images/banner-vertical.svg",
-  date: "00/00/0000",
-  address: {
-    street: "Rua do Chafariz",
-    number: 28,
-    city: "Paulo dos Ferros",
-    state: "RN",
-  },
-};
+import type { Event } from "@/types/event"; // Ensure this matches the type of events you expect
+import { fetchEvents } from "@/actions/fetch-events";
 
 export async function MainHeroEvent() {
+  const events: Event[] = await fetchEvents();
+
   return (
     <div className="w-full h-full">
-      {events && <HeroEvent event={events} />}
+      {/* Handle cases where events might be empty */}
+      {events.length > 0 ? (
+        events.map((event) => <HeroEvent key={event.uuid} event={event} />)
+      ) : (
+        <p>No events found.</p> // Optional: handle empty state
+      )}
     </div>
   );
 }

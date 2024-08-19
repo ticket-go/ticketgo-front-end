@@ -1,34 +1,19 @@
 "use server";
 
-import { Event } from "@/types/event";
-import { cookies } from "next/headers";
+import { fetcher } from "@/lib/utils";
+import { Event } from "../types/event";
 
-export async function fetchCreateEvent(data: Event): Promise<Event | void> {
+export async function fetchEvents(): Promise<Event[]> {
   try {
-    const cookieStore = cookies();
-    const token = cookieStore.get("access_token")?.value;
-
-    if (!token) {
-      throw new Error("Usuário não autenticado.");
-    }
-
-    const response = await fetch(`${process.env.API_HOST}/events/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetcher(`${process.env.API_HOST}/events/`);
 
     if (!response.ok) {
-      console.log(response);
-      throw new Error("Erro ao criar evento");
+      throw new Error(`Error: ${response.statusText}`);
     }
 
-    const event = await response.json();
-    return event;
+    return response.json(); // Ensure this returns an array of Event objects
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching events:", error);
+    return []; // Return an empty array in case of error
   }
 }
