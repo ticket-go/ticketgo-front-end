@@ -2,7 +2,6 @@ import { MainEvents } from "./_components/main-events";
 import { MainHeroEvent } from "./_components/main-hero-event";
 import { EventCategories } from "./_components/main-category-event";
 import { Carousel } from "@/components/carousel";
-import { Event } from "@/components/event";
 import { Typography } from "@/components/typography";
 
 export default function Home() {

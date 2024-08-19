@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCookie } from "cookies-next";
 
-export function middleware(req: NextRequest, res: NextResponse) {
+export function middleware(req: NextRequest) {
   const accessToken = getCookie("access_token", { req });
 
   if (accessToken && req.nextUrl.pathname === "/login") {
