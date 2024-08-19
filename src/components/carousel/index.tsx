@@ -1,50 +1,49 @@
 "use client";
 
-import Image from "next/image";
+import { useState, useEffect } from "react";
+
 import {
   CarouselContent,
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  CarouselApi,
   Carousel as CarouselWrapper,
 } from "@/components/ui/carousel";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Event } from "../event";
 
 export function Carousel() {
+  const [api, setApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
   return (
-    <div className="w-full h-full">
-      <CarouselWrapper className="h-[600px] w-full">
-        <CarouselContent>
-          <CarouselItem>
-            <Image
-              src="/assets/images/carousel.svg"
-              alt="Banner"
-              fill
-              objectFit="cover"
-              className="h-[600px] w-full object-cover"
-            />
-          </CarouselItem>
-          <CarouselItem>
-            <Image
-              src="/assets/images/carousel.svg"
-              alt="Banner"
-              width={1920}
-              height={600}
-              className="h-[600px] w-full object-cover"
-            />
-          </CarouselItem>
-        </CarouselContent>
+    <CarouselWrapper setApi={setApi} autoPlay={4000}>
+      <CarouselContent className="mb-10">
+        <CarouselItem>
+          <Event />
+        </CarouselItem>
+        <CarouselItem>
+          <Event />
+        </CarouselItem>
+        <CarouselItem>
+          <Event />
+        </CarouselItem>
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
 
-        <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-2/2 rounded-full bg-white/50 p-2 hover:bg-white/75 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
-          <ChevronLeftIcon className="h-6 w-6 text-primary" />
-          <span className="sr-only">Previous</span>
-        </CarouselPrevious>
+      <CarouselNavigator />
+    </CarouselWrapper>
+  );
+}
 
-        <CarouselNext className="absolute right-4 top-1/2 -translate-y-2/2 rounded-full bg-white/50 p-2 hover:bg-white/75 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
-          <ChevronRightIcon className="h-6 w-6 text-primary" />
-          <span className="sr-only">Next</span>
-        </CarouselNext>
-      </CarouselWrapper>
+function CarouselNavigator() {
+  return (
+    <div className="absolute bottom-0.5 mt-10 left-1/2 -translate-x-2/4 flex gap-3">
+      <div className="h-4 w-4 rounded-full bg-purple" />
+      <div className="h-4 w-4 rounded-full bg-primary/50" />
+      <div className="h-4 w-4 rounded-full bg-primary/50" />
     </div>
   );
 }

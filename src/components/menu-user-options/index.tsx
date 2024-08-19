@@ -13,9 +13,10 @@ import { Typography } from "../typography";
 
 interface UserMenuOptionsProps {
   username: string;
+  children?: React.ReactNode;
 }
 
-export function UserMenuOptions({ username }: UserMenuOptionsProps) {
+export function UserMenuOptions({ username, children }: UserMenuOptionsProps) {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const openModal = () => setModalOpen(true);

@@ -30,7 +30,7 @@ export function FooterNavItem({
         aria-label={socialNetwork.label}
         prefetch={false}
       >
-        <IconComponent size={24} className="hover:text-[#B3F554]" />
+        <IconComponent size={24} className="hover:text-purple" />
       </Link>
     );
   }
@@ -41,7 +41,7 @@ export function FooterNavItem({
         data-testid="footer-nav-item"
         variant={"h6"}
         fontWeight={"regular"}
-        className="leading-6 text-muted-foreground hover:text-[#B3F554]/50"
+        className="leading-6 text-muted-foreground hover:text-purple"
       >
         {children}
       </Typography>

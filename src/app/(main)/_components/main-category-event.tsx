@@ -5,7 +5,7 @@ export async function EventCategories() {
   const categories = await fetchCategoryByEvents();
 
   return (
-    <div className="grid grid-cols-6 col-span-* justify-items-center px-32 w-full h-full">
+    <div className="grid grid-cols-6 col-span-* justify-items-center w-full h-full">
       {categories.map((category) => (
         <EventCategory key={category.category} event={category} />
       ))}

@@ -23,6 +23,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cookies-next": "^4.2.1",
+    "embla-carousel-autoplay": "^8.1.8",
     "embla-carousel-react": "^8.1.8",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.5",
