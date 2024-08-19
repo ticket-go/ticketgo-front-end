@@ -4,7 +4,7 @@ import { Organization } from "./organization";
 export interface Event {
   uuid: string;
   name: string;
-  date: string;
+  date: Date;
   time: string;
   description: string;
   category: string;
