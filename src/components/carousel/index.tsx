@@ -19,7 +19,7 @@ export function Carousel() {
 
   return (
     <CarouselWrapper setApi={setApi} autoPlay={4000}>
-      <CarouselContent className="mb-10">
+      <CarouselContent className="mt-10">
         <CarouselItem>
           <Event />
         </CarouselItem>

@@ -34,7 +34,7 @@ type LoginFormSchema = z.infer<typeof loginFormSchema>;
 export function LoginForm() {
   const {
     register,
-
+    setError,
     handleSubmit,
     formState: { isSubmitting, isLoading, errors },
   } = useForm<LoginFormSchema>({
@@ -46,6 +46,15 @@ export function LoginForm() {
 
   const onSubmit: SubmitHandler<LoginFormSchema> = async (data) => {
     const session = await authLogin(data.username, data.password);
+
+    if (!session) {
+      setError("username", {
+        message: "Usuário ou senha inválidos",
+      });
+      setError("password", {
+        message: "Usuário ou senha inválidos",
+      });
+    }
 
     if (session) {
       setUser(session.user);

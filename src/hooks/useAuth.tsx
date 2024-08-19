@@ -11,7 +11,6 @@ import { logoutAuth } from "@/actions/auth-logout";
 import { deleteCookie, getCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { Auth } from "@/types/auth";
-import { fetchUser } from "@/actions/fetch-user";
 
 interface AuthContextType {
   user: Auth["user"] | null;

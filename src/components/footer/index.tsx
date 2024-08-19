@@ -11,10 +11,10 @@ export function Footer() {
   return (
     <footer
       data-testid="footer-container"
-      className="flex w-full items-center py-10"
+      className="flex w-full items-center py-5"
     >
-      <div className="container flex justify-between items-center w-full md:grid-cols-3 gap-8">
-        <div className="grid gap-3">
+      <div className=" flex justify-between items-center w-full md:grid-cols-3 gap-8 px-20">
+        <div className="flex flex-col gap-3">
           <Typography
             data-testid="footer-title"
             variant="h5"
