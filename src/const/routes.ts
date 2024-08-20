@@ -5,4 +5,5 @@ export const ROUTES = {
 
 export const PRIVATE_ROUTES = {
   admin: "/admin",
+  myAccount: "/my-account",
 };

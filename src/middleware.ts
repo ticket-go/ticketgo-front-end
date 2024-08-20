@@ -14,6 +14,10 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
+  if (!accessToken && req.nextUrl.pathname === PRIVATE_ROUTES.myAccount) {
+    return NextResponse.redirect(new URL(ROUTES.login, req.url));
+  }
+
   return NextResponse.next();
 }
 
