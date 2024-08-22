@@ -3,9 +3,12 @@
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useUserInfoForm } from "./user-info-form/useUserInfoForm";
+import { Separator } from "./separator";
 
 export default function AccountInformation() {
   const { user } = useAuth();
+  const { handleUserForm } = useUserInfoForm();
 
   return (
     <>
@@ -17,7 +20,7 @@ export default function AccountInformation() {
         Informações pessoais
       </Typography>
 
-      <div className="border-t-2 w-full border-foreground" />
+      <Separator />
 
       <Typography className="p-4" variant="h4" fontWeight="semibold">
         Meus dados
@@ -67,6 +70,7 @@ export default function AccountInformation() {
       <Button
         variant="outline"
         className="w-56 h-14 flex gap-4 border-purple bg-transparent text-purple hover:text-purple/80 hover:border-purple/90 hover:bg-transparent"
+        onClick={() => handleUserForm()}
       >
         Alterar dados pessoais
       </Button>
