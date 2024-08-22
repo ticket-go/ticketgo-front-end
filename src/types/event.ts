@@ -4,7 +4,7 @@ import { Organization } from "./organization";
 export interface Event {
   uuid: string;
   name: string;
-  date: Date;
+  date: string | Date;
   time: string;
   description: string;
   category: string;
@@ -19,6 +19,8 @@ export interface Event {
   tickets_sold: number;
   tickets_available: number;
   half_tickets_available: number;
+  is_top_event?: boolean;
+  is_hero_event?: boolean;
   address: Address;
   organization: Organization;
 }
