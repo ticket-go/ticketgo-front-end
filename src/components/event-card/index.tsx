@@ -13,6 +13,7 @@ export interface EventCardProps {
 
 export function EventCard({ event }: EventCardProps) {
   const router = useRouter();
+
   return (
     <Card
       data-testid="event-card-container"
@@ -35,7 +36,7 @@ export function EventCard({ event }: EventCardProps) {
               data-testid="event-card-title"
               variant="h5"
               fontWeight={"black"}
-              className="leading-[21px]"
+              className="leading-[21px] truncate"
             >
               {event.name}
             </Typography>
@@ -86,7 +87,7 @@ function EventDate({ date }: { date: Date }) {
     return <div>Invalid date</div>;
   }
 
-  const day = date.getDay();
+  const day = date.getDate();
   const month = date.toLocaleString("pt-BR", { month: "short" }).toUpperCase();
 
   return (

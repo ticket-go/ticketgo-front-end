@@ -1,18 +1,20 @@
 import { HeroEvent } from "@/components/hero-event";
-import type { Event } from "@/types/event"; // Ensure this matches the type of events you expect
-import { fetchEvents } from "@/actions/fetch-events";
+import type { Event } from "@/types/event";
 
-export async function MainHeroEvent() {
-  const events: Event[] = await fetchEvents();
+interface MainHeroEventProps {
+  isEventHero: Event;
+}
+
+export async function MainHeroEvent({
+  isEventHero: eventHero,
+}: MainHeroEventProps) {
+  if (!eventHero.is_hero_event) {
+    return null;
+  }
 
   return (
     <div className="w-full h-full">
-      {/* Handle cases where events might be empty */}
-      {events.length > 0 ? (
-        events.map((event) => <HeroEvent key={event.uuid} event={event} />)
-      ) : (
-        <p>No events found.</p> // Optional: handle empty state
-      )}
+      <HeroEvent event={eventHero} />
     </div>
   );
 }

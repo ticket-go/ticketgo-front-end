@@ -6,6 +6,7 @@ import { Typography } from "../typography";
 import { Button } from "@/components/ui/button";
 import { AlarmClockIcon, CalendarIcon, MapPinIcon } from "lucide-react";
 import type { HeroEvent as Event } from "@/types/event-hero";
+
 export interface HeroEventProps {
   event: Event;
 }
@@ -37,7 +38,7 @@ export function HeroEvent({ event }: HeroEventProps) {
             src={event.image}
             alt={`Image of ${event.name}`}
             width={334}
-            height={10}
+            height={400}
             className="rounded-lg h-fit"
           />
         </div>
@@ -79,8 +80,11 @@ export function HeroEvent({ event }: HeroEventProps) {
                 fontWeight={"medium"}
                 className="leading-[33px] text-white"
               >
-                {/* {event.date.} */}
-                01/09 - 05/09/2024
+                {event.date.toLocaleString("pt-BR", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
               </Typography>
             </div>
             <div className="flex w-fit h-fit items-center gap-3">

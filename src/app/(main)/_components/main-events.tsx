@@ -1,10 +1,11 @@
-import { fetchEvents } from "@/actions/fetch-events";
 import { EventCard } from "@/components/event-card";
 import { Event } from "@/types/event";
 
-export async function MainEvents() {
-  const events = await fetchEvents();
+interface MainEventsProps {
+  events: Event[];
+}
 
+export function MainEvents({ events }: MainEventsProps) {
   return (
     <div className="flex flex-col w-full h-full gap-3">
       <div className="grid grid-cols-4 w-full gap-6">
