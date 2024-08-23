@@ -1,6 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Typography } from "../typography";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+import { Event } from "@/types/event";
 import { Button } from "../ui/button";
 
 export interface EventCardProps {
@@ -8,6 +12,8 @@ export interface EventCardProps {
 }
 
 export function EventCard({ event }: EventCardProps) {
+  const router = useRouter();
+
   return (
     <Card
       data-testid="event-card-container"
@@ -16,7 +22,7 @@ export function EventCard({ event }: EventCardProps) {
       <Image
         data-testid="event-card-image"
         src={"/assets/images/event-image.svg"}
-        alt={`Image do evento`}
+        alt={`Imagem do evento ${event.name}`}
         width={500}
         height={300}
         priority
@@ -24,16 +30,15 @@ export function EventCard({ event }: EventCardProps) {
       />
       <CardContent className="flex flex-col gap-3 w-[284px]">
         <div className="flex justify-center items-center w-full h-fit gap-2 px-4">
-          <EventDate day={""} month="SET" />
+          <EventDate date={event.date} />
           <div className="flex flex-col w-full h-fit">
             <Typography
               data-testid="event-card-title"
               variant="h5"
               fontWeight={"black"}
-              className="leading-[21px]"
+              className="leading-[21px] truncate"
             >
-              {/* {title} */}
-              FINECAP 2024
+              {event.name}
             </Typography>
             <Typography
               data-testid="event-card-title"
@@ -49,18 +54,19 @@ export function EventCard({ event }: EventCardProps) {
               fontWeight={"bold"}
               className="text-[12px]"
             >
-              23:00 hrs
+              {event.time}
             </Typography>
           </div>
         </div>
         <EventLocation
           image={"/assets/images/second-image.svg"}
-          location="Rua do Chafariz, 28, SP"
+          location={event.address.city}
         />
 
         <Button
           data-testid="event-card-button"
           className="w-full h-12 bg-[#E85AFF] hover:bg-purple/80 rounded-sm"
+          onClick={() => router.push(`/event/${event.uuid}`)}
         >
           <Typography
             variant="h6"
@@ -76,7 +82,14 @@ export function EventCard({ event }: EventCardProps) {
   );
 }
 
-function EventDate({ day, month }: { day: string; month: string }) {
+function EventDate({ date }: { date: Date }) {
+  if (!(date instanceof Date) || isNaN(date.getTime())) {
+    return <div>Invalid date</div>;
+  }
+
+  const day = date.getDate();
+  const month = date.toLocaleString("pt-BR", { month: "short" }).toUpperCase();
+
   return (
     <div className="flex flex-col justify-center items-center w-[45px] min-h-14 h-fit rounded-sm px-3 py-2 bg-[#E85AFF]">
       <Typography
@@ -85,7 +98,7 @@ function EventDate({ day, month }: { day: string; month: string }) {
         color={"white"}
         className="leading-[30px]"
       >
-        {/* {day} */} 01
+        {day}
       </Typography>
       <Typography
         variant={"h6"}

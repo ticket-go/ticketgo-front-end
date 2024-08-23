@@ -1,13 +1,18 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Typography } from "../typography";
 import { Button } from "@/components/ui/button";
 import { AlarmClockIcon, CalendarIcon, MapPinIcon } from "lucide-react";
 import type { HeroEvent as Event } from "@/types/event-hero";
+
 export interface HeroEventProps {
   event: Event;
 }
 
 export function HeroEvent({ event }: HeroEventProps) {
+  const router = useRouter();
   return (
     <div className="relative flex justify-start items-center w-full max-h-[614px] px-20 py-10 gap-4">
       {/* Image Hero */}
@@ -31,9 +36,9 @@ export function HeroEvent({ event }: HeroEventProps) {
         <div data-testid="hero-event-image">
           <Image
             src={event.image}
-            alt="Logo"
+            alt={`Image of ${event.name}`}
             width={334}
-            height={10}
+            height={400}
             className="rounded-lg h-fit"
           />
         </div>
@@ -75,7 +80,11 @@ export function HeroEvent({ event }: HeroEventProps) {
                 fontWeight={"medium"}
                 className="leading-[33px] text-white"
               >
-                {event.date}
+                {event.date.toLocaleString("pt-BR", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
               </Typography>
             </div>
             <div className="flex w-fit h-fit items-center gap-3">
@@ -95,6 +104,7 @@ export function HeroEvent({ event }: HeroEventProps) {
           <Button
             data-testid="hero-event-buy-button"
             className="min-w-[300px] h-16 bg-[#E85AFF] hover:bg-purple/80 rounded-sm"
+            onClick={() => router.push(`/event/${event.uuid}`)}
           >
             <Typography
               variant="h6"

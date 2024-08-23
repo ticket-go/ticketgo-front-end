@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/(accounts)/admin/_components/create-event-form", "src/app/(accounts)/admin/_components/create-event-form"],
   "exclude": ["node_modules"]
 }
