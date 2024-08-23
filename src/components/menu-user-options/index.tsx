@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { ModalLogout } from "../modal-logout";
 import { Button } from "../ui/button";
 import {
@@ -10,6 +9,18 @@ import {
   DropdownMenuItem,
 } from "../ui/dropdown-menu";
 import { Typography } from "../typography";
+import { useModal } from "@/hooks/useModal";
+import { useRouter } from "next/navigation";
+
+const MENU_OPTIONS = [
+  {
+    name: "Conta",
+    path: "/my-account",
+  },
+  {
+    name: "Sair",
+  },
+];
 
 interface UserMenuOptionsProps {
   username: string;
@@ -17,10 +28,8 @@ interface UserMenuOptionsProps {
 }
 
 export function UserMenuOptions({ username, children }: UserMenuOptionsProps) {
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+  const router = useRouter();
+  const { isModalOpen, openModal } = useModal();
 
   return (
     <>
@@ -33,19 +42,31 @@ export function UserMenuOptions({ username, children }: UserMenuOptionsProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent sideOffset={10}>
-          <DropdownMenuItem>
-            <Button
-              variant={"destructive"}
-              className="w-full"
-              onClick={() => openModal()}
-            >
-              Sair
-            </Button>
-          </DropdownMenuItem>
+          {MENU_OPTIONS.map((option) => (
+            <DropdownMenuItem key={option.name}>
+              {option.name !== "Sair" ? (
+                <Button
+                  variant={"default"}
+                  className="w-full"
+                  onClick={() => router.push(`${option.path}`)}
+                >
+                  {option.name}
+                </Button>
+              ) : (
+                <Button
+                  variant={"destructive"}
+                  className="w-full"
+                  onClick={() => openModal()}
+                >
+                  Sair
+                </Button>
+              )}
+            </DropdownMenuItem>
+          ))}
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {isModalOpen && <ModalLogout closeModal={closeModal} />}
+      {isModalOpen && <ModalLogout />}
     </>
   );
 }

@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect } from "react";
 import {
   Dialog,
   DialogTrigger,
@@ -12,34 +15,57 @@ import { Typography } from "../typography";
 import { Button } from "../ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { signOut } from "next-auth/react";
+import { useModal } from "@/hooks/useModal";
+import { useRouter } from "next/navigation";
+// import { useRouter } from "next/router";
 
 interface ModalLogoutProps {
-  closeModal: () => void;
+  isPageAccount?: boolean;
 }
 
-export function ModalLogout({ closeModal }: ModalLogoutProps) {
-  const { logout } = useAuth();
+export function ModalLogout({ isPageAccount = false }: ModalLogoutProps) {
+  const router = useRouter();
+  const { isAuthenticated, logout } = useAuth();
+  const { isModalOpen, setIsModalOpen, openModal, closeModal } = useModal();
+
+  useEffect(() => {
+    if (isPageAccount) {
+      openModal();
+    }
+  }, [isPageAccount, openModal]);
 
   const handleLogout = async () => {
-    await logout();
-    await signOut();
+    if (!isAuthenticated) {
+      return;
+    } else {
+      await logout();
+      await signOut();
+    }
+
     closeModal();
+    if (!isPageAccount) {
+      router.prefetch("/");
+    }
   };
 
   return (
-    <Dialog open={true} onOpenChange={closeModal}>
-      <DialogTrigger asChild>
-        <Button variant="destructive">Sair</Button>
-      </DialogTrigger>
+    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+      {isPageAccount ? null : (
+        <DialogTrigger asChild>
+          <Button variant="destructive">Sair</Button>
+        </DialogTrigger>
+      )}
       <DialogContent className="bg-background">
         <DialogHeader>
           <DialogTitle>
-            <Typography variant="h4">Sair</Typography>
+            <Typography variant="h4" fontWeight={"bold"}>
+              Sair
+            </Typography>
           </DialogTitle>
           <DialogClose />
         </DialogHeader>
         <DialogDescription>
-          <Typography variant="h4">Deseja realmente sair?</Typography>
+          <Typography variant="h5">Deseja realmente sair?</Typography>
         </DialogDescription>
         <DialogFooter>
           <Button variant="secondary" onClick={closeModal}>
