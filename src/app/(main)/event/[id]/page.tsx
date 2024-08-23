@@ -1,8 +1,6 @@
 import { fetchEventDetail } from "@/actions/fetch-event-detail";
 import { Suspense } from "react";
 import EventDesc from "../_components/event-desc";
-import EventLoc from "../_components/event-loc";
-import EventAdm from "../_components/event-adm";
 import AddTicket from "../_components/add-ticket";
 
 export default async function Event({ params }: { params: { id: string } }) {
@@ -14,15 +12,13 @@ export default async function Event({ params }: { params: { id: string } }) {
       {event && (
         <Suspense fallback={<div>Loading...</div>}>
     
-          <EventDesc params={params} />
-          <EventLoc params={params} />
-          <EventAdm params={params} />
+          <EventDesc description={event.description} />
 
           <div className="flex gap-6 w-full">
             <AddTicket/>
             <AddTicket/>
           </div>
-
+          
         </Suspense>
       )}
     </main>

@@ -22,7 +22,7 @@ export function Header() {
   return (
     <header
       data-testid="header-container"
-      className="fixed top-0 right-0 left-0 flex items-center justify-between bg-background px-6 py-4 lg:px-8 lg:py-8 z-20"
+      className="fixed top-0 right-0 left-0 flex items-center justify-between bg-background px-6 py-4 lg:px-8 lg:py-8 z-20 mb-4"
     >
       <Link href="/" className="flex items-center" prefetch={false}>
         <Typography
@@ -34,7 +34,7 @@ export function Header() {
         </Typography>
       </Link>
 
-      <nav className="md:flex items-center space-x-8">
+      <nav className="md:flex items-center space-x-8 mb-4">
         <SearchBar />
 
         <HeaderNavItems children="Eventos" href="/" />
