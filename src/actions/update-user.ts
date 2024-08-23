@@ -3,7 +3,7 @@
 import { User } from "@/types/user";
 import { cookies } from "next/headers";
 
-export async function putUser(userId: string, data: User) {
+export async function fetchUpdateUser(userId: string, data: User) {
   try {
     const cookieStore = cookies();
     const token = cookieStore.get("access_token")?.value;
@@ -22,10 +22,7 @@ export async function putUser(userId: string, data: User) {
       body: JSON.stringify(data),
     });
 
-    console.log("Resposta da API:", response);
-
     const result = await response.json();
-    console.log("Resultado da API:", result);
     return result;
   } catch (error) {
     console.error(error);

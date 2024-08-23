@@ -8,27 +8,27 @@ import { Typography } from "@/components/typography";
 import { AddressForm } from "./address-form";
 import { UserInfoForm } from "./user-info-form";
 import { Button } from "@/components/ui/button";
-import { putUser } from "@/actions/put-user";
+import { fetchUpdateUser } from "@/actions/update-user";
 
 interface EditProfileFormProps {
   userId: string;
 }
 
 const UserProfileFormValues = z.object({
-  first_name: z.string({}).optional(),
-  last_name: z.string().optional(),
-  email: z.string().email("Email inválido").optional(),
-  phone: z.string().optional(),
-  street: z.string().optional(),
+  first_name: z.optional(z.string()),
+  last_name: z.optional(z.string()),
+  email: z.optional(z.string({})),
+  phone: z.string({ required_error: "Telefone é obrigatório" }),
+  street: z.optional(z.string()),
   number: z
     .string()
     .transform((val) => parseInt(val, 10))
     .optional(),
-  city: z.string().optional(),
-  district: z.string().optional(),
-  state: z.string().optional(),
-  country: z.string().optional(),
-  complement: z.string().optional(),
+  city: z.optional(z.string()),
+  district: z.optional(z.string()),
+  state: z.optional(z.string()),
+  country: z.optional(z.string()),
+  complement: z.optional(z.string()),
 });
 
 export type UserProfileFormSchema = z.infer<typeof UserProfileFormValues>;
@@ -45,13 +45,13 @@ export function EditProfileForm({ userId }: EditProfileFormProps) {
 
   const onSubmit: SubmitHandler<UserProfileFormSchema> = async (data) => {
     try {
-      const response = await putUser(userId, data);
+      const response = await fetchUpdateUser(userId, data);
 
       if (response) {
         router.replace("/my-account");
       }
     } catch (error) {
-      console.error("Erro ao atualizar usuário:", error);
+      console.error(error);
     }
   };
 

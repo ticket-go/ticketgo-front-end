@@ -66,15 +66,17 @@ export function AddressForm({ register, errors }: AddressFormProps) {
         {errors.state && <ErrorMessage error={errors.state.message} />}
 
         <InputForm
-          label="Estado"
+          label="Complemento"
           name="complement"
           id="complement"
-          type="select"
-          placeholder="Informe seu estado"
+          type="text"
+          placeholder="Complemento"
           register={register("complement")}
           className="w-full"
         />
-        {errors.state && <ErrorMessage error={errors.state.message} />}
+        {errors.complement && (
+          <ErrorMessage error={errors.complement.message} />
+        )}
       </div>
     </div>
   );

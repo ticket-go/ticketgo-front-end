@@ -4,6 +4,7 @@ import { EventCategories } from "./_components/main-category-event";
 import { Carousel } from "@/components/carousel";
 import { Typography } from "@/components/typography";
 import { fetchEvents } from "@/actions/fetch-events";
+import { Suspense } from "react";
 
 export default async function Home() {
   const events = await fetchEvents();
@@ -21,12 +22,16 @@ export default async function Home() {
       </section>
 
       <section className="w-full h-full py-8 px-10">
-        <EventCategories />
+        <Suspense>
+          <EventCategories />
+        </Suspense>
       </section>
 
       <section className="flex flex-col w-full h-full py-8 px-20 gap-4">
         <Typography fontWeight={"bold"}>Eventos do mês</Typography>
-        <MainEvents events={events} />
+        <Suspense>
+          <MainEvents events={events} />
+        </Suspense>
       </section>
 
       {topEvents.length > 0 ? (
@@ -34,7 +39,9 @@ export default async function Home() {
           <Typography variant="h4" fontWeight="extrabold">
             Eventos em destaque
           </Typography>
-          <Carousel events={topEvents} />
+          <Suspense>
+            <Carousel events={topEvents} />
+          </Suspense>
         </section>
       ) : (
         <section className="py-8 px-20">
@@ -44,12 +51,16 @@ export default async function Home() {
 
       <section className="flex flex-col w-full h-full py-8 px-20 gap-4">
         <Typography fontWeight={"bold"}>Eventos mais badalados</Typography>
-        <MainEvents events={events} />
+        <Suspense>
+          <MainEvents events={events} />
+        </Suspense>
       </section>
 
       <section className="flex flex-col w-full h-full py-8 px-20 gap-4">
         <Typography fontWeight={"bold"}>Promoções</Typography>
-        <MainEvents events={events} />
+        <Suspense>
+          <MainEvents events={events} />
+        </Suspense>
       </section>
     </main>
   );
