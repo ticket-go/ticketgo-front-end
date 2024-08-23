@@ -9,22 +9,6 @@ export function useMyAccount() {
   const [loadingPurchases, setLoadingPurchases] = useState(true);
   const [accountData, setAccountData] = useState(null);
 
-  const getPurchases = useCallback(async () => {
-    setLoadingPurchases(true);
-    try {
-      const fetchedPurchases = await fetchPurchases();
-      setPurchases(fetchedPurchases);
-    } catch (error) {
-      console.error("Error fetching purchases", error);
-    } finally {
-      setLoadingPurchases(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    getPurchases();
-  }, [getPurchases]);
-
   const purchaseData = useMemo(() => purchases, [purchases]);
   const isLoadingPurchases = useMemo(
     () => loadingPurchases,
@@ -35,6 +19,5 @@ export function useMyAccount() {
     purchases: purchaseData,
     loadingPurchases: isLoadingPurchases,
     accountData,
-    getPurchases,
   };
 }

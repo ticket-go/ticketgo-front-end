@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { Header } from "@/components/header";
 import NextTopLoader from "nextjs-toploader";
 import { AuthProvider } from "@/hooks/useAuth";
+import { ModalProvider } from "@/hooks/useModal";
 import SessionProvider from "@/components/session-wrapper";
 import { getServerSession } from "next-auth";
 
@@ -32,11 +33,17 @@ export default async function RootLayout({
           )}
         >
           <SessionProvider session={session}>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <NextTopLoader color="#CB1EE8" showSpinner={false} />
-              <Header />
-              {children}
-            </ThemeProvider>
+            <ModalProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                <NextTopLoader color="#CB1EE8" showSpinner={false} />
+                <Header />
+                {children}
+              </ThemeProvider>
+            </ModalProvider>
           </SessionProvider>
         </body>
       </AuthProvider>

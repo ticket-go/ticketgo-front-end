@@ -3,7 +3,7 @@
 import { fetcher } from "@/lib/utils";
 import { Event } from "../types/event";
 
-export async function fetchEvents(): Promise<Event[]> {
+export async function fetchCreateEvent(data: Event): Promise<Event[]> {
   try {
     const response = await fetcher(`${process.env.API_HOST}/events/`);
 

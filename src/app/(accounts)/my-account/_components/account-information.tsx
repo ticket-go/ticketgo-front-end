@@ -3,12 +3,12 @@
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-import { useUserInfoForm } from "./user-info-form/useUserInfoForm";
 import { Separator } from "./separator";
+import { useRouter } from "next/navigation";
 
 export default function AccountInformation() {
   const { user } = useAuth();
-  const { handleUserForm } = useUserInfoForm();
+  const router = useRouter();
 
   return (
     <>
@@ -70,7 +70,7 @@ export default function AccountInformation() {
       <Button
         variant="outline"
         className="w-56 h-14 flex gap-4 border-purple bg-transparent text-purple hover:text-purple/80 hover:border-purple/90 hover:bg-transparent"
-        onClick={() => handleUserForm()}
+        onClick={() => router.push(`/my-account/edit/${user?.user_id}`)}
       >
         Alterar dados pessoais
       </Button>

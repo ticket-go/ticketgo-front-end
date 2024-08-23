@@ -11,10 +11,8 @@ import {
 } from "lucide-react";
 import AccountInformation from "./_components/account-information";
 import { MyOrders } from "./_components/my-orders";
-import { createPortal } from "react-dom";
-import { UserInfoForm } from "./_components/user-info-form";
-import { useUserInfoForm } from "./_components/user-info-form/useUserInfoForm";
 import { Address } from "./_components/address";
+import { ModalLogout } from "@/components/modal-logout";
 
 const TABS_ACCOUNT = [
   {
@@ -39,15 +37,13 @@ const TABS_ACCOUNT = [
     name: "Sair",
     icon: <LogOutIcon size={24} />,
     activeIcon: <LogOutIcon size={24} color="#CB1EE8" />,
-    component: <UserInfoForm />,
+    component: <ModalLogout isPageAccount={true} />,
   },
 ];
 
 export default function MyAccount() {
   const [tabSelected, setTabSelected] = useState(TABS_ACCOUNT[0].name);
   const [activePage, setActivePage] = useState(TABS_ACCOUNT[0].component);
-
-  const { isUserForm } = useUserInfoForm();
 
   const handleTabChange = (tabName: string) => {
     setTabSelected(tabName);
@@ -92,7 +88,6 @@ export default function MyAccount() {
 
           <div className="flex flex-col flex-1 gap-4 bg-background w-[12rem] h-fit rounded-xl p-4 tab-land:w-full mobile:bg-transparent mobile:p-0 mobile:gap-2">
             {activePage}
-            {isUserForm && createPortal(<UserInfoForm />, document.body)}
           </div>
         </div>
       </div>

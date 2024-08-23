@@ -17,7 +17,10 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  if (!accessToken && req.nextUrl.pathname === PRIVATE_ROUTES.myAccount) {
+  if (
+    !accessToken &&
+    req.nextUrl.pathname === PRIVATE_ROUTES.myAccount("edit")
+  ) {
     return NextResponse.redirect(new URL(ROUTES.login, req.url));
   }
 
@@ -25,7 +28,8 @@ export function middleware(req: NextRequest) {
     const isChangePasswordRoute =
       req.nextUrl.pathname.startsWith("/change-password/");
     if (
-      req.nextUrl.pathname === PRIVATE_ROUTES.myAccount ||
+      req.nextUrl.pathname ===
+        PRIVATE_ROUTES.myAccount(`${isChangePasswordRoute}`) ||
       isChangePasswordRoute
     ) {
       return NextResponse.redirect(new URL(ROUTES.login, req.url));
@@ -40,6 +44,7 @@ export const config = {
     "/((?!api|_next/static|favicon.ico).*)",
     "/login",
     "/register",
+    "/my-account/:path*",
     "/change-password/:id",
   ],
 };

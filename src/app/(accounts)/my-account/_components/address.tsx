@@ -2,12 +2,12 @@ import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { Separator } from "./separator";
-import { createPortal } from "react-dom";
 import { Edit2Icon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export function Address() {
   const { user } = useAuth();
-
+  const router = useRouter();
   return (
     <>
       <div className="flex justify-between items-center pr-6">
@@ -18,15 +18,6 @@ export function Address() {
         >
           Meus Endereços
         </Typography>
-        <Button
-          variant="outline"
-          className="w- h-12 flex gap-4 bg-purple text-purple hover:text-purple/80 hover:border-purple/90 hover:bg-purple/90"
-          size={"lg"}
-        >
-          <Typography variant="h6" fontWeight={"medium"}>
-            Adicionar
-          </Typography>
-        </Button>
       </div>
       <Separator />
       <div className="flex gap-4 p-6 border-foreground tab-port:flex-col tab-port:p-4">
@@ -51,9 +42,7 @@ export function Address() {
                 variant="outline"
                 className="w-fit h-fit flex gap-4 p-2 bg"
                 size={"icon"}
-                onClick={() => {
-                  console.log("Edit address");
-                }}
+                onClick={() => router.push(`/my-account/edit/${user.user_id}`)}
               >
                 <Edit2Icon size={24} />
               </Button>

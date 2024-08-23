@@ -3,13 +3,15 @@
 import { User } from "@/types/user";
 import { cookies } from "next/headers";
 
-export async function putUser(
-  userId: string,
-  data: User
-): Promise<User | void | undefined> {
+export async function putUser(userId: string, data: User) {
   try {
     const cookieStore = cookies();
     const token = cookieStore.get("access_token")?.value;
+
+    if (!token) {
+      console.error("Token de acesso não encontrado");
+      return null;
+    }
 
     const response = await fetch(`${process.env.API_HOST}/users/${userId}/`, {
       method: "PUT",
@@ -17,14 +19,16 @@ export async function putUser(
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ data }),
+      body: JSON.stringify(data),
     });
 
-    if (response.ok) {
-      const data = await response.json();
-      return data;
-    }
+    console.log("Resposta da API:", response);
+
+    const result = await response.json();
+    console.log("Resultado da API:", result);
+    return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw new Error("Erro ao atualizar usuário");
   }
 }
