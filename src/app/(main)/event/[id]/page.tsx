@@ -1,6 +1,7 @@
 import { fetchEventDetail } from "@/actions/fetch-event-detail";
 import { Suspense } from "react";
 import EventDesc from "../_components/event-desc";
+import EventLoc from "../_components/event-loc";
 import AddTicket from "../_components/add-ticket";
 
 export default async function Event({ params }: { params: { id: string } }) {
@@ -13,6 +14,15 @@ export default async function Event({ params }: { params: { id: string } }) {
         <Suspense fallback={<div>Loading...</div>}>
     
           <EventDesc description={event.description} />
+
+          <EventLoc
+            city={event.address.city}
+            street={event.address.street}
+            number={event.address.number}
+            district={event.address.district}
+            state={event.address.state}
+            zip_code={event.address.zip_code}
+          />
 
           <div className="flex gap-6 w-full">
             <AddTicket/>
