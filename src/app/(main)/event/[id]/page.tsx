@@ -25,8 +25,8 @@ export default async function Event({ params }: { params: { id: string } }) {
           />
 
           <div className="flex gap-6 w-full">
-            <AddTicket/>
-            <AddTicket/>
+            <AddTicket type="Inteira" price="80,00" parcels="10"/>
+            <AddTicket type="Inteira" price="80,00" parcels="10"/>
           </div>
           
         </Suspense>

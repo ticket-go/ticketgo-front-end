@@ -14,9 +14,11 @@ export default function EventLoc({ city, street, number, district, state, zip_co
  
   const address = `${street}, ${number}, ${district || ''}, ${city}, ${state}, ${zip_code || ''}`;
   
+  const key = 'AIzaSyAuM8h1_2rmCrx17kK_KnoQIoIrdU21_no'
+
   const encodedAddress = encodeURIComponent(address);
 
-  const mapUrl = `https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${encodedAddress}`;
+  const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${key}&q=${encodedAddress}`;
 
   return (
     <div className="w-full rounded-md shadow-lg flex flex-col p-6 bg-gradient-block gap-4">

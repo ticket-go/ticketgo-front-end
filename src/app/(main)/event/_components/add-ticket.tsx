@@ -1,23 +1,37 @@
 import { Typography } from "@/components/typography";
+import { InputCodeForm } from "@/components/input-code";
+import { Button } from "@/components/button";
 
-export default function AddTicket() {
+interface Ticket {
+  type: string;
+  price: string;
+  parcels: string;
+}
+
+export default function AddTicket({ type, price, parcels }: Ticket) {
   return (
-    <div className="w-full rounded-md shadow-lg flex flex-col p-6 bg-gradient-block gap-4">
+    <div className="w-full rounded-md shadow-lg flex flex-col p-6 bg-gradient-block gap-4 border-l-4 border-purple">
       <div className="flex flex-col gap-2">
-        <Typography fontWeight={"medium"} variant={"h5"}>Individual - Inteira</Typography>
-        <Typography fontWeight={"light"} variant={"h5"}>R$ 80,00</Typography>
-        <Typography fontWeight={"light"} variant={"h5"}>em até 10x</Typography>
+        <Typography fontWeight={"medium"} variant={"h5"}>
+          Individual - {type}
+        </Typography>
+
+        <Typography fontWeight={"light"} variant={"h5"}>
+          R$ {price}
+        </Typography>
+
+        <Typography fontWeight={"light"} variant={"h5"}>
+          em até {parcels}x
+        </Typography>
 
         <div className="flex flex-col gap-4">
-          <Typography fontWeight={"light"} variant={"h6"}>Aplicar código promocional individual</Typography>
-          <input
-            type="text"
-            placeholder="Digite seu código"
-            className="mt-2 p-2 border border-gray-300 rounded-md w-full"
-          />
-          <button
-          data-testid="event-card-button"
-          className="w-full h-12 bg-[#E85AFF] hover:bg-purple/80 rounded-sm">Adicionar ao carrinho</button>
+          <Typography fontWeight={"light"} variant={"h6"}>
+            Aplicar código promocional individual
+          </Typography>
+
+          <InputCodeForm/>
+
+          <Button text="ADICIONAR AO CARRINHO" />
         </div>
       </div>
     </div>

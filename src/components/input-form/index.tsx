@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { IconInput } from "./icon-input";
 import { cn } from "@/lib/utils";
 
-interface InputFormProps {
+interface InputCodeProps {
   label: string;
   id: string;
   type?: string;
@@ -26,7 +26,7 @@ export function InputForm({
   icon,
   textColor,
   className,
-}: InputFormProps) {
+}: InputCodeProps) {
   return (
     <div className="flex flex-col gap-2 w-full">
       <Label htmlFor={name} className="text-lg font-medium">
