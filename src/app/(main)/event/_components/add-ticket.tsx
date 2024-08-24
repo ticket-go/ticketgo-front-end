@@ -6,9 +6,12 @@ interface Ticket {
   type: string;
   price: string;
   parcels: string;
+  available: number;
+  sold: number;
+  
 }
 
-export default function AddTicket({ type, price, parcels }: Ticket) {
+export default function AddTicket({ type, price, parcels, available, sold }: Ticket) {
   return (
     <div className="w-full rounded-md shadow-lg flex flex-col p-6 bg-gradient-block gap-4 border-l-4 border-purple">
       <div className="flex flex-col gap-2">
@@ -30,8 +33,18 @@ export default function AddTicket({ type, price, parcels }: Ticket) {
           </Typography>
 
           <InputCodeForm/>
+        </div>
 
-          <Button text="ADICIONAR AO CARRINHO" />
+        <Button text="ADICIONAR AO CARRINHO" />
+
+        <div className="flex justify-between">
+          <Typography fontWeight={"light"} variant={"h5"}>
+            Disponíveis: {available}
+          </Typography>
+
+          <Typography fontWeight={"light"} variant={"h5"}>
+            Vendidos: {sold}
+          </Typography>
         </div>
       </div>
     </div>
