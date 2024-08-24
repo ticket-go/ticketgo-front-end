@@ -1,5 +1,4 @@
 import { Address } from "./address";
-import { Organization } from "./organization";
 
 export interface User {
   user_id?: string;
@@ -14,5 +13,4 @@ export interface User {
   privileged?: boolean;
   password?: string;
   address?: Address;
-  organization?: Organization;
 }
