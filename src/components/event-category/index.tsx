@@ -4,9 +4,10 @@ import type { EventCategory as Event } from "@/types/event-category";
 
 export interface EventCategoryProps {
   event: Event;
+  image: string;
 }
 
-export function EventCategory({ event }: EventCategoryProps) {
+export function EventCategory({ event, image }: EventCategoryProps) {
   return (
     <div
       data-testid="event-category-container"
@@ -14,7 +15,7 @@ export function EventCategory({ event }: EventCategoryProps) {
     >
       <Image
         data-testid="event-category-image"
-        src={"/assets/images/event-image.svg"}
+        src={`/assets/images/icons/${image}.png`}
         alt="Categoria do evento"
         width={140}
         height={140}
