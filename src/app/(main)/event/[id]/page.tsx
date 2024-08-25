@@ -35,7 +35,7 @@ export default async function Event({ params }: { params: { id: string } }) {
           />
 
           <UserAdm 
-            city={event.uuid}
+            city={event.address.city}
             street={event.address.street}
             number={event.address.number}
             district={event.address.district}

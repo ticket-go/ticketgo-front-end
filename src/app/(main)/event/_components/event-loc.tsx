@@ -1,6 +1,7 @@
 import { Typography } from "@/components/typography";
 import Image from "next/image";
 
+
 interface EventAddress {
   city: string;
   street: string;
@@ -14,7 +15,7 @@ export default function EventLoc({ city, street, number, district, state, zip_co
  
   const address = `${street}, ${number}, ${district || ''}, ${city}, ${state}, ${zip_code || ''}`;
   
-  const key = 'AIzaSyAuM8h1_2rmCrx17kK_KnoQIoIrdU21_no'
+  const key = process.env.GOOGLE_MAPS_API_KEY
 
   const encodedAddress = encodeURIComponent(address);
 
