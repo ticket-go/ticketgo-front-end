@@ -1,6 +1,4 @@
 import { Address } from "./address";
-import { Auth } from "./auth";
-import { Organization } from "./organization";
 import { User } from "./user";
 
 export interface Event {

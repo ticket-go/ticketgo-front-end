@@ -16,7 +16,7 @@ export async function fetchEvents(): Promise<Event[]> {
     }
 
     const data = await response.json();
-    return data;
+    return data || [];
   } catch (error) {
     console.error("Error fetching events:", error);
     return [];

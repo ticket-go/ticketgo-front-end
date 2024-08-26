@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Typography } from "../typography";
 import { Button } from "@/components/ui/button";
 import { AlarmClockIcon, CalendarIcon, MapPinIcon } from "lucide-react";
-import type { Event } from "@/types/event";
+import { Event } from "@/types/event";
 
 interface FeaturedEventProps {
   event: Event;
@@ -55,7 +55,7 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
               fontWeight={"medium"}
               className="leading-[33px]"
             >
-              {event.date}
+              {event.date.toString()}
             </Typography>
           </div>
           <div className="flex w-fit h-fit items-center gap-3">

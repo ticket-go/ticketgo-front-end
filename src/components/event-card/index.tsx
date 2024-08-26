@@ -6,6 +6,7 @@ import { Typography } from "../typography";
 import { Card, CardContent } from "@/components/ui/card";
 import { Event } from "@/types/event";
 import { Button } from "../ui/button";
+import { Address } from "@/types/address";
 
 export interface EventCardProps {
   event: Event;
@@ -30,7 +31,7 @@ export function EventCard({ event }: EventCardProps) {
       />
       <CardContent className="flex flex-col gap-3 w-[284px]">
         <div className="flex justify-center items-center w-full h-fit gap-2 px-4">
-          <EventDate date={event.date} />
+          <EventDate date={event.date.toString()} />
           <div className="flex flex-col w-full h-fit">
             <Typography
               data-testid="event-card-title"
@@ -82,7 +83,7 @@ export function EventCard({ event }: EventCardProps) {
   );
 }
 
-function EventDate({ date }: { date: Date }) {
+function EventDate({ date }: { date: Date | string }) {
   if (!(date instanceof Date) || isNaN(date.getTime())) {
     return <div>Invalid date</div>;
   }
@@ -112,13 +113,12 @@ function EventDate({ date }: { date: Date }) {
   );
 }
 
-export function EventLocation({
-  image,
-  location,
-}: {
+interface EventLocationProps {
   image: string;
-  location: string;
-}) {
+  location: Address["city"];
+}
+
+export function EventLocation({ image, location }: EventLocationProps) {
   return (
     <div className="flex justify-center items-center w-full h-fit gap-2">
       <Image
