@@ -17,13 +17,11 @@ export const useCreateEventForm = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isLoading, isSubmitting },
+    formState: { errors, isSubmitting, isLoading },
   } = useForm<CreateEventFormSchema>({
     defaultValues: {
       category: "other",
       status: "scheduled",
-      is_hero_event: false,
-      is_top_event: false,
       ticket_value: "0",
       ticket_quantity: 0,
       half_ticket_value: "0",
@@ -31,17 +29,31 @@ export const useCreateEventForm = () => {
     },
   });
 
-  const handleTopEventChange = () => setIsTopEvent(!isTopEvent);
-  const handleHeroEventChange = () => setIsHeroEvent(!isHeroEvent);
+  const handleTopEventChange = () => setIsTopEvent((prev) => !prev);
+  const handleHeroEventChange = () => setIsHeroEvent((prev) => !prev);
 
   const onSubmit: SubmitHandler<CreateEventFormSchema> = async (data) => {
-    const newData = {
-      ...data,
-      user_uuid: user?.user_id as string,
-      address_id: data?.address?.uuid || undefined,
-    };
+    const formData = new FormData();
 
-    await fetchCreateEvent(newData);
+    formData.append("user_uuid", user?.user_id as string);
+    formData.append("address_id", data?.user.address?.uuid || "");
+    formData.append("is_hero_event", String(isHeroEvent));
+    formData.append("is_top_event", String(isTopEvent));
+    formData.append("uuid", data.uuid || "");
+    formData.append("name", data.name);
+    formData.append("date", String(data.date)); // Convertendo para string se necessário
+    formData.append("time", data.time);
+    formData.append("description", data.description);
+
+    if (data.image && data.image[0]) {
+      formData.append("image", data.image[0]);
+    }
+
+    try {
+      await fetchCreateEvent(formData);
+    } catch (error) {
+      console.error("Error creating event:", error);
+    }
   };
 
   return {

@@ -9,10 +9,33 @@ import {
 } from "@/components/ui/select";
 import { UseFormRegister } from "react-hook-form";
 import { Label } from "@radix-ui/react-dropdown-menu";
-import { ErrorMessage } from "@/app/(auth)/_components/error-message";
+import { ErrorMessage } from "@/components/error-message";
 import { ModalCreateAddress } from "@/components/modal-address";
 import { CreateEventFormSchema } from "./useCreateEventForm";
 import { useAuth } from "@/hooks/useAuth";
+
+const EVENT_CATEGORIES = [
+  {
+    label: "nusic",
+    name: "Música",
+  },
+  {
+    label: "sports",
+    name: "Esportes",
+  },
+  {
+    label: "entertainment",
+    name: "Entretenimento",
+  },
+  {
+    label: "workshop",
+    name: "Workshop",
+  },
+  {
+    label: "other",
+    name: "Outros",
+  },
+];
 
 interface SelectInfoEventProps {
   register: UseFormRegister<CreateEventFormSchema>;
@@ -32,21 +55,11 @@ export function SelectInfoEvent({ register, errors }: SelectInfoEventProps) {
               <SelectValue placeholder="Nenhuma categoria selecionada" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="music" key="music">
-                Música
-              </SelectItem>
-              <SelectItem value="sports" key="sports">
-                Esportes
-              </SelectItem>
-              <SelectItem value="entertainment" key="entertainment">
-                Entretenimento
-              </SelectItem>
-              <SelectItem value="workshop" key="workshop">
-                Workshop
-              </SelectItem>
-              <SelectItem value="other" key="other">
-                Outros
-              </SelectItem>
+              {EVENT_CATEGORIES.map((category) => (
+                <SelectItem value={category.label} key={category.label}>
+                  {category.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
           {errors.category && <ErrorMessage error={errors.category.message} />}
@@ -74,7 +87,7 @@ export function SelectInfoEvent({ register, errors }: SelectInfoEventProps) {
           Qual o endereço do seu evento?
         </Label>
         <div className="flex items-center w-full gap-4">
-          <Select {...register("address")}>
+          <Select {...register("user.address")}>
             <SelectTrigger className="h-14">
               <SelectValue placeholder="Nenhum endereço selecionado" />
             </SelectTrigger>

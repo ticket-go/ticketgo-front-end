@@ -26,14 +26,14 @@ export function UploadImageFile({ register }: UploadImageFileProps) {
         <span className="text-white text-xl font-bold mt-4">
           Clique para fazer upload de uma imagem
         </span>
+        <Input
+          type="file"
+          id="image"
+          className="hidden"
+          accept="image/*"
+          {...register("image")}
+        />
       </Label>
-      <Input
-        type="file"
-        id="image"
-        className="hidden"
-        accept="image/*"
-        {...register("image")}
-      />
     </div>
   );
 }
