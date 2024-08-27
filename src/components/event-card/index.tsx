@@ -6,7 +6,6 @@ import { Typography } from "../typography";
 import { Card, CardContent } from "@/components/ui/card";
 import { Event } from "@/types/event";
 import { Button } from "../ui/button";
-import { Address } from "@/types/address";
 
 export interface EventCardProps {
   event: Event;
@@ -61,7 +60,7 @@ export function EventCard({ event }: EventCardProps) {
         </div>
         <EventLocation
           image={"/assets/images/second-image.svg"}
-          location={event.address.city}
+          location={event}
         />
 
         <Button
@@ -115,7 +114,7 @@ function EventDate({ date }: { date: Date | string }) {
 
 interface EventLocationProps {
   image: string;
-  location: Address["city"];
+  location: Event;
 }
 
 export function EventLocation({ image, location }: EventLocationProps) {
@@ -133,7 +132,7 @@ export function EventLocation({ image, location }: EventLocationProps) {
           fontWeight={"semibold"}
           className="leading-[15px]"
         >
-          {location}
+          {location.user.address?.city}
         </Typography>
       </div>
     </div>

@@ -66,7 +66,7 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
               fontWeight={"medium"}
               className="leading-[33px]"
             >
-              {`${event.address.street}, ${event.address.number}, ${event.address.city}, ${event.address.state}`}
+              {`${event.user.address?.street}, ${event.user.address?.number}, ${event.user.address?.city}, ${event.user.address?.state}`}
             </Typography>
           </div>
         </div>
