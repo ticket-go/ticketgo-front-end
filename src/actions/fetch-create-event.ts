@@ -1,19 +1,61 @@
 "use server";
 
-import { fetcher } from "@/lib/utils";
-import { Event } from "../types/event";
+import { Event } from "@/types/event";
+import { cookies } from "next/headers";
 
-export async function fetchEvents(): Promise<Event[]> {
+const CATEGORIES = [
+  { id: 1, name: "music" },
+  { id: 2, name: "sports" },
+  { id: 3, name: "entretainement" },
+  { id: 4, name: "worksho" },
+  { id: 5, name: "other" },
+];
+
+const STATUSES = [
+  { id: 1, name: "scheduled" },
+  { id: 2, name: "Em andamento" },
+  { id: 3, name: "Concluído" },
+];
+
+export async function fetchCreateEvent(data: Event): Promise<void> {
   try {
-    const response = await fetcher(`${process.env.API_HOST}/events/`);
+    const cookieStore = cookies();
+    const token = cookieStore.get("access_token")?.value;
 
-    if (!response.ok) {
-      throw new Error(`Error: ${response.statusText}`);
+    if (!token) {
+      throw new Error("Usuário não autenticado.");
     }
 
-    return response.json(); // Ensure this returns an array of Event objects
+    const { image, ...newData } = data;
+    if (newData.category === "") {
+      const category = CATEGORIES.find((category) => category.id === 5);
+      newData.category = category ? category.name : "Não informado";
+    }
+
+    if (newData.status === "") {
+      const status = STATUSES.find((status) => status.id === 1);
+      newData.status = status ? status.name : "Não informado";
+    }
+
+    const response = await fetch(`${process.env.API_HOST}/events/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(newData),
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      console.error(
+        "Failed to create event:",
+        result.message || "Unknown error"
+      );
+      throw new Error(result.message || "Failed to create event");
+    }
+    return result;
   } catch (error) {
-    console.error("Error fetching events:", error);
-    return []; // Return an empty array in case of error
+    console.error(error);
   }
 }

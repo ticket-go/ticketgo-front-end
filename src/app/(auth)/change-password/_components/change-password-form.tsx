@@ -65,7 +65,7 @@ export function ChangePasswordForm({ userId }: ChangePasswordFormProps) {
 
   return (
     <form
-      className="flex justify-center items-center w-full h-full bg-background gap-10"
+      className="flex justify-center items-center w-full h-full bg-background gap-10 mt-4"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex items-center justify-center w-fit h-fit p-2.5 tab-port:hidden">
@@ -80,7 +80,7 @@ export function ChangePasswordForm({ userId }: ChangePasswordFormProps) {
       </div>
 
       <div className="flex flex-col h-fit w-[600px] tab-port:w-full px-20 gap-2">
-        <div className="flex flex-col gap-6 py-4 w-full h-fit">
+        <div className="flex flex-col gap-6 py-3 w-full h-fit">
           <Typography variant="h3" fontWeight={"bold"} className="w-full">
             Altere sua senha
           </Typography>

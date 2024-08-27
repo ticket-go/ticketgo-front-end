@@ -1,8 +1,8 @@
 "use server";
 
-import { EventCategory } from "@/types/event-category";
+import { Event } from "@/types/event";
 
-export async function fetchCategoryByEvents(): Promise<EventCategory[]> {
+export async function fetchCategoryByEvents(): Promise<Event[]> {
   try {
     const fetchOptions: RequestInit = {
       next: { tags: ["category"] },
@@ -18,7 +18,7 @@ export async function fetchCategoryByEvents(): Promise<EventCategory[]> {
     }
 
     const data = await response.json();
-    return data;
+    return data || [];
   } catch (error) {
     console.error("Failed to fetch events:", error);
     throw new Error("Failed to fetch events");

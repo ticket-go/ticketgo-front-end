@@ -1,49 +1,102 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
+import { useCarousel } from "./useCarousel";
 import {
   CarouselContent,
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
-  CarouselApi,
   Carousel as CarouselWrapper,
 } from "@/components/ui/carousel";
-import { Event } from "../event";
+import { FeaturedEvent } from "../event";
+import { Event } from "@/types/event";
+import { cn } from "@/lib/utils";
 
-export function Carousel() {
-  const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
+interface CarouselProps {
+  events: Event[];
+  loop?: boolean;
+  pagination?: boolean;
+}
+
+export function Carousel({
+  events,
+  loop = true,
+  pagination = true,
+}: CarouselProps) {
+  const {
+    setCarouselApi,
+    current,
+    count,
+    carouselApi,
+    nextPage,
+    previousPage,
+    goToPage,
+  } = useCarousel({
+    totalItems: events.length,
+    itemsPerPage: 1,
+    loop,
+  });
 
   return (
-    <CarouselWrapper setApi={setApi} autoPlay={4000}>
-      <CarouselContent className="mt-10">
-        <CarouselItem>
-          <Event />
-        </CarouselItem>
-        <CarouselItem>
-          <Event />
-        </CarouselItem>
-        <CarouselItem>
-          <Event />
-        </CarouselItem>
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+    <div className="relative">
+      <CarouselWrapper
+        setApi={setCarouselApi}
+        opts={{
+          loop,
+          slidesToScroll: 1,
+        }}
+        className="relative select-none"
+      >
+        <CarouselContent className="relative">
+          {events.map((event) => (
+            <CarouselItem key={event.uuid} className="w-[650px] relative z-10">
+              <FeaturedEvent event={event} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
 
-      <CarouselNavigator />
-    </CarouselWrapper>
+        <CarouselPrevious
+          className="absolute left-2 z-20 top-1/2 -translate-y-1/2"
+          onClick={previousPage}
+        />
+        <CarouselNext
+          className="absolute right-2 z-20 top-1/2 -translate-y-1/2"
+          onClick={nextPage}
+        />
+      </CarouselWrapper>
+
+      {pagination && (
+        <CarouselPagination
+          current={current}
+          length={count}
+          goToPage={goToPage}
+        />
+      )}
+    </div>
   );
 }
 
-function CarouselNavigator() {
+function CarouselPagination({
+  current,
+  length,
+  goToPage,
+}: {
+  current: number;
+  length: number;
+  goToPage: (page: number) => void;
+}) {
   return (
-    <div className="absolute bottom-0.5 mt-10 left-1/2 -translate-x-2/4 flex gap-3">
-      <div className="h-4 w-4 rounded-full bg-purple" />
-      <div className="h-4 w-4 rounded-full bg-primary/50" />
-      <div className="h-4 w-4 rounded-full bg-primary/50" />
+    <div className="w-full pt-32 gap-4 flex justify-center absolute bottom-0">
+      {Array.from({ length }).map((_, index) => (
+        <div
+          key={index}
+          className={cn([
+            "w-4 h-4 bg-white opacity-70 rounded-full transition-all duration-300 cursor-pointer",
+            current === index && "w-4 bg-purple opacity-100",
+          ])}
+          onClick={() => goToPage(index)}
+        />
+      ))}
     </div>
   );
 }

@@ -8,6 +8,6 @@ export interface Ticket {
   verified: boolean;
   hash: string;
   user: User;
-  event: Event;
-  purchase: Purchase;
+  event: Event["uuid"];
+  purchase: string;
 }

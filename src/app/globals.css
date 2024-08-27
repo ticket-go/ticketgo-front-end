@@ -63,6 +63,28 @@
 @layer base {
   * {
     @apply border-border;
+
+    /* Ocultar ícone de calendário em campos date */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+
+    input[type="date"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+
+    /* Ocultar ícone de relógio em campos time */
+    input[type="time"]::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+
+    input[type="time"] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
   }
   body {
     @apply bg-background text-foreground;

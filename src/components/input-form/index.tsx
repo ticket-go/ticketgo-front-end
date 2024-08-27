@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IconInput } from "./icon-input";
 import { cn } from "@/lib/utils";
+import { FieldValues, UseFormRegister } from "react-hook-form";
 
 interface InputCodeProps {
   label: string;
@@ -13,6 +14,7 @@ interface InputCodeProps {
   register: any;
   icon?: ReactNode;
   textColor?: boolean;
+  isSmall?: boolean;
   className?: string;
 }
 
@@ -25,8 +27,9 @@ export function InputForm({
   register,
   icon,
   textColor,
+  isSmall,
   className,
-}: InputCodeProps) {
+}: InputFormProps) {
   return (
     <div className="flex flex-col gap-2 w-full">
       <Label htmlFor={name} className="text-lg font-medium">
@@ -40,11 +43,13 @@ export function InputForm({
           className={cn([
             "h-14 pl-12",
             textColor && "placeholder:text-black",
+            isSmall && "w-fit",
+            !icon && "pl-4",
             className,
           ])}
           {...register}
         />
-        <IconInput>{icon}</IconInput>
+        {icon && <IconInput>{icon}</IconInput>}
       </div>
     </div>
   );

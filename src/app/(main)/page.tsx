@@ -3,39 +3,57 @@ import { MainHeroEvent } from "./_components/main-hero-event";
 import { EventCategories } from "./_components/main-category-event";
 import { Carousel } from "@/components/carousel";
 import { Typography } from "@/components/typography";
+import { fetchEvents } from "@/actions/fetch-events";
+import { Section } from "@/components/section";
+import { Suspense } from "react";
 
-export default function Home() {
+export default async function Home() {
+  const events = await fetchEvents();
+  const topEvents = events.filter((event) => event.is_top_event);
+
   return (
     <main className="flex flex-col justify-center items-center w-full min-h-screen bg-background mt-8 mb-8">
-      <section className="w-full h-full py-8">
-        <MainHeroEvent />
-      </section>
+      <div className="w-full">
+        <section className="w-full h-full py-8">
+          {topEvents.length > 0 && <MainHeroEvent event={topEvents[0]} />}
+        </section>
 
-      <section className="w-full h-full py-8 px-10">
-        <EventCategories />
-      </section>
+        <Section>
+          <Suspense>
+            <EventCategories />
+          </Suspense>
+        </Section>
 
-      <section className="flex flex-col w-full h-full py-8 px-20 gap-4">
-        <Typography fontWeight={"bold"}>Eventos do mês</Typography>
-        <MainEvents />
-      </section>
+        <Section>
+          <Typography fontWeight="bold">Eventos do mês</Typography>
+          <Suspense>
+            <MainEvents events={events} />
+          </Suspense>
+        </Section>
 
-      <section className="py-8 px-20">
-        <Typography variant="h4" fontWeight="extrabold">
-          Eventos em destaque
-        </Typography>
-        <Carousel />
-      </section>
+        <Section>
+          <Typography variant="h4" fontWeight="extrabold">
+            Eventos em destaque
+          </Typography>
+          <Suspense>
+            <Carousel events={topEvents} />
+          </Suspense>
+        </Section>
 
-      <section className="flex flex-col w-full h-full py-8 px-20 gap-4">
-        <Typography fontWeight={"bold"}>Eventos mais badalados</Typography>
-        <MainEvents />
-      </section>
+        <Section>
+          <Typography fontWeight="bold">Eventos mais badalados</Typography>
+          <Suspense>
+            <MainEvents events={events} />
+          </Suspense>
+        </Section>
 
-      <section className="flex flex-col w-full h-full py-8 px-20 gap-4">
-        <Typography fontWeight={"bold"}>Promoções</Typography>
-        <MainEvents />
-      </section>
+        <Section>
+          <Typography fontWeight="bold">Promoções</Typography>
+          <Suspense>
+            <MainEvents events={events} />
+          </Suspense>
+        </Section>
+      </div>
     </main>
   );
 }
