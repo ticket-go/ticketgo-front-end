@@ -1,10 +1,10 @@
 import { Typography } from "@/components/typography";
 
-interface EventDescription {
+interface EventDescriptionProps {
   description?: string;
 }
 
-export default function EventDesc({ description }: EventDescription) {
+export default function EventDesc({ description }: EventDescriptionProps) {
   return (
     <div className="w-full rounded-md shadow-lg flex flex-col p-6 bg-gradient-block gap-4">
       <Typography fontWeight={"bold"} color={"white"}>Descrição</Typography>

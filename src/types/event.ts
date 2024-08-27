@@ -1,5 +1,6 @@
 import { Address } from "./address";
 import { Organization } from "./organization";
+import { User } from "./user";
 
 export interface Event {
   uuid: string;
@@ -21,4 +22,5 @@ export interface Event {
   half_tickets_available: number;
   address: Address;
   organization: Organization;
+  user: User;
 }

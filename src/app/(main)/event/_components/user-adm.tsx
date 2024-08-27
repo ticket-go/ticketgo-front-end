@@ -1,18 +1,13 @@
 import { Typography } from "@/components/typography";
 import { Suspense } from "react";
 import Image from "next/image";
+import { Event } from "@/types/event";
 
 interface UserAdmProps {
-  city: string;
-  street: string;
-  number: number;
-  district?: string; 
-  state: string;
-  zip_code: string | undefined;
-  organization: string;
+  event: Event;
 }
 
-export default async function UserAdm({city, state, zip_code, street, number, district, organization}: UserAdmProps ) {
+export default async function UserAdm({event}: UserAdmProps ) {
 
   return (
     <div className="w-full rounded-md shadow-lg flex flex-col p-6 bg-gradient-block gap-4">
@@ -27,9 +22,9 @@ export default async function UserAdm({city, state, zip_code, street, number, di
             className="rounded-full"
           />
         <div className="flex flex-col gap-2">
-            <Typography fontWeight={"medium"} variant={"h4"}>{organization}</Typography>
+            <Typography fontWeight={"medium"} variant={"h4"}>{event.user.address?.city}</Typography>
             <Typography fontWeight={"light"} variant={"h5"}>
-                {street}, {number}, {district || "Não informado"}, {city}, {state}, {zip_code || "Não informado"}
+                {event.user.address?.street}, {event.user.address?.number}, {event.user.address?.district || "Não informado"}, {event.user.address?.city}, {event.user.address?.state}, {event.user.address?.zip_code || "Não informado"}
             </Typography>
 
             <Typography fontWeight={"light"} variant={"h6"}>A melhor casa de show do Rio Grande do Norte, cerveja quente e cara, chão sujo e torto, sem segurança nenhuma e com inúmeras moitas para os casais curtirem. Venham agora mesmo para o MuroSujoCasaShow e tenha uma noite inesquecível, aproveite ela como se fosse sua última noite, pois com nossa segurança e higienização, pode acabar sendo.</Typography>

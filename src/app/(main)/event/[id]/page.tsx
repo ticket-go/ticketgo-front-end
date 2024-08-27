@@ -12,7 +12,8 @@ export default async function Event({ params }: { params: { id: string } }) {
   console.log(event)
 
   return (
-    <main className="flex flex-col justify-center items-center h-screen bg-background p-4 gap-8 px-[300px] mt-14">
+    <main className="flex flex-col justify-center items-center w-full min-h-screen bg-background mt-8 mb-8">
+      <div className=" flex flex-col w-full py-8 px-[120px] gap-4">
       {event && (
         <Suspense fallback={<div>Loading...</div>}>
           
@@ -35,17 +36,13 @@ export default async function Event({ params }: { params: { id: string } }) {
           />
 
           <UserAdm 
-            city={event.address.city}
-            street={event.address.street}
-            number={event.address.number}
-            district={event.address.district}
-            state={event.address.state}
-            zip_code={event.address.zip_code}
-            organization={event.name}
+            event={event}
             />
           
         </Suspense>
       )}
+
+      </div>
     </main>
   );
 }

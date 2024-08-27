@@ -2,7 +2,7 @@ import { Typography } from "@/components/typography";
 import Image from "next/image";
 
 
-interface EventAddress {
+interface EventAddressProps {
   city: string;
   street: string;
   number: number;
@@ -11,15 +11,13 @@ interface EventAddress {
   zip_code: string | undefined;
 }
 
-export default function EventLoc({ city, street, number, district, state, zip_code }: EventAddress) {
+export default function EventLoc({ city, street, number, district, state, zip_code }: EventAddressProps) {
  
   const address = `${street}, ${number}, ${district || ''}, ${city}, ${state}, ${zip_code || ''}`;
-  
-  const key = process.env.GOOGLE_MAPS_API_KEY
 
   const encodedAddress = encodeURIComponent(address);
 
-  const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${key}&q=${encodedAddress}`;
+  const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_MAPS_API_KEY}&q=${encodedAddress}`;
 
   return (
     <div className="w-full rounded-md shadow-lg flex flex-col p-6 bg-gradient-block gap-4">
