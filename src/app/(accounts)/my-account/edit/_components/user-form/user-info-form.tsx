@@ -1,12 +1,14 @@
 "use client";
 
 import { InputForm } from "@/components/input-form";
-import { ErrorMessage } from "@/app/(auth)/_components/error-message";
+import { ErrorMessage } from "@/components/error-message";
 import { MailIcon, UserIcon, PhoneIcon } from "lucide-react";
 import { Typography } from "@/components/typography";
+import { UseFormRegister } from "react-hook-form";
+import { EditProfileFormValues } from ".";
 
 interface UserInfoFormProps {
-  register: any;
+  register: UseFormRegister<EditProfileFormValues>;
   errors: any;
 }
 

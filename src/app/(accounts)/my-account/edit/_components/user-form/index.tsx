@@ -2,36 +2,18 @@
 
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Typography } from "@/components/typography";
 import { AddressForm } from "./address-form";
 import { UserInfoForm } from "./user-info-form";
 import { Button } from "@/components/ui/button";
 import { fetchUpdateUser } from "@/actions/update-user";
+import { User } from "@/types/user";
+
+export interface EditProfileFormValues extends User {}
 
 interface EditProfileFormProps {
   userId: string;
 }
-
-const UserProfileFormValues = z.object({
-  first_name: z.optional(z.string()),
-  last_name: z.optional(z.string()),
-  email: z.optional(z.string({})),
-  phone: z.string({ required_error: "Telefone é obrigatório" }),
-  street: z.optional(z.string()),
-  number: z
-    .string()
-    .transform((val) => parseInt(val, 10))
-    .optional(),
-  city: z.optional(z.string()),
-  district: z.optional(z.string()),
-  state: z.optional(z.string()),
-  country: z.optional(z.string()),
-  complement: z.optional(z.string()),
-});
-
-export type UserProfileFormSchema = z.infer<typeof UserProfileFormValues>;
 
 export function EditProfileForm({ userId }: EditProfileFormProps) {
   const router = useRouter();
@@ -39,11 +21,9 @@ export function EditProfileForm({ userId }: EditProfileFormProps) {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm<UserProfileFormSchema>({
-    resolver: zodResolver(UserProfileFormValues),
-  });
+  } = useForm<EditProfileFormValues>();
 
-  const onSubmit: SubmitHandler<UserProfileFormSchema> = async (data) => {
+  const onSubmit: SubmitHandler<EditProfileFormValues> = async (data) => {
     try {
       const response = await fetchUpdateUser(userId, data);
 
