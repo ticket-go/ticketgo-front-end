@@ -11,7 +11,7 @@ import { Typography } from "@/components/typography";
 import { User, Calendar, Mail, LockIcon, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { createUser } from "@/actions/create-user";
-import { ErrorMessage } from "../../_components/error-message";
+import { ErrorMessage } from "../../../../components/error-message";
 import { InputForm } from "@/components/input-form";
 
 const RegisterFormSchema = z.object({
@@ -218,7 +218,7 @@ export function RegisterForm() {
               <div>
                 <InputForm
                   label="E-mail"
-                  name=""
+                  name="email"
                   id="email"
                   type="email"
                   placeholder="Digite seu Email"
@@ -230,7 +230,7 @@ export function RegisterForm() {
               <div className="relative flex items-center">
                 <InputForm
                   label="Senha"
-                  name=""
+                  name="password"
                   id="password"
                   type={"password"}
                   placeholder="Digite sua senha"

@@ -12,7 +12,7 @@ import { Typography } from "@/components/typography";
 import { authLogin } from "@/actions/auth-login";
 import { useAuth } from "@/hooks/useAuth";
 import { User, LockIcon } from "lucide-react";
-import { ErrorMessage } from "../../_components/error-message";
+import { ErrorMessage } from "../../../../components/error-message";
 import { InputForm } from "@/components/input-form";
 
 const loginFormSchema = z.object({
