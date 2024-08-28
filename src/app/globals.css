@@ -1,3 +1,4 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -87,5 +88,13 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  .bg-gradient-block {
+    background: linear-gradient(90deg, #0C071C 0%, #0F1129 100%);
+  }
+
+  .bg-gradient-circle {
+    background: linear-gradient(90deg, #0C071C 0%, #55576F 100%);
   }
 }

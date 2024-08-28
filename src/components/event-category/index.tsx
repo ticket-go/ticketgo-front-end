@@ -5,9 +5,10 @@ import Link from "next/link";
 
 export interface EventCategoryProps {
   event: Event;
+  image: string;
 }
 
-export function EventCategory({ event }: EventCategoryProps) {
+export function EventCategory({ event, image }: EventCategoryProps) {
   return (
     <Link href={`/events/${event.category}`} passHref>
       <div
