@@ -2,12 +2,12 @@ import { ErrorMessage } from "@/components/error-message";
 import { InputForm } from "@/components/input-form";
 import { Typography } from "@/components/typography";
 import { DollarSign, TicketPlus } from "lucide-react";
-import { UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { CreateEventFormSchema } from "./useCreateEventForm";
 
 interface TicketValueEventProps {
   register: UseFormRegister<CreateEventFormSchema>;
-  errors: any;
+  errors: FieldErrors<CreateEventFormSchema>;
 }
 
 export function TicketValueEvent({ register, errors }: TicketValueEventProps) {

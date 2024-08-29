@@ -1,6 +1,5 @@
 import { User } from "./user";
 import { Event } from "./event";
-import { Purchase } from "./purchase";
 
 export interface Ticket {
   uuid: string;
@@ -9,5 +8,5 @@ export interface Ticket {
   hash: string;
   user: User;
   event: Event["uuid"];
-  purchase: string;
+  cart_payment_data: string;
 }

@@ -4,7 +4,7 @@ import { Typography } from "@/components/typography";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { DollarSign, TicketPlus } from "lucide-react";
-import { UseFormRegister } from "react-hook-form";
+import { Controller, FieldErrors, UseFormRegister } from "react-hook-form";
 import {
   CreateEventFormSchema,
   useCreateEventForm,
@@ -12,12 +12,14 @@ import {
 
 interface HalfTicketValueEventProps {
   register: UseFormRegister<CreateEventFormSchema>;
-  errors: any;
+  errors: FieldErrors<CreateEventFormSchema>;
+  control: any;
 }
 
 export function HalfTicketValueEvent({
   register,
   errors,
+  control,
 }: HalfTicketValueEventProps) {
   const {
     isHeroEvent,
@@ -58,29 +60,43 @@ export function HalfTicketValueEvent({
         )}
       </div>
       <div className="flex items-center gap-2 w-full mt-4">
-        <Checkbox
-          checked={isHeroEvent}
-          onCheckedChange={handleHeroEventChange}
-          id="is_hero_event"
-          {...register("is_hero_event")}
-          className="w-5 h-5"
+        <Controller
+          control={control}
+          name="is_hero_event"
+          render={({ field }) => (
+            <div className="flex items-center gap-2 w-full">
+              <Checkbox
+                checked={field.value}
+                onCheckedChange={field.onChange}
+                id="is_hero_event"
+                className="w-5 h-5"
+              />
+              <Label htmlFor="is_hero_event" className="text-lg font-medium">
+                Evento Destaque
+              </Label>
+            </div>
+          )}
         />
-        <Label htmlFor="is_hero_event" className="text-lg font-medium">
-          Evento Destaque
-        </Label>
       </div>
 
       <div className="flex items-center gap-2 w-full mt-4">
-        <Checkbox
-          checked={isTopEvent}
-          onCheckedChange={handleTopEventChange}
-          id="is_top_event"
-          {...register("is_top_event")}
-          className="w-5 h-5"
+        <Controller
+          control={control}
+          name="is_top_event"
+          render={({ field }) => (
+            <div className="flex items-center gap-2 w-full">
+              <Checkbox
+                checked={field.value}
+                onCheckedChange={field.onChange}
+                id="is_top_event"
+                className="w-5 h-5"
+              />
+              <Label htmlFor="is_top_event" className="text-lg font-medium">
+                Evento Principal
+              </Label>
+            </div>
+          )}
         />
-        <Label htmlFor="is_top_event" className="text-lg font-medium">
-          Evento Principal
-        </Label>
       </div>
     </div>
   );

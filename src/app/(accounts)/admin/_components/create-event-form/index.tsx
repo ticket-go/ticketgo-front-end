@@ -8,9 +8,16 @@ import { SelectInfoEvent } from "./select-info-event";
 import { TicketValueEvent } from "./ticket-value-event";
 import { HalfTicketValueEvent } from "./half_ticket-value";
 import { CreateEventFormActions } from "./actions";
+import { Address } from "@/types/address";
+import { useAuth } from "@/hooks/useAuth";
 
-export function CreateEventForm() {
-  const { register, handleSubmit, errors, onSubmit } = useCreateEventForm();
+interface CreateEventFormProps {
+  address: Address[];
+}
+
+export function CreateEventForm({ address }: CreateEventFormProps) {
+  const { register, handleSubmit, control, errors, onSubmit } =
+    useCreateEventForm();
 
   return (
     <form
@@ -23,7 +30,11 @@ export function CreateEventForm() {
 
       <UploadImageFile register={register} />
       <InfoEvent register={register} errors={errors} />
-      <SelectInfoEvent register={register} errors={errors} />
+      <SelectInfoEvent
+        register={register}
+        errors={errors}
+        addresses={address}
+      />
 
       <Typography variant="h2" fontWeight="bold" className="leading-[60px]">
         Ingresso
@@ -31,7 +42,11 @@ export function CreateEventForm() {
 
       <TicketValueEvent register={register} errors={errors} />
 
-      <HalfTicketValueEvent register={register} errors={errors} />
+      <HalfTicketValueEvent
+        register={register}
+        errors={errors}
+        control={control}
+      />
 
       <CreateEventFormActions />
     </form>

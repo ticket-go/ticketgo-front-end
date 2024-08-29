@@ -7,44 +7,32 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { ErrorMessage } from "@/components/error-message";
 import { ModalCreateAddress } from "@/components/modal-address";
 import { CreateEventFormSchema } from "./useCreateEventForm";
-import { useAuth } from "@/hooks/useAuth";
+import { Address } from "@/types/address";
 
 const EVENT_CATEGORIES = [
-  {
-    label: "nusic",
-    name: "Música",
-  },
-  {
-    label: "sports",
-    name: "Esportes",
-  },
-  {
-    label: "entertainment",
-    name: "Entretenimento",
-  },
-  {
-    label: "workshop",
-    name: "Workshop",
-  },
-  {
-    label: "other",
-    name: "Outros",
-  },
+  { label: "music", name: "Música" },
+  { label: "sports", name: "Esportes" },
+  { label: "entertainment", name: "Entretenimento" },
+  { label: "workshop", name: "Workshop" },
+  { label: "other", name: "Outros" },
 ];
 
 interface SelectInfoEventProps {
   register: UseFormRegister<CreateEventFormSchema>;
-  errors: any;
+  errors: FieldErrors<CreateEventFormSchema>;
+  addresses: Address[];
 }
 
-export function SelectInfoEvent({ register, errors }: SelectInfoEventProps) {
-  const { user } = useAuth();
-  const address = [user?.address];
+export function SelectInfoEvent({
+  register,
+  errors,
+  addresses,
+}: SelectInfoEventProps) {
   return (
     <div className="flex flex-col gap-4 w-full h-fit">
       <div className="flex items-center gap-2 w-full h-full">
@@ -74,7 +62,6 @@ export function SelectInfoEvent({ register, errors }: SelectInfoEventProps) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="scheduled">Agendado</SelectItem>
-              <SelectItem value="ongoing">Em andamento</SelectItem>
               <SelectItem value="completed">Concluído</SelectItem>
             </SelectContent>
           </Select>
@@ -87,17 +74,23 @@ export function SelectInfoEvent({ register, errors }: SelectInfoEventProps) {
           Qual o endereço do seu evento?
         </Label>
         <div className="flex items-center w-full gap-4">
-          <Select {...register("user.address")}>
+          <Select {...register("address")}>
             <SelectTrigger className="h-14">
               <SelectValue placeholder="Nenhum endereço selecionado" />
             </SelectTrigger>
             <SelectContent>
-              {address.map((address) => (
-                <SelectItem key={address?.zip_code} value={`${address?.city}`}>
-                  {address?.street}, {`${address?.number}`},{" "}
-                  {`${address?.city} - ${address?.state}`}
-                </SelectItem>
-              ))}
+              {addresses.length > 0 ? (
+                addresses.map((addr) => (
+                  <SelectItem
+                    value={addr.uuid || ""}
+                    key={addr.uuid || Math.random()}
+                  >
+                    {addr.street}, {addr.number} - {addr.city} ({addr.state})
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem value="none">Nenhum endereço disponível</SelectItem>
+              )}
             </SelectContent>
           </Select>
           <ModalCreateAddress />

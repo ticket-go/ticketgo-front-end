@@ -25,5 +25,5 @@ export interface Event {
   is_hero_event?: boolean;
   address_data: Address;
   user: User;
-  address_id: Address["uuid"];
+  address: Address["uuid"];
 }
