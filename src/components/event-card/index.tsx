@@ -6,7 +6,8 @@ import { Typography } from "../typography";
 import { Card, CardContent } from "@/components/ui/card";
 import { Event } from "@/types/event";
 import { Button } from "../ui/button";
-import { Address } from "@/types/address";
+import { useCartPayment } from "@/hooks/useCartPayment";
+import { useMemo } from "react";
 
 export interface EventCardProps {
   event: Event;
@@ -47,7 +48,7 @@ export function EventCard({ event }: EventCardProps) {
               fontWeight={"medium"}
               className="text-[12px] truncate"
             >
-              Mari Fernandez, Nattan e Tarcisio do Acordenon
+              Mari Fernandez, Rai Saia Rodada, DJ Guuga
             </Typography>
             <Typography
               data-testid="event-card-date-hour"
@@ -59,10 +60,7 @@ export function EventCard({ event }: EventCardProps) {
             </Typography>
           </div>
         </div>
-        <EventLocation
-          image={"/assets/images/second-image.svg"}
-          location={event.address.city}
-        />
+        <EventLocation event={event} />
 
         <Button
           data-testid="event-card-button"
@@ -75,7 +73,7 @@ export function EventCard({ event }: EventCardProps) {
             color={"white"}
             className="text-[10px] leading-3"
           >
-            COMPRAR INGRESSO
+            VER DETALHES DO EVENTO
           </Typography>
         </Button>
       </CardContent>
@@ -84,12 +82,15 @@ export function EventCard({ event }: EventCardProps) {
 }
 
 function EventDate({ date }: { date: Date | string }) {
-  if (!(date instanceof Date) || isNaN(date.getTime())) {
-    return <div>Invalid date</div>;
-  }
+  const day = useMemo(() => {
+    const dateObj = new Date(date);
+    return dateObj.getDate();
+  }, [date]);
 
-  const day = date.getDate();
-  const month = date.toLocaleString("pt-BR", { month: "short" }).toUpperCase();
+  const month = useMemo(() => {
+    const dateObj = new Date(date);
+    return dateObj.toLocaleString("pt-br", { month: "short" });
+  }, [date]);
 
   return (
     <div className="flex flex-col justify-center items-center w-[45px] min-h-14 h-fit rounded-sm px-3 py-2 bg-[#E85AFF]">
@@ -114,15 +115,14 @@ function EventDate({ date }: { date: Date | string }) {
 }
 
 interface EventLocationProps {
-  image: string;
-  location: Address["city"];
+  event: Event;
 }
 
-export function EventLocation({ image, location }: EventLocationProps) {
+export function EventLocation({ event }: EventLocationProps) {
   return (
     <div className="flex justify-center items-center w-full h-fit gap-2">
       <Image
-        src={image}
+        src={`${event.image_url}`}
         alt="Imagem de localização do evento"
         width={43}
         height={43}
@@ -133,7 +133,7 @@ export function EventLocation({ image, location }: EventLocationProps) {
           fontWeight={"semibold"}
           className="leading-[15px]"
         >
-          {location}
+          {event.address_data.city}
         </Typography>
       </div>
     </div>

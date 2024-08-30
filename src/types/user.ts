@@ -12,5 +12,5 @@ export interface User {
   gender?: string;
   privileged?: boolean;
   password?: string;
-  address?: Address;
+  address: Address;
 }

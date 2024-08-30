@@ -9,9 +9,10 @@ export interface Event {
   description: string;
   category: string;
   category_display?: string;
-  status?: string;
-  status_display: string;
-  image?: string;
+  status: string;
+  status_display?: string;
+  image: string;
+  image_url?: string;
   ticket_value: string;
   half_ticket_value: string;
   ticket_quantity: number;
@@ -19,9 +20,10 @@ export interface Event {
   tickets_sold: number;
   tickets_available: number;
   half_tickets_available: number;
+  tickets_verified: number;
   is_top_event?: boolean;
   is_hero_event?: boolean;
-  address: Address;
-  user_id: User;
-  address_id: Address["uuid"];
+  address_data: Address;
+  user: User;
+  address: Address["uuid"];
 }

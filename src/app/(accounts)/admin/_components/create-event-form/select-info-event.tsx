@@ -7,21 +7,32 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
-import { UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { Label } from "@radix-ui/react-dropdown-menu";
-import { ErrorMessage } from "@/app/(auth)/_components/error-message";
+import { ErrorMessage } from "@/components/error-message";
 import { ModalCreateAddress } from "@/components/modal-address";
 import { CreateEventFormSchema } from "./useCreateEventForm";
-import { useAuth } from "@/hooks/useAuth";
+import { Address } from "@/types/address";
+
+const EVENT_CATEGORIES = [
+  { label: "music", name: "Música" },
+  { label: "sports", name: "Esportes" },
+  { label: "entertainment", name: "Entretenimento" },
+  { label: "workshop", name: "Workshop" },
+  { label: "other", name: "Outros" },
+];
 
 interface SelectInfoEventProps {
   register: UseFormRegister<CreateEventFormSchema>;
-  errors: any;
+  errors: FieldErrors<CreateEventFormSchema>;
+  addresses: Address[];
 }
 
-export function SelectInfoEvent({ register, errors }: SelectInfoEventProps) {
-  const { user } = useAuth();
-  const address = [user?.address];
+export function SelectInfoEvent({
+  register,
+  errors,
+  addresses,
+}: SelectInfoEventProps) {
   return (
     <div className="flex flex-col gap-4 w-full h-fit">
       <div className="flex items-center gap-2 w-full h-full">
@@ -32,21 +43,11 @@ export function SelectInfoEvent({ register, errors }: SelectInfoEventProps) {
               <SelectValue placeholder="Nenhuma categoria selecionada" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="music" key="music">
-                Música
-              </SelectItem>
-              <SelectItem value="sports" key="sports">
-                Esportes
-              </SelectItem>
-              <SelectItem value="entertainment" key="entertainment">
-                Entretenimento
-              </SelectItem>
-              <SelectItem value="workshop" key="workshop">
-                Workshop
-              </SelectItem>
-              <SelectItem value="other" key="other">
-                Outros
-              </SelectItem>
+              {EVENT_CATEGORIES.map((category) => (
+                <SelectItem value={category.label} key={category.label}>
+                  {category.name}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
           {errors.category && <ErrorMessage error={errors.category.message} />}
@@ -61,7 +62,6 @@ export function SelectInfoEvent({ register, errors }: SelectInfoEventProps) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="scheduled">Agendado</SelectItem>
-              <SelectItem value="ongoing">Em andamento</SelectItem>
               <SelectItem value="completed">Concluído</SelectItem>
             </SelectContent>
           </Select>
@@ -79,12 +79,18 @@ export function SelectInfoEvent({ register, errors }: SelectInfoEventProps) {
               <SelectValue placeholder="Nenhum endereço selecionado" />
             </SelectTrigger>
             <SelectContent>
-              {address.map((address) => (
-                <SelectItem key={address?.zip_code} value={`${address?.city}`}>
-                  {address?.street}, {`${address?.number}`},{" "}
-                  {`${address?.city} - ${address?.state}`}
-                </SelectItem>
-              ))}
+              {addresses.length > 0 ? (
+                addresses.map((addr) => (
+                  <SelectItem
+                    value={addr.uuid || ""}
+                    key={addr.uuid || Math.random()}
+                  >
+                    {addr.street}, {addr.number} - {addr.city} ({addr.state})
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem value="none">Nenhum endereço disponível</SelectItem>
+              )}
             </SelectContent>
           </Select>
           <ModalCreateAddress />

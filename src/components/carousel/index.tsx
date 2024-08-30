@@ -23,19 +23,12 @@ export function Carousel({
   loop = true,
   pagination = true,
 }: CarouselProps) {
-  const {
-    setCarouselApi,
-    current,
-    count,
-    carouselApi,
-    nextPage,
-    previousPage,
-    goToPage,
-  } = useCarousel({
-    totalItems: events.length,
-    itemsPerPage: 1,
-    loop,
-  });
+  const { setCarouselApi, current, count, nextPage, previousPage, goToPage } =
+    useCarousel({
+      totalItems: events.length,
+      itemsPerPage: 1,
+      loop,
+    });
 
   return (
     <div className="relative">
@@ -49,18 +42,18 @@ export function Carousel({
       >
         <CarouselContent className="relative">
           {events.map((event) => (
-            <CarouselItem key={event.uuid} className="w-[650px] relative z-10">
+            <CarouselItem key={event.uuid} className="relative py-10 z-10">
               <FeaturedEvent event={event} />
             </CarouselItem>
           ))}
         </CarouselContent>
 
         <CarouselPrevious
-          className="absolute left-2 z-20 top-1/2 -translate-y-1/2"
+          className="absolute left-2 top-1/2 -translate-y-1/2 bg-transparent border-none z-0"
           onClick={previousPage}
         />
         <CarouselNext
-          className="absolute right-2 z-20 top-1/2 -translate-y-1/2"
+          className="absolute right-2  top-1/2 -translate-y-1/2 bg-transparent border-none z-0"
           onClick={nextPage}
         />
       </CarouselWrapper>

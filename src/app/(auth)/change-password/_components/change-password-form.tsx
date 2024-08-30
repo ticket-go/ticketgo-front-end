@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/typography";
 import { LockIcon } from "lucide-react";
-import { ErrorMessage } from "../../_components/error-message";
+import { ErrorMessage } from "../../../../components/error-message";
 import { InputForm } from "@/components/input-form";
 import { useRouter } from "next/navigation";
 import { authChangePassword } from "@/actions/auth-change-password";

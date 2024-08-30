@@ -1,23 +1,36 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { fetchPurchases } from "@/actions/fetch-purchases";
-import { Purchase } from "@/types/purchase";
+import { Payment } from "@/types/payment";
+import { useState, useEffect, useMemo } from "react";
+import { fetchPaymentsUser } from "@/actions/fetch-payments";
 
 export function useMyAccount() {
-  const [purchases, setPurchases] = useState<Purchase[] | []>([]);
-  const [loadingPurchases, setLoadingPurchases] = useState(true);
+  const [payments, setPayments] = useState<Payment[]>([]);
+  const [loadingPayments, setLoadingPayments] = useState(true);
   const [accountData, setAccountData] = useState(null);
 
-  const purchaseData = useMemo(() => purchases, [purchases]);
-  const isLoadingPurchases = useMemo(
-    () => loadingPurchases,
-    [loadingPurchases]
-  );
+  useEffect(() => {
+    const loadPayments = async () => {
+      try {
+        const paymentsData = await fetchPaymentsUser();
+        if (paymentsData) {
+          setPayments(paymentsData);
+        }
+      } catch (error) {
+        console.error("Failed to fetch payments:", error);
+      } finally {
+        setLoadingPayments(false);
+      }
+    };
+    loadPayments();
+  }, []);
+
+  const paymentsData = useMemo(() => payments, [payments]);
+  const isLoadingPayments = useMemo(() => loadingPayments, [loadingPayments]);
 
   return {
-    purchases: purchaseData,
-    loadingPurchases: isLoadingPurchases,
+    payments: paymentsData,
+    loadingPayments: isLoadingPayments,
     accountData,
   };
 }
