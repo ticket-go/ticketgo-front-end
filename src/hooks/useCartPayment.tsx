@@ -8,6 +8,7 @@ import { Event } from "@/types/event";
 import { Ticket } from "@/types/ticket";
 import { paymentGenerateInvoice } from "@/actions/payments-generate-invoice";
 import { ShoppingCartComponent } from "@/components/shopping-cart";
+import { Payment } from "@/types/payment";
 
 interface CartPaymentContextType {
   tickets: Ticket[];
@@ -17,7 +18,7 @@ interface CartPaymentContextType {
     eventId: Event["uuid"],
     isHalfTicket: boolean
   ) => Promise<Ticket | void>;
-  handlePaymentGenerateInvoice: (cartPayment: Ticket["uuid"]) => void;
+  handlePaymentGenerateInvoice: (cartPayment: Payment["uuid"]) => void;
   handleRemoveTicketFromCart: (itemId: Ticket) => void;
   handleClearCart: () => void;
   cartTotalAmount: number;
@@ -53,6 +54,8 @@ export const CartPaymentProvider = ({ children }: { children: ReactNode }) => {
 
           setIsVisible(true);
           setTimeout(() => setIsVisible(false), 3000);
+
+          handlePaymentGenerateInvoice(paymentResponse);
         } else {
           console.error("Falha ao criar o ingresso.");
         }
@@ -64,9 +67,12 @@ export const CartPaymentProvider = ({ children }: { children: ReactNode }) => {
   }
 
   async function handlePaymentGenerateInvoice(cartPaymentId: string) {
+    setIsLoading(true);
     try {
       const invoiceData = await paymentGenerateInvoice(cartPaymentId);
-      console.log("Fatura gerada com sucesso:", invoiceData);
+      if (invoiceData) {
+        router.push(`/payment/${cartPaymentId}`);
+      }
     } catch (error) {
       console.error("Erro ao gerar fatura:", error);
     }

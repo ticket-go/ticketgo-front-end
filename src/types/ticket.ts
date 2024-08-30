@@ -15,9 +15,9 @@ export interface Invoice {
   uuid: string;
   value: string;
   status: string;
-  external_id: null;
-  payment_type: null;
-  link_payment: null;
+  external_id: null | string;
+  payment_type: null | string;
+  link_payment: null | string;
   user: User["username"];
   user_data: User;
   tickets: Ticket[];
