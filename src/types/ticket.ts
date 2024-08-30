@@ -8,5 +8,17 @@ export interface Ticket {
   hash: string;
   user: User;
   event: Event["uuid"];
-  cart_payment_data: string;
+  cart_payment: string;
+}
+
+export interface Invoice {
+  uuid: string;
+  value: string;
+  status: string;
+  external_id: null;
+  payment_type: null;
+  link_payment: null;
+  user: User["username"];
+  user_data: User;
+  tickets: Ticket[];
 }

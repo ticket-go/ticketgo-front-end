@@ -11,14 +11,16 @@ interface FeaturedEventProps {
 export function FeaturedEvent({ event }: FeaturedEventProps) {
   return (
     <div className="flex justify-center items-center min-w-full max-h-[490px]">
-      <Image
-        data-testid="hero-event-image"
-        src={event.image || "/assets/images/event-destaque.png"}
-        alt="Event image"
-        width={800}
-        height={500}
-      />
-      <div className="flex flex-col items-start w-full h-full py-10 px-10 gap-4">
+      <div className="w-full h-full">
+        <Image
+          data-testid="hero-event-image"
+          src={event.image || "/assets/images/event-destaque.png"}
+          alt="Event image"
+          width={800}
+          height={500}
+        />
+      </div>
+      <div className="flex flex-col items-start w-full h-full px-12 gap-4">
         <Typography
           data-testid="hero-event-name"
           variant={"h3"}
@@ -66,7 +68,7 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
               fontWeight={"medium"}
               className="leading-[33px]"
             >
-              {`${event.user.address?.street}, ${event.user.address?.number}, ${event.user.address?.city}, ${event.user.address?.state}`}
+              {`${event.address_data.city}, ${event.address_data.number}, ${event.address_data.city}, ${event.address_data.state}`}
             </Typography>
           </div>
         </div>

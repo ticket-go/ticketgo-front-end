@@ -10,7 +10,7 @@ import {
   HomeIcon,
 } from "lucide-react";
 import AccountInformation from "./_components/account-information";
-import { MyOrders } from "./_components/my-orders";
+import { MyPayments } from "./_components/my-payments";
 import { Address } from "./_components/address";
 import { ModalLogout } from "@/components/modal-logout";
 
@@ -25,7 +25,7 @@ const TABS_ACCOUNT = [
     name: "Informações de pagamento",
     icon: <DollarSignIcon size={24} />,
     activeIcon: <DollarSignIcon size={24} color="#CB1EE8" />,
-    component: <MyOrders />,
+    component: <MyPayments />,
   },
   {
     name: "Endereços",

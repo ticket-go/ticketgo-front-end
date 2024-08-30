@@ -3,7 +3,7 @@
 import { Payment } from "@/types/payment";
 import { cookies } from "next/headers";
 
-export async function createPayment(
+export async function checkoutPayment(
   payment: Payment
 ): Promise<Payment | undefined> {
   try {

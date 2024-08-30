@@ -1,3 +1,5 @@
+"use client";
+
 import { fetchAddresses } from "@/actions/fetch-addresses";
 import { CreateEventForm } from "./_components/create-event-form";
 

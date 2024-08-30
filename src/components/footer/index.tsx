@@ -11,7 +11,7 @@ export function Footer() {
   return (
     <footer
       data-testid="footer-container"
-      className="flex w-full items-center py-5 mt-[600px]"
+      className="flex w-full items-center py-5"
     >
       <div className=" flex justify-between items-center w-full md:grid-cols-3 gap-8 px-20">
         <div className="flex flex-col gap-3">
