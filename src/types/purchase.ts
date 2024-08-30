@@ -5,6 +5,7 @@ export interface Purchase {
   uuid: string;
   value: string;
   status: string;
-  user: User;
+  user: User["user_id"];
+  user_data: User;
   tickets: Ticket[];
 }

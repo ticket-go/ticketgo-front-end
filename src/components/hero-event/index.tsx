@@ -35,7 +35,7 @@ export function HeroEvent({ event }: HeroEventProps) {
       >
         <div data-testid="hero-event-image">
           <Image
-            src={event.image}
+            src={`${event.image}` || "/assets/images/event-destaque.png"}
             alt={`Image of ${event.name}`}
             width={334}
             height={400}

@@ -1,20 +1,14 @@
 import { HeroEvent } from "@/components/hero-event";
-import type { Event } from "@/types/event";
+import { Event } from "@/types/event";
 
 interface MainHeroEventProps {
-  isEventHero: Event;
+  event: Event;
 }
 
-export async function MainHeroEvent({
-  isEventHero: eventHero,
-}: MainHeroEventProps) {
-  if (!eventHero.is_hero_event) {
-    return null;
-  }
-
+export function MainHeroEvent({ event }: MainHeroEventProps) {
   return (
     <div className="w-full h-full">
-      <HeroEvent event={eventHero} />
+      <HeroEvent event={event} />
     </div>
   );
 }

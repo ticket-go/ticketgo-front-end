@@ -1,17 +1,17 @@
 import { Address } from "./address";
-import { Organization } from "./organization";
+import { User } from "./user";
 
 export interface Event {
-  uuid: string;
+  uuid?: string;
   name: string;
   date: string | Date;
   time: string;
   description: string;
   category: string;
-  category_display: string;
-  status: string;
+  category_display?: string;
+  status?: string;
   status_display: string;
-  image: string;
+  image?: string;
   ticket_value: string;
   half_ticket_value: string;
   ticket_quantity: number;
@@ -22,5 +22,6 @@ export interface Event {
   is_top_event?: boolean;
   is_hero_event?: boolean;
   address: Address;
-  organization: Organization;
+  user_id: User;
+  address_id: Address["uuid"];
 }

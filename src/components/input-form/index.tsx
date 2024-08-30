@@ -5,7 +5,7 @@ import { IconInput } from "./icon-input";
 import { cn } from "@/lib/utils";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 
-interface InputFormProps {
+interface InputCodeProps {
   label: string;
   id: string;
   type?: string;

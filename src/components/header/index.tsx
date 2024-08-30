@@ -34,7 +34,7 @@ export function Header() {
         </Typography>
       </Link>
 
-      <nav className="md:flex items-center space-x-8">
+      <nav className="md:flex items-center space-x-8 mb-4">
         <SearchBar />
 
         <HeaderNavItems children="Eventos" href="/" />
