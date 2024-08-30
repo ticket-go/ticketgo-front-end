@@ -34,6 +34,7 @@
 
   .dark {
     --background: 210.2 24% 1.9%;
+    --background-card: 256, 59%, 7%, 1;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -91,10 +92,10 @@
   }
 
   .bg-gradient-block {
-    background: linear-gradient(90deg, #0C071C 0%, #0F1129 100%);
+    background: linear-gradient(90deg, #0c071c 0%, #0f1129 100%);
   }
 
   .bg-gradient-circle {
-    background: linear-gradient(90deg, #0C071C 0%, #55576F 100%);
+    background: linear-gradient(90deg, #0c071c 0%, #55576f 100%);
   }
 }

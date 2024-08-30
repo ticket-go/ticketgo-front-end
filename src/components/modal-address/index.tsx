@@ -155,7 +155,7 @@ export function ModalCreateAddress() {
             <DialogClose>
               <Button
                 type="button"
-                disabled={watchedFields.some((field) => !field)}
+                onClick={handleCloseModalAddress}
                 className="w-16 h-10 p-4 bg-purple hover:bg-purple/60"
               >
                 <Typography variant="h6" fontWeight="semibold">

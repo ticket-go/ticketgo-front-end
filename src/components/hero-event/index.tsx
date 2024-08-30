@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Typography } from "../typography";
 import { Button } from "@/components/ui/button";
 import { AlarmClockIcon, CalendarIcon, MapPinIcon } from "lucide-react";
-import type { HeroEvent as Event } from "@/types/event-hero";
+import { Event } from "@/types/event";
 
 export interface HeroEventProps {
   event: Event;
@@ -95,8 +95,8 @@ export function HeroEvent({ event }: HeroEventProps) {
                 fontWeight={"medium"}
                 className="leading-[33px] text-white"
               >
-                {event.address.street}, {event.address.number},{" "}
-                {event.address.city}, {event.address.state}
+                {event.user.address?.street}, {event.user.address?.number},{" "}
+                {event.user.address?.city}, {event.user.address?.state}
               </Typography>
             </div>
           </div>

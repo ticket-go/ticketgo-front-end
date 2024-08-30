@@ -10,7 +10,7 @@ import { ModeToggle } from "../theme-switch";
 import { UserMenuOptions } from "../menu-user-options";
 import { useAuth } from "@/hooks/useAuth";
 import { useSession } from "next-auth/react";
-import { UserAvatar } from "./user-avatar";
+import { ShoppingCart } from "lucide-react";
 
 export function Header() {
   const router = useRouter();
@@ -39,8 +39,8 @@ export function Header() {
 
         <HeaderNavItems children="Eventos" href="/" />
 
-        <div className="flex items-center h-fit space-x-4">
-          {!isAuthenticated && !session && (
+        <div className="flex items-center w-fit h-fit space-x-4">
+          {!isAuthenticated && !session ? (
             <Button
               data-testid="header-button"
               variant={"secondary"}
@@ -49,7 +49,20 @@ export function Header() {
             >
               Criar conta
             </Button>
+          ) : (
+            <Button
+              variant={"outline"}
+              size={"icon"}
+              className="bg-background hover:bg-transparent/10"
+            >
+              <Link href={"/my-account"}>
+                <ShoppingCart size={24} />
+              </Link>
+            </Button>
           )}
+
+          <ModeToggle />
+
           {isAuthenticated || session ? (
             <UserMenuOptions username={`${displayName}`} />
           ) : (
@@ -63,8 +76,6 @@ export function Header() {
             </Button>
           )}
         </div>
-
-        <ModeToggle />
       </nav>
     </header>
   );

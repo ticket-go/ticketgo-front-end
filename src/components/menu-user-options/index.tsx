@@ -11,6 +11,7 @@ import {
 import { Typography } from "../typography";
 import { useModal } from "@/hooks/useModal";
 import { useRouter } from "next/navigation";
+import { User2Icon } from "lucide-react";
 
 const MENU_OPTIONS = [
   {
@@ -35,8 +36,16 @@ export function UserMenuOptions({ username, children }: UserMenuOptionsProps) {
     <>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Button size={"lg"} className="bg-purple hover:bg-purple/90 ">
-            <Typography variant={"h5"} fontWeight={"semibold"}>
+          <Button
+            size={"lg"}
+            className="flex items-center gap-2 bg-purple hover:bg-purple/90 px-4"
+          >
+            <User2Icon size={20} color="white" />
+            <Typography
+              variant={"h5"}
+              fontWeight={"semibold"}
+              className="text-white"
+            >
               {username}
             </Typography>
           </Button>

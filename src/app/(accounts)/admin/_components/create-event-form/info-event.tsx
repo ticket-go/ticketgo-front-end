@@ -1,12 +1,12 @@
 import { InputForm } from "@/components/input-form";
 import { Calendar, Clock, User } from "lucide-react";
-import { UseFormRegister } from "react-hook-form";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { CreateEventFormSchema } from "./useCreateEventForm";
-import { ErrorMessage } from "@/app/(auth)/_components/error-message";
+import { ErrorMessage } from "@/components/error-message";
 
 interface InfoEventProps {
   register: UseFormRegister<CreateEventFormSchema>;
-  errors: any;
+  errors: FieldErrors<CreateEventFormSchema>;
 }
 
 export function InfoEvent({ register, errors }: InfoEventProps) {
@@ -34,7 +34,7 @@ export function InfoEvent({ register, errors }: InfoEventProps) {
         {errors.date && <ErrorMessage error={errors.date.message} />}
 
         <InputForm
-          label="Horário"
+          label="Hora"
           id="time"
           name="time"
           type="time"
@@ -48,10 +48,9 @@ export function InfoEvent({ register, errors }: InfoEventProps) {
         label="Descrição"
         id="description"
         name="description"
-        type="text"
-        placeholder="Descreva o evento para seu público"
+        type="description"
         register={register("description")}
-        className="h-40"
+        className="h-24"
       />
       {errors.description && (
         <ErrorMessage error={errors.description.message} />

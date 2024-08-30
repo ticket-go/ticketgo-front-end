@@ -1,11 +1,12 @@
-import { Purchase } from "./purchase";
-
+import { User } from "./user";
 export interface Payment {
   uuid: string;
+  value: string;
+  status: string;
   external_id: string;
   payment_type: string;
-  status: string;
   link_payment: string;
-  purchase: string;
-  purchase_data: Purchase;
+  user: User["user_id"];
+  user_data: User;
+  tickets: string;
 }

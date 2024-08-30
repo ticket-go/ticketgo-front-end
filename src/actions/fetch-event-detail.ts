@@ -1,18 +1,15 @@
 "use server";
 
 import { Event } from "../types/event";
-import { cookies } from "next/headers";
 
-export async function fetchEventDetail(eventId: string): Promise<Event | null> {
+export async function fetchEventDetail(
+  eventId: string
+): Promise<Event | undefined> {
   try {
-    const cookieStore = cookies();
-    const token = cookieStore.get("access_token")?.value;
-
     const response = await fetch(`${process.env.API_HOST}/events/${eventId}/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -24,6 +21,5 @@ export async function fetchEventDetail(eventId: string): Promise<Event | null> {
     return data;
   } catch (error) {
     console.error("Error fetching events", error);
-    return null;
   }
 }

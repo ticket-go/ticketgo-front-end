@@ -36,7 +36,6 @@ export const useModalAddress = () => {
     "district",
     "zip_code",
     "country",
-    "complement",
   ]);
 
   const handleChangeModalAddress = () => setIsModalAddressOpen(true);
@@ -48,8 +47,10 @@ export const useModalAddress = () => {
   }, [isModalAddressOpen]);
 
   const onSubmit: SubmitHandler<CreateAddressFormSchema> = async (data) => {
-    console.log(data);
-    await fetchCreateAddress(data);
+    const response = await fetchCreateAddress(data);
+    if (response.status === 201) {
+      setIsModalAddressOpen(false);
+    }
   };
 
   return {

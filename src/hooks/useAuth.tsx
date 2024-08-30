@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     deleteCookie("user");
     setIsAuthenticated(false);
     setUser(null);
-    router.refresh();
+    router.replace("/");
   };
 
   return (
