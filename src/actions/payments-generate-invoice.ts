@@ -1,11 +1,11 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { Ticket } from "@/types/ticket";
+import { Payment } from "@/types/payment";
 
 export async function paymentGenerateInvoice(
   cartPaymentId: string
-): Promise<Ticket["cart_payment"] | void> {
+): Promise<Payment | void> {
   try {
     const cookieStore = cookies();
     const token = cookieStore.get("access_token")?.value;

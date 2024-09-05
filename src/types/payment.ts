@@ -6,7 +6,8 @@ export interface Payment {
   external_id: string;
   payment_type: string;
   link_payment: string;
+  invoiceUrl: string;
   user: User["user_id"];
   user_data: User;
-  tickets: string;
+  tickets: string[];
 }

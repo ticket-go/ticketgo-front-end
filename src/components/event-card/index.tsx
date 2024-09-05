@@ -6,7 +6,6 @@ import { Typography } from "../typography";
 import { Card, CardContent } from "@/components/ui/card";
 import { Event } from "@/types/event";
 import { Button } from "../ui/button";
-import { useCartPayment } from "@/hooks/useCartPayment";
 import { useMemo } from "react";
 
 export interface EventCardProps {
@@ -23,7 +22,7 @@ export function EventCard({ event }: EventCardProps) {
     >
       <Image
         data-testid="event-card-image"
-        src={"/assets/images/event-image.svg"}
+        src={!event.image ? `${event.image}` : "/assets/images/event-image.svg"}
         alt={`Imagem do evento ${event.name}`}
         width={500}
         height={300}
@@ -122,7 +121,7 @@ export function EventLocation({ event }: EventLocationProps) {
   return (
     <div className="flex justify-center items-center w-full h-fit gap-2">
       <Image
-        src={`${event.image_url}`}
+        src={`${event.image}`}
         alt="Imagem de localização do evento"
         width={43}
         height={43}

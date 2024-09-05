@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
-import { useCartPayment } from "@/hooks/useCartPayment";
+import { useCart } from "@/hooks/useCart";
 import { Typography } from "../typography";
 
 export function ShoppingCartComponent() {
   const [isVisible, setIsVisible] = useState(false);
-  const { tickets } = useCartPayment();
+  const { tickets } = useCart();
 
   useEffect(() => {
     if (tickets.length > 0) {
