@@ -14,7 +14,11 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
       <div className="w-full h-full">
         <Image
           data-testid="hero-event-image"
-          src={event.image || "/assets/images/event-destaque.png"}
+          src={
+            !event.image
+              ? `${event.image}`
+              : "/assets/images/event-destaque.png"
+          }
           alt="Event image"
           width={800}
           height={500}

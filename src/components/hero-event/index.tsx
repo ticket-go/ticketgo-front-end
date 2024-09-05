@@ -9,9 +9,10 @@ import { Event } from "@/types/event";
 
 export interface HeroEventProps {
   event: Event;
+  isEventDetail?: boolean;
 }
 
-export function HeroEvent({ event }: HeroEventProps) {
+export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
   const router = useRouter();
   return (
     <div className="relative flex justify-start items-center w-full max-h-[614px] px-20 py-10 gap-4">
@@ -35,10 +36,14 @@ export function HeroEvent({ event }: HeroEventProps) {
       >
         <div data-testid="hero-event-image">
           <Image
-            src={`${event.image}` || "/assets/images/event-destaque.png"}
+            src={
+              !event.image
+                ? `${event.image}`
+                : "/assets/images/banner-vertical.svg"
+            }
             alt={`Image of ${event.name}`}
             width={334}
-            height={400}
+            height={334}
             className="rounded-lg h-fit"
           />
         </div>
@@ -101,20 +106,22 @@ export function HeroEvent({ event }: HeroEventProps) {
             </div>
           </div>
 
-          <Button
-            data-testid="hero-event-buy-button"
-            className="min-w-[300px] h-16 bg-[#E85AFF] hover:bg-purple/80 rounded-sm"
-            onClick={() => router.push(`/event/${event.uuid}`)}
-          >
-            <Typography
-              variant="h6"
-              fontWeight={"semibold"}
-              color={"white"}
-              className="text-[10px] leading-3"
+          {!isEventDetail && (
+            <Button
+              data-testid="hero-event-buy-button"
+              className="min-w-[300px] h-16 bg-[#E85AFF] hover:bg-purple/80 rounded-sm"
+              onClick={() => router.push(`/event/${event.uuid}`)}
             >
-              COMPRAR INGRESSO
-            </Typography>
-          </Button>
+              <Typography
+                variant="h6"
+                fontWeight={"semibold"}
+                color={"white"}
+                className="text-[10px] leading-3"
+              >
+                COMPRAR INGRESSO
+              </Typography>
+            </Button>
+          )}
         </div>
       </div>
     </div>

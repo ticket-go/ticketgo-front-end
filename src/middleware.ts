@@ -1,30 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getRouteRegex } from "next/dist/shared/lib/router/utils/route-regex";
 import { getCookie } from "cookies-next";
 import { ROUTES, PRIVATE_ROUTES } from "@/const/routes";
-
-const route = getRouteRegex("/page/posts/[pid]/[comment]");
+import { revalidateToken } from "./lib/utils";
 
 export function middleware(req: NextRequest) {
-  const accessToken = getCookie("access_token", { req });
-  const user = getCookie("user", { req });
+  const isAuthenticated = revalidateToken(req);
 
-  if (accessToken && req.nextUrl.pathname === "/login") {
+  if (isAuthenticated && req.nextUrl.pathname === "/login") {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  if (accessToken && req.nextUrl.pathname === "/register") {
+  if (isAuthenticated && req.nextUrl.pathname === "/register") {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
   if (
-    !accessToken &&
+    !isAuthenticated &&
     req.nextUrl.pathname === PRIVATE_ROUTES.myAccount("edit")
   ) {
     return NextResponse.redirect(new URL(ROUTES.login, req.url));
   }
 
-  if (!accessToken) {
+  if (!isAuthenticated) {
     const isChangePasswordRoute =
       req.nextUrl.pathname.startsWith("/change-password/");
     if (
@@ -34,6 +31,17 @@ export function middleware(req: NextRequest) {
     ) {
       return NextResponse.redirect(new URL(ROUTES.login, req.url));
     }
+  }
+
+  if (!isAuthenticated && req.nextUrl.pathname === PRIVATE_ROUTES.payment) {
+    return NextResponse.redirect(new URL(ROUTES.login, req.url));
+  }
+
+  if (
+    !isAuthenticated &&
+    req.nextUrl.pathname === PRIVATE_ROUTES.invoice("id")
+  ) {
+    return NextResponse.redirect(new URL(ROUTES.login, req.url));
   }
 
   return NextResponse.next();
@@ -46,5 +54,7 @@ export const config = {
     "/register",
     "/my-account/:path*",
     "/change-password/:id",
+    "/payment",
+    "/payment/:id",
   ],
 };

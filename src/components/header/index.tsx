@@ -11,18 +11,33 @@ import { UserMenuOptions } from "../menu-user-options";
 import { useAuth } from "@/hooks/useAuth";
 import { useSession } from "next-auth/react";
 import { ShoppingCart } from "lucide-react";
+import { useCart } from "@/hooks/useCart";
+import { useHeader } from "./useHeader";
+import { cn } from "@/lib/utils";
+import { usePayment } from "@/hooks/usePayment";
+
+interface CartIndicatorProps {
+  totalItems: number;
+  paymentId: string;
+}
 
 export function Header() {
   const router = useRouter();
   const { isAuthenticated, user } = useAuth();
   const { data: session } = useSession();
+  const { cartTotalAmount } = useCart();
+  const { currentPaymentId } = usePayment();
+  const { isScroll } = useHeader();
 
   const displayName = session?.user?.name || user?.username;
 
   return (
     <header
       data-testid="header-container"
-      className="fixed top-0 right-0 left-0 flex items-center justify-between bg-background px-6 py-4 lg:px-8 lg:py-8 z-20"
+      className={cn([
+        "fixed top-0 right-0 left-0 flex items-center justify-between bg-background px-6 py-4 lg:px-8 lg:py-8 z-20",
+        isScroll && "bg-background/90 shadow-md",
+      ])}
     >
       <Link href="/" className="flex items-center" prefetch={false}>
         <Typography
@@ -50,15 +65,10 @@ export function Header() {
               Criar conta
             </Button>
           ) : (
-            <Button
-              variant={"outline"}
-              size={"icon"}
-              className="bg-background hover:bg-transparent/10"
-            >
-              <Link href={"/my-account"}>
-                <ShoppingCart size={24} />
-              </Link>
-            </Button>
+            <CartIndicator
+              totalItems={cartTotalAmount}
+              paymentId={`${currentPaymentId}`}
+            />
           )}
 
           <ModeToggle />
@@ -78,5 +88,24 @@ export function Header() {
         </div>
       </nav>
     </header>
+  );
+}
+
+function CartIndicator({ totalItems, paymentId }: CartIndicatorProps) {
+  return (
+    <Button
+      variant={"outline"}
+      size={"icon"}
+      className="relative bg-background hover:bg-transparent/10"
+    >
+      <Link href={`/payment/${paymentId}`}>
+        <ShoppingCart size={24} />
+      </Link>
+      {totalItems > 0 && (
+        <span className="absolute top-0 right-0 inline-flex items-center justify-center h-4 w-4 rounded-full bg-red-500 text-white text-xs">
+          {totalItems}
+        </span>
+      )}
+    </Button>
   );
 }

@@ -1,62 +1,38 @@
-import { fetchInvoice } from "@/actions/fetch-invoice";
+import { Section } from "@/components/section";
 import { Typography } from "@/components/typography";
-import Link from "next/link";
+import { Cart } from "../_components/cart";
+import { fetchPaymentsUser } from "@/actions/fetch-payments";
+import { GenericButton } from "@/components/generic-button";
+import { ShoppingCartIcon } from "lucide-react";
 
 export default async function Payment({ params }: { params: { id: string } }) {
   const { id } = params;
-  const invoice = await fetchInvoice(id);
+  const payments = await fetchPaymentsUser(id);
 
-  if (!invoice) {
+  if (!payments) {
     return (
       <main className="flex justify-center items-center w-full min-h-screen bg-background">
-        <div className="w-fit h-fit">
-          <Typography variant={"h4"} fontWeight={"bold"}>
-            Fatura não encontrada.
+        <div className="flex flex-col justify-center items-center w-fit h-fit gap-4">
+          <ShoppingCartIcon size={80} />
+
+          <Typography variant={"h4"} fontWeight={"medium"}>
+            Você não possui nenhum item em seu carrinho de compras.
           </Typography>
+
+          <GenericButton title="Ver eventos" className="w-[200px] mt-4" />
         </div>
       </main>
     );
   }
 
   return (
-    <main className="flex justify-center items-center w-full min-h-screen bg-background">
-      <div className="w-fit h-fit p-4 rounded shadow-md">
-        <Typography variant={"h4"} fontWeight={"bold"} className="mb-4">
-          Fatura: {invoice.uuid}
+    <main className="flex justify-start items-center w-full h-screen bg-background">
+      <Section className="w-full h-fit">
+        <Typography variant={"h4"} fontWeight={"bold"}>
+          Carrinho de compras
         </Typography>
-        <Typography variant={"h5"} className="mb-2">
-          Valor: R$ {invoice.value}
-        </Typography>
-        <Typography variant={"h5"} className="mb-2">
-          Status: {invoice.status}
-        </Typography>
-        <Typography variant={"h5"} className="mb-2">
-          Tipo de Pagamento: {invoice.payment_type ?? "Não especificado"}
-        </Typography>
-        <Typography variant={"h5"} className="mb-4">
-          ID Externo: {invoice.external_id ?? "N/A"}
-        </Typography>
-        {invoice.link_payment && (
-          <Typography variant={"h5"} className="mb-4">
-            <Link
-              href={invoice.link_payment}
-              target="_blank"
-              className="text-blue-500 underline"
-            >
-              Pagar Fatura
-            </Link>
-          </Typography>
-        )}
-        <Typography variant={"h5"} className="mb-2">
-          Usuário: {invoice.user}
-        </Typography>
-        <Typography variant={"h5"} className="mb-4">
-          Total de Ingressos: {invoice.tickets.length}
-        </Typography>
-        <Typography variant={"h5"} fontWeight={"bold"} className="mt-4">
-          Detalhes dos Ingressos:
-        </Typography>
-      </div>
+        <Cart payment={payments} />
+      </Section>
     </main>
   );
 }
