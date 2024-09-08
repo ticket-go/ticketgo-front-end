@@ -4,12 +4,10 @@ import { EventCategory } from "@/components/event-category";
 export async function EventCategories() {
   const categories = await fetchCategoryByEvents();
 
-  const uniqueCategories = categories.reduce((acc, category) => {
-    if (!acc.find((cat) => cat.category === category.category)) {
-      acc.push(category);
-    }
-    return acc;
-  }, [] as typeof categories);
+  const uniqueCategories = categories.filter(
+    (category, index, self) =>
+      index === self.findIndex((event) => event.category === category.category)
+  );
 
   return (
     <div className="flex overflow-x-auto gap-2 sm:gap-4 justify-between items-center w-full h-full">
