@@ -20,8 +20,8 @@ const config = {
     extend: {
       screens: {
         "tab-land": { max: "1440px" },
-        "tab-port": { max: "767px" },
-        mobile: { max: "400px" },
+        "tab-port": { max: "1024px" },
+        mobile: { max: "767px" },
       },
       colors: {
         backgroundmain: "#04000f",

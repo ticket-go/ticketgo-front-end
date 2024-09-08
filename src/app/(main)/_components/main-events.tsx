@@ -12,23 +12,16 @@ export function MainEvents({ events, category }: MainEventsProps) {
     : events;
 
   return (
-    <div className="flex flex-col w-full h-full gap-3 p-4">
-      <div className="flex flex-wrap w-full">
-        {filteredEvents.length > 0 ? (
-          filteredEvents.map((event) => (
-            <div
-              className="flex-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
-              key={event.uuid}
-            >
-              <EventCard event={event} />
-            </div>
-          ))
-        ) : (
-          <div className="col-span-full text-center text-gray-500">
-            No events available
-          </div>
-        )}
-      </div>
+    <div className="grid grid-cols-1 mobile:grid-cols-1 tab-port:grid-cols-2 tab-land:grid-cols-3 lg:grid-cols-5 gap-8 w-full"> 
+      {filteredEvents.length > 0 ? (
+        filteredEvents.map((event) => (
+          <EventCard event={event} key={event.uuid} />
+        ))
+      ) : (
+        <div className="col-span-full text-center text-gray-500">
+          No events available
+        </div>
+      )}
     </div>
   );
 }

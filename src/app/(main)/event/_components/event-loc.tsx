@@ -18,7 +18,7 @@ export function EventLocation({ event }: EventLocationProps) {
   const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_MAPS_API_KEY}&q=${encodedAddress}`;
 
   return (
-    <div className="w-full rounded-md shadow-lg flex flex-col p-6 bg-background gap-4">
+    <div className="w-full rounded-md shadow-lg flex flex-col p-6 bg-backgroundCard gap-4">
       <div className="flex gap-6 items-center justify-between">
         <div className="flex flex-col gap-4">
           <Typography fontWeight={"bold"} color={"white"} variant={"h4"}>
