@@ -61,6 +61,7 @@ export function Header() {
               variant={"secondary"}
               size={"lg"}
               onClick={() => router.push("/register")}
+              className="hidden md:block" // Esconde no mobile
             >
               Criar conta
             </Button>
@@ -109,3 +110,4 @@ function CartIndicator({ totalItems, paymentId }: CartIndicatorProps) {
     </Button>
   );
 }
+

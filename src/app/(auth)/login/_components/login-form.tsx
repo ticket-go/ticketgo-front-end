@@ -134,7 +134,7 @@ export function LoginForm() {
               {isSubmitting ? "Entrando..." : "Entrar"}
             </Typography>
           </Button>
-          <div className="flex flex-col justify-center items-center gap-2 w-full h-[124px] py-8">
+          <div className="flex flex-col justify-center items-center gap-2 w-full h-[124px] py-8 text-center">
             <Typography variant={"h5"}>
               Não tem uma conta? <Span href={"/register"}>Inscrever-se</Span>
             </Typography>
