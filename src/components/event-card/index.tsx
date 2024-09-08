@@ -72,7 +72,7 @@ export function EventCard({ event }: EventCardProps) {
             variant="h6"
             fontWeight={"semibold"}
             color={"white"}
-            className="text-[10px] leading-3 text-sm mobile:text-xs tab-port:text-sm"
+            className="text-[10px] leading-3 text-sm mobile:text-xs tab-port:text-sm text-center truncate"
           >
             VER DETALHES DO EVENTO
           </Typography>
@@ -123,7 +123,7 @@ export function EventLocation({ event }: EventLocationProps) {
   return (
     <div className="flex justify-center items-center w-full h-fit gap-2">
       <Image
-        src={`${event.image}`}
+        src={"/assets/images/icons/pin.webp"}
         alt="Imagem de localização do evento"
         width={43}
         height={43}
