@@ -57,7 +57,7 @@ export function EventCard({ event }: EventCardProps) {
               fontWeight={"bold"}
               className="text-[12px] text-black text-sm mobile:text-xs tab-port:text-sm"
             >
-              {event.time}
+              {event.time.slice(0, 5)}
             </Typography>
           </div>
         </div>
