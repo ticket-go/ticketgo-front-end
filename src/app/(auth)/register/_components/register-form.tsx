@@ -95,9 +95,9 @@ export function RegisterForm() {
       className="flex justify-center items-center w-full h-full bg-background gap-10"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex items-center justify-center w-fit h-fit p-2.5 tab-port:hidden">
+      <div className="flex items-center justify-center w-fit h-fit p-2.5 tab-land:hidden">
         <Image
-          src={"/assets/images/left.svg"}
+          src={"/assets/images/register.svg"}
           width={750}
           height={700}
           alt="Sessão de Register"
