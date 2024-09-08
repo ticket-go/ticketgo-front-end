@@ -17,12 +17,12 @@ import { InputForm } from "@/components/input-form";
 
 const loginFormSchema = z.object({
   username: z
-    .string({ required_error: "Usuário é obrigatório" })
+    .string({ required_error: "O nome de usuário é obrigatório." })
     .trim()
-    .min(4, { message: "Usuário inválido, deve conter no mini 4 caracteres" })
-    .max(20, { message: "Usuário deve ter no máximo 20 caracteres" })
+    .min(4, { message: "Usuário inválido, o usuário deve conter no minímo 4 caracteres." })
+    .max(20, { message: "Usuário inválido, o usuário deve ter no máximo 20 caracteres." })
     .regex(/^[a-zA-Z0-9_]+$/, {
-      message: "Usuário deve conter apenas letras, números e _",
+      message: "Usuário deve conter apenas letras, números e _. Não use caracteres especiais.",
     }),
   password: z.string({ required_error: "Senha é obrigatória" }).min(4, {
     message: "Senha deve conter no mínimo 4 caracteres",
@@ -70,7 +70,7 @@ export function LoginForm() {
     >
       <div className="flex items-center justify-center w-fit h-fit p-2.5 tab-port:hidden">
         <Image
-          src={"/assets/images/left.svg"}
+          src={"/assets/images/login.svg"}
           width={700}
           height={700}
           alt="Sessão de login"
@@ -82,7 +82,7 @@ export function LoginForm() {
       <div className="flex flex-col h-fit w-[600px] tab-port:w-full px-20 gap-2">
         <div className="flex flex-col gap-6 py-4 w-full h-fit">
           <Typography variant="h3" fontWeight={"bold"} className="w-full">
-            Entrar
+            Login
           </Typography>
           <Typography variant="h5" fontWeight={"regular"} className="w-full">
             Vamos entrar na sua conta e começar.
@@ -126,7 +126,7 @@ export function LoginForm() {
           <Button
             type="submit"
             disabled={isSubmitting || isLoading}
-            className="w-full h-14 bg-purple hover:bg-purple/60"
+            className="w-full h-14 text-white bg-purple hover:bg-purple/60"
           >
             <Typography variant={"h5"} fontWeight={"semibold"}>
               {isSubmitting ? "Entrando..." : "Entrar"}
