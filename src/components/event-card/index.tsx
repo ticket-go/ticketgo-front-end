@@ -18,7 +18,7 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <Card
       data-testid="event-card-container"
-      className="flex flex-col items-center w-full max-w-[500px] rounded-sm border-0 border-l-4 border-purple bg-white" // Alterado: borda roxa apenas na esquerda, mais grossa
+      className="flex flex-col items-center w-full max-w-[500px] rounded-sm border-0 border-l-4 border-purple bg-white" // Ajuste do tamanho do card
     >
       <div className="p-4 w-full">
         <Image
