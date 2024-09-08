@@ -65,10 +65,11 @@ export function LoginForm() {
 
   return (
     <form
-      className="flex justify-center items-center w-full h-full bg-background gap-10"
+      className="flex flex-col lg:flex-row justify-center items-center w-full h-screen bg-background gap-10"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <div className="flex items-center justify-center w-fit h-fit p-2.5 tab-port:hidden">
+     
+      <div className="hidden lg:flex items-center justify-center w-fit h-fit p-2.5">
         <Image
           src={"/assets/images/login.svg"}
           width={700}
@@ -79,8 +80,9 @@ export function LoginForm() {
         />
       </div>
 
-      <div className="flex flex-col h-fit w-[600px] tab-port:w-full px-20 gap-2">
-        <div className="flex flex-col gap-6 py-4 w-full h-fit">
+     
+      <div className="flex flex-col h-fit w-[600px] tab-port:w-full mobile:w-[90%] px-20 mobile:px-4 gap-2 items-center">
+        <div className="flex flex-col gap-6 py-4 w-full h-fit text-center">
           <Typography variant="h3" fontWeight={"bold"} className="w-full">
             Login
           </Typography>
@@ -89,9 +91,9 @@ export function LoginForm() {
           </Typography>
         </div>
 
-        <div className="flex flex-col max-w-[600px] gap-6">
-          <div className="flex flex-col gap-6">
-            <div>
+        <div className="flex flex-col max-w-[600px] gap-6 w-full items-center">
+          <div className="flex flex-col gap-6 w-full">
+            <div className="w-full">
               <InputForm
                 label="Usuário"
                 name="username"
@@ -105,7 +107,7 @@ export function LoginForm() {
               )}
             </div>
 
-            <div>
+            <div className="w-full">
               <InputForm
                 label="Senha"
                 id="password"
@@ -122,11 +124,11 @@ export function LoginForm() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 items-center w-full">
           <Button
             type="submit"
             disabled={isSubmitting || isLoading}
-            className="w-full h-14 text-white bg-purple hover:bg-purple/60"
+            className="w-full max-w-[600px] h-14 text-white bg-purple hover:bg-purple/60"
           >
             <Typography variant={"h5"} fontWeight={"semibold"}>
               {isSubmitting ? "Entrando..." : "Entrar"}
