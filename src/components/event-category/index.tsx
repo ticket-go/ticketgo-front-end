@@ -5,10 +5,22 @@ import Link from "next/link";
 
 export interface EventCategoryProps {
   event: Event;
-  image: string;
 }
 
-export function EventCategory({ event, image }: EventCategoryProps) {
+const categoryIcons: { [key: string]: string } = {
+  music: "/assets/images/icons/musica.png",
+  sports: "/assets/images/icons/esportes.png",
+  entertainment: "/assets/images/icons/entretenimento.png",
+  conference: "/assets/images/icons/conference.png",
+  workshop: "/assets/images/icons/workshops.png",
+  other: "/assets/images/icons/others.png",
+};
+
+
+export function EventCategory({ event }: EventCategoryProps) {
+  
+  const iconSrc = categoryIcons[event.category.toLowerCase()] || "/assets/images/icons/cinema.png";
+
   return (
     <Link href={`/events/${event.category}`} passHref>
       <div
@@ -17,8 +29,8 @@ export function EventCategory({ event, image }: EventCategoryProps) {
       >
         <Image
           data-testid="event-category-image"
-          src={"/assets/images/event-image.svg"}
-          alt="Categoria do evento"
+          src={iconSrc}
+          alt={`Ícone da categoria ${event.category_display}`}
           width={140}
           height={140}
           className="rounded-full w-36 h-36 object-cover"

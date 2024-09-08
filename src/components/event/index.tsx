@@ -82,7 +82,7 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
 
         <Button
           data-testid="hero-event-buy-button"
-          className="w-[500px] h-16 bg-[#E85AFF] hover:bg-purple/80 rounded-sm"
+          className="w-[70%] h-16 bg-[#E85AFF] hover:bg-purple/80 rounded-sm"
         >
           <Typography
             variant="h6"

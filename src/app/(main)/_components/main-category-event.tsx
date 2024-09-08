@@ -3,14 +3,20 @@ import { EventCategory } from "@/components/event-category";
 
 export async function EventCategories() {
   const categories = await fetchCategoryByEvents();
-  const uniqueCategories = Array.from(
-    new Set(categories.map((category) => category.category))
-  ).map((category) => categories.find((cat) => cat.category === category));
+
+  const uniqueCategories = categories.reduce((acc, category) => {
+    if (!acc.find((cat) => cat.category === category.category)) {
+      acc.push(category);
+    }
+    return acc;
+  }, [] as typeof categories);
 
   return (
-    <div className="grid grid-cols-6 col-span-* justify-items-center w-full h-full">
+    <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 justify-items-center w-full h-full">
       {uniqueCategories.map((category) => (
-        <EventCategory key={category?.category} event={category!} />
+        category && (
+          <EventCategory key={category.category} event={category} />
+        )
       ))}
     </div>
   );
