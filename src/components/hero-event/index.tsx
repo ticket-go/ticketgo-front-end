@@ -16,7 +16,6 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
   const router = useRouter();
   return (
     <div className="relative flex justify-start items-center w-full max-h-[614px] px-20 py-10 gap-4">
-      {/* Image Hero */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/assets/images/carousel.svg"
@@ -29,10 +28,9 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
         <GradientHeroSection />
       </div>
 
-      {/* info */}
       <div
         data-testid="hero-event-container"
-        className="relative flex w-full h-full items-start gap-10 py-10 z-10"
+        className="relative flex w-full h-full items-center justify-start gap-10 py-10 z-10"
       >
         <div data-testid="hero-event-image">
           <Image
