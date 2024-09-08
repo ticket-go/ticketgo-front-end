@@ -17,16 +17,13 @@ export default async function EventsCategory({
   const selectCategoryName = matchedCategoryEvent?.category_display;
 
   return (
-    <main className="flex flex-col justify-center items-center w-full h-screen bg-background ">
+    <main className="flex flex-col justify-center items-center w-full min-h-screen bg-background mt-20">
       <div className="w-full">
-        <Section className="h-fit py-0">
+        <Section>
           <FilterEvents
             selectCategory={`${selectCategoryName}`}
             events={events}
           />
-        </Section>
-
-        <Section>
           <MainEvents events={events} category={params.category} />
         </Section>
       </div>

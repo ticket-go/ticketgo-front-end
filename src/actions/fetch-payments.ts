@@ -3,7 +3,9 @@
 import { Payment } from "@/types/payment";
 import { cookies } from "next/headers";
 
-export async function fetchPaymentsUser(): Promise<Payment[] | void> {
+export async function fetchPaymentsUser(
+  paymentId: string
+): Promise<Payment | void> {
   try {
     const cookieStore = cookies();
     const token = cookieStore.get("access_token")?.value;
@@ -13,22 +15,8 @@ export async function fetchPaymentsUser(): Promise<Payment[] | void> {
       throw new Error("User data not found in cookies");
     }
 
-    const decodedUser = decodeURIComponent(user);
-    const userData = JSON.parse(decodedUser);
-    const userId = userData.user_id;
-
-    console.log("User ID:", userId);
-
-    if (!userId) {
-      throw new Error("User ID not found in decoded user data");
-    }
-
-    const fetchOptions: RequestInit = {
-      next: { tags: [`${userId}`] },
-    };
-
     const response = await fetch(
-      `${process.env.API_HOST}/payments/?user=${fetchOptions}`,
+      `${process.env.API_HOST}/payments/${paymentId}/`,
       {
         method: "GET",
         headers: {
@@ -43,7 +31,7 @@ export async function fetchPaymentsUser(): Promise<Payment[] | void> {
     }
 
     const data = await response.json();
-    return data || [];
+    return data;
   } catch (error) {
     console.error(error);
   }

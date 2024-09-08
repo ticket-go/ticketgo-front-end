@@ -9,13 +9,13 @@ import { Event } from "@/types/event";
 
 export interface HeroEventProps {
   event: Event;
+  isEventDetail?: boolean;
 }
 
-export function HeroEvent({ event }: HeroEventProps) {
+export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
   const router = useRouter();
   return (
     <div className="relative flex justify-start items-center w-full max-h-[614px] px-20 py-10 gap-4">
-      {/* Image Hero */}
       <div className="absolute inset-0 z-0">
         <Image
           src="/assets/images/carousel.svg"
@@ -28,20 +28,25 @@ export function HeroEvent({ event }: HeroEventProps) {
         <GradientHeroSection />
       </div>
 
-      {/* info */}
       <div
         data-testid="hero-event-container"
-        className="relative flex w-full h-full items-start gap-10 py-10 z-10"
+        className="relative flex w-full h-full items-center justify-start gap-10 py-10 z-10"
       >
-        <div data-testid="hero-event-image">
-          <Image
-            src={`${event.image}` || "/assets/images/event-destaque.png"}
-            alt={`Image of ${event.name}`}
-            width={334}
-            height={400}
-            className="rounded-lg h-fit"
-          />
-        </div>
+        {!isEventDetail ? (
+          <div data-testid="hero-event-image">
+            <Image
+              src={
+                !event.image
+                  ? `${event.image}`
+                  : "/assets/images/banner-vertical.svg"
+              }
+              alt={`Image of ${event.name}`}
+              width={334}
+              height={334}
+              className="rounded-lg h-fit"
+            />
+          </div>
+        ) : null}
         <div className="flex flex-col items-start w-fit h-full gap-4">
           <Typography
             data-testid="hero-event-name"
@@ -95,26 +100,28 @@ export function HeroEvent({ event }: HeroEventProps) {
                 fontWeight={"medium"}
                 className="leading-[33px] text-white"
               >
-                {event.user.address?.street}, {event.user.address?.number},{" "}
-                {event.user.address?.city}, {event.user.address?.state}
+                {event.address_data.street}, {event.address_data.district},{" "}
+                {event.address_data.city}, {event.address_data.state}
               </Typography>
             </div>
           </div>
 
-          <Button
-            data-testid="hero-event-buy-button"
-            className="min-w-[300px] h-16 bg-[#E85AFF] hover:bg-purple/80 rounded-sm"
-            onClick={() => router.push(`/event/${event.uuid}`)}
-          >
-            <Typography
-              variant="h6"
-              fontWeight={"semibold"}
-              color={"white"}
-              className="text-[10px] leading-3"
+          {!isEventDetail && (
+            <Button
+              data-testid="hero-event-buy-button"
+              className="min-w-[300px] h-16 bg-[#E85AFF] hover:bg-purple/80 rounded-sm"
+              onClick={() => router.push(`/event/${event.uuid}`)}
             >
-              COMPRAR INGRESSO
-            </Typography>
-          </Button>
+              <Typography
+                variant="h6"
+                fontWeight={"semibold"}
+                color={"white"}
+                className="leading-3"
+              >
+                COMPRAR INGRESSO
+              </Typography>
+            </Button>
+          )}
         </div>
       </div>
     </div>

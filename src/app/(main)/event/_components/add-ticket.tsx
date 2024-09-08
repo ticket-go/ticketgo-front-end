@@ -11,7 +11,7 @@ interface TicketProps {
   
 }
 
-export default function AddTicket({ type, price, parcels, available, sold }: TicketProps) {
+export function AddTicket({ type, price, parcels, available, sold }: TicketProps) {
   return (
     <div className="w-full rounded-md shadow-lg flex flex-col p-6 bg-gradient-block gap-4 border-l-4 border-purple">
       <div className="flex flex-col gap-2">

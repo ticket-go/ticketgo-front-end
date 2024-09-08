@@ -5,7 +5,7 @@ import { Typography } from "@/components/typography";
 import { InputCodeForm } from "@/components/input-code";
 import { GenericButton } from "@/components/generic-button";
 import { Event } from "@/types/event";
-import { useCartPayment } from "@/hooks/useCartPayment";
+import { useCart } from "@/hooks/useCart";
 import { LoadingSpinner } from "../loading-spinner";
 
 interface TicketProps {
@@ -15,7 +15,7 @@ interface TicketProps {
 }
 
 export function AddTicket({ event, type, parcels }: TicketProps) {
-  const { handleAddTicketToCart, isLoading } = useCartPayment();
+  const { addTicketToCart, isLoading } = useCart();
 
   return (
     <div className="w-full rounded-md shadow-lg flex flex-col p-6 bg-background gap-4 border-l-4 border-purple">
@@ -44,7 +44,7 @@ export function AddTicket({ event, type, parcels }: TicketProps) {
 
         <GenericButton
           title="ADICIONAR AO CARRINHO"
-          onClick={() => handleAddTicketToCart(event.uuid?.toString(), false)}
+          onClick={() => addTicketToCart(event.uuid, false)}
         />
 
         <div className="flex justify-between">

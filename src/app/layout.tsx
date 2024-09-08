@@ -9,7 +9,8 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { ModalProvider } from "@/hooks/useModal";
 import SessionProvider from "@/components/session-wrapper";
 import { getServerSession } from "next-auth";
-import { CartPaymentProvider } from "@/hooks/useCartPayment";
+import { CartProvider } from "@/hooks/useCart";
+import { PaymentProvider } from "@/hooks/usePayment";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,28 +28,30 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <AuthProvider>
-        <CartPaymentProvider>
-          <body
-            className={cn(
-              "min-h-screen bg-background font-sans antialiased",
-              inter.className
-            )}
-          >
-            <SessionProvider session={session}>
-              <ModalProvider>
-                <ThemeProvider
-                  attribute="class"
-                  defaultTheme="system"
-                  enableSystem
-                >
-                  <NextTopLoader color="#CB1EE8" showSpinner={false} />
-                  <Header />
-                  {children}
-                </ThemeProvider>
-              </ModalProvider>
-            </SessionProvider>
-          </body>
-        </CartPaymentProvider>
+        <PaymentProvider>
+          <CartProvider>
+            <body
+              className={cn(
+                "min-h-screen bg-background font-sans antialiased",
+                inter.className
+              )}
+            >
+              <SessionProvider session={session}>
+                <ModalProvider>
+                  <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                  >
+                    <NextTopLoader color="#CB1EE8" showSpinner={false} />
+                    <Header />
+                    {children}
+                  </ThemeProvider>
+                </ModalProvider>
+              </SessionProvider>
+            </body>
+          </CartProvider>
+        </PaymentProvider>
       </AuthProvider>
     </html>
   );

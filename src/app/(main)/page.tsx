@@ -9,13 +9,16 @@ import { Suspense } from "react";
 
 export default async function Home() {
   const events = await fetchEvents();
+
   const topEvents = events.filter((event) => event.is_top_event);
+
+  const heroEvent = events.find((event) => event.is_hero_event);
 
   return (
     <main className="flex flex-col justify-center items-center w-full min-h-screen bg-background mt-20">
-      {topEvents.length > 0 && (
+      {heroEvent && (
         <section className="w-full h-full py-8">
-          <MainHeroEvent event={topEvents[0]} />
+          <MainHeroEvent event={heroEvent} />
         </section>
       )}
 

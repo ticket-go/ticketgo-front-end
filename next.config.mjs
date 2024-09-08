@@ -1,26 +1,11 @@
-import { hostname } from "os";
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "localhost",
-      },
-      {
-        protocol: "http",
-        hostname: "127.0.0.1",
-        port: "8000",
-        pathname: "/**",
-      },
-      {
-        hostname: "host.docker.internal",
-      },
-      {
         protocol: "https",
-        hostname: process.env.IMAGES_HOST || "",
-        port: "",
-        pathname: "/**",
+        hostname: "ticketgo-backend-dev.onrender.com",
+        pathname: "/media/**",
       },
     ],
   },
