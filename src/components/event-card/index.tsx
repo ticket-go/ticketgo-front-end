@@ -18,26 +18,28 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <Card
       data-testid="event-card-container"
-      className="flex flex-col items-center w-[284px] h-[315px] rounded-sm border-0 border-b-2 border-l-[3px] border-purple p-2.5 gap-2.5 bg-background"
+      className="flex flex-col items-center w-full max-w-[500px] rounded-sm border-0 border-l-4 border-purple bg-white" // Alterado: borda roxa apenas na esquerda, mais grossa
     >
-      <Image
-        data-testid="event-card-image"
-        src={!event.image ? `${event.image}` : "/assets/images/event-image.svg"}
-        alt={`Imagem do evento ${event.name}`}
-        width={500}
-        height={300}
-        priority
-        className="rounded-sm object-cover w-full"
-      />
-      <CardContent className="flex flex-col gap-3 w-[284px]">
-        <div className="flex justify-center items-center w-full h-fit gap-2 px-4">
+      <div className="p-4 w-full">
+        <Image
+          data-testid="event-card-image"
+          src={!event.image ? `${event.image}` : "/assets/images/event-image.svg"}
+          alt={`Imagem do evento ${event.name}`}
+          width={500}
+          height={300}
+          priority
+          className="rounded-sm object-cover w-full"
+        />
+      </div>
+      <CardContent className="flex flex-col gap-3 w-full p-4">
+        <div className="flex justify-center items-center w-full h-fit gap-2 px-0">
           <EventDate date={event.date.toString()} />
           <div className="flex flex-col w-full h-fit">
             <Typography
               data-testid="event-card-title"
               variant="h5"
               fontWeight={"black"}
-              className="leading-[21px] truncate"
+              className="leading-[21px] truncate text-black"
             >
               {event.name}
             </Typography>
@@ -45,7 +47,7 @@ export function EventCard({ event }: EventCardProps) {
               data-testid="event-card-title"
               variant="h6"
               fontWeight={"medium"}
-              className="text-[12px] truncate"
+              className="text-[12px] truncate text-black"
             >
               Mari Fernandez, Rai Saia Rodada, DJ Guuga
             </Typography>
@@ -53,7 +55,7 @@ export function EventCard({ event }: EventCardProps) {
               data-testid="event-card-date-hour"
               variant="h6"
               fontWeight={"bold"}
-              className="text-[12px]"
+              className="text-[12px] text-black"
             >
               {event.time}
             </Typography>
@@ -130,7 +132,7 @@ export function EventLocation({ event }: EventLocationProps) {
         <Typography
           variant={"h6"}
           fontWeight={"semibold"}
-          className="leading-[15px]"
+          className="leading-[15px] text-black"
         >
           {event.address_data.city}
         </Typography>
