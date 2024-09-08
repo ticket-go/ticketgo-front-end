@@ -18,7 +18,7 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <Card
       data-testid="event-card-container"
-      className="flex flex-col items-center w-full max-w-[500px] rounded-sm border-0 border-l-4 border-purple bg-white" // Ajuste do tamanho do card
+      className="flex flex-col items-center w-full max-w-[500px] rounded-sm border-0 border-l-4 border-purple bg-white"
     >
       <div className="p-4 w-full">
         <Image
@@ -32,14 +32,14 @@ export function EventCard({ event }: EventCardProps) {
         />
       </div>
       <CardContent className="flex flex-col gap-3 w-full p-4">
-        <div className="flex justify-center items-center w-full h-fit gap-2 px-0">
+      <div className="flex justify-center items-start w-full h-fit gap-2 overflow-hidden">
           <EventDate date={event.date.toString()} />
-          <div className="flex flex-col w-full h-fit">
+          <div className="flex flex-col w-full h-fit overflow-hidden">
             <Typography
               data-testid="event-card-title"
               variant="h5"
               fontWeight={"black"}
-              className="leading-[21px] truncate text-black"
+              className="leading-[21px] truncate text-black text-lg mobile:text-sm tab-port:text-base"
             >
               {event.name}
             </Typography>
@@ -47,7 +47,7 @@ export function EventCard({ event }: EventCardProps) {
               data-testid="event-card-title"
               variant="h6"
               fontWeight={"medium"}
-              className="text-[12px] truncate text-black"
+              className="text-[12px] truncate text-black text-sm mobile:text-xs tab-port:text-sm"
             >
               Mari Fernandez, Rai Saia Rodada, DJ Guuga
             </Typography>
@@ -55,7 +55,7 @@ export function EventCard({ event }: EventCardProps) {
               data-testid="event-card-date-hour"
               variant="h6"
               fontWeight={"bold"}
-              className="text-[12px] text-black"
+              className="text-[12px] text-black text-sm mobile:text-xs tab-port:text-sm"
             >
               {event.time}
             </Typography>
@@ -72,7 +72,7 @@ export function EventCard({ event }: EventCardProps) {
             variant="h6"
             fontWeight={"semibold"}
             color={"white"}
-            className="text-[10px] leading-3"
+            className="text-[10px] leading-3 text-sm mobile:text-xs tab-port:text-sm"
           >
             VER DETALHES DO EVENTO
           </Typography>
@@ -99,7 +99,7 @@ function EventDate({ date }: { date: Date | string }) {
         variant={"h5"}
         fontWeight={"extrabold"}
         color={"white"}
-        className="leading-[30px]"
+        className="leading-[30px] text-lg mobile:text-sm tab-port:text-base"
       >
         {day}
       </Typography>
@@ -107,7 +107,7 @@ function EventDate({ date }: { date: Date | string }) {
         variant={"h6"}
         fontWeight={"extrabold"}
         color={"white"}
-        className="leading-[15px]"
+        className="leading-[15px] text-sm mobile:text-xs tab-port:text-sm"
       >
         {month}
       </Typography>
@@ -132,7 +132,7 @@ export function EventLocation({ event }: EventLocationProps) {
         <Typography
           variant={"h6"}
           fontWeight={"semibold"}
-          className="leading-[15px] text-black"
+          className="leading-[15px] text-black text-sm mobile:text-xs tab-port:text-sm"
         >
           {event.address_data.city}
         </Typography>
