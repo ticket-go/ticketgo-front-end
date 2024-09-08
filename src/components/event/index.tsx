@@ -11,7 +11,7 @@ interface FeaturedEventProps {
 export function FeaturedEvent({ event }: FeaturedEventProps) {
   return (
     <div className="flex w-full h-[490px]">
-      {/* Ajuste: Largura e altura iguais para a imagem e a div de texto */}
+ 
       <div className="w-1/2 h-full">
         <Image
           data-testid="hero-event-image"
@@ -23,10 +23,10 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
           alt="Event image"
           width={800}
           height={500}
-          className="object-cover w-full h-full" // A imagem ocupa todo o espaço
+          className="object-cover w-full h-full rounded-tl-lg rounded-bl-lg" 
         />
       </div>
-      <div className="w-1/2 h-full flex flex-col justify-center bg-white p-6 text-black">
+      <div className="w-1/2 h-full flex flex-col justify-center bg-white p-6 text-black rounded-tr-lg rounded-br-lg shadow-lg">
         <Typography
           data-testid="hero-event-name"
           variant={"h3"}
@@ -45,7 +45,7 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
           {event.description}
         </Typography>
 
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <AlarmClockIcon size={28} color={"black"} />
             <Typography
@@ -82,7 +82,7 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
 
         <Button
           data-testid="hero-event-buy-button"
-          className="min-w-[300px] h-16 bg-[#E85AFF] hover:bg-purple/80 rounded-sm"
+          className="w-[500px] h-16 bg-[#E85AFF] hover:bg-purple/80 rounded-sm"
         >
           <Typography
             variant="h6"
