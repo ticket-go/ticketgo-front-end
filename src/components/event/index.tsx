@@ -26,7 +26,7 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
           className="object-cover w-full h-full rounded-tl-lg rounded-bl-lg" 
         />
       </div>
-      <div className="w-1/2 h-full flex flex-col justify-center bg-white p-6 text-black rounded-tr-lg rounded-br-lg shadow-lg">
+      <div className="w-1/2 h-full flex flex-col justify-center bg-white p-6 text-black rounded-tr-lg rounded-br-lg shadow-lg g-2">
         <Typography
           data-testid="hero-event-name"
           variant={"h3"}
@@ -45,7 +45,7 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
           {event.description}
         </Typography>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
           <div className="flex items-center gap-3">
             <AlarmClockIcon size={28} color={"black"} />
             <Typography

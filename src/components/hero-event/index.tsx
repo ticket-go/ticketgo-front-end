@@ -32,19 +32,21 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
         data-testid="hero-event-container"
         className="relative flex w-full h-full items-center justify-start gap-10 py-10 z-10"
       >
-        <div data-testid="hero-event-image">
-          <Image
-            src={
-              !event.image
-                ? `${event.image}`
-                : "/assets/images/banner-vertical.svg"
-            }
-            alt={`Image of ${event.name}`}
-            width={334}
-            height={334}
-            className="rounded-lg h-fit"
-          />
-        </div>
+        {!isEventDetail ? (
+          <div data-testid="hero-event-image">
+            <Image
+              src={
+                !event.image
+                  ? `${event.image}`
+                  : "/assets/images/banner-vertical.svg"
+              }
+              alt={`Image of ${event.name}`}
+              width={334}
+              height={334}
+              className="rounded-lg h-fit"
+            />
+          </div>
+        ) : null}
         <div className="flex flex-col items-start w-fit h-full gap-4">
           <Typography
             data-testid="hero-event-name"
@@ -98,8 +100,8 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
                 fontWeight={"medium"}
                 className="leading-[33px] text-white"
               >
-                {event.user.address?.street}, {event.user.address?.number},{" "}
-                {event.user.address?.city}, {event.user.address?.state}
+                {event.address_data.street}, {event.address_data.district},{" "}
+                {event.address_data.city}, {event.address_data.state}
               </Typography>
             </div>
           </div>
@@ -114,7 +116,7 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
                 variant="h6"
                 fontWeight={"semibold"}
                 color={"white"}
-                className="text-[10px] leading-3"
+                className="leading-3"
               >
                 COMPRAR INGRESSO
               </Typography>
