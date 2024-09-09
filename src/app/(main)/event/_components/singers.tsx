@@ -1,12 +1,10 @@
 import Image from "next/image";
 
-
 const Images = [
     {
         id: 1,
         path: "/assets/images/singers/1.png"
     },
-
     {
         id: 2,
         path: "/assets/images/singers/2.png"
@@ -28,14 +26,17 @@ const Images = [
 export function Singers() {
   return (
     <div className="w-full flex justify-between items-center gap-2">
-
         {Images.map((singer) => 
-            <div key={singer.id} className="w-full h-full">
-                <Image src={singer.path} width={400} height={350} alt="oi"></Image>
+            <div key={singer.id} className="w-full h-[450px]">
+                <Image 
+                    src={singer.path} 
+                    width={400} 
+                    height={350} 
+                    alt="oi" 
+                    className="object-cover w-full h-full"  
+                />
             </div>)
         }
-        
-     
     </div>
   );
 }
