@@ -24,6 +24,9 @@ const config = {
         mobile: { max: "767px" },
         litemobile: { max: "440px" },
       },
+      backgroundImage: {
+        'purple-gradient': 'linear-gradient(45deg, #CB1EE8 0%, #721182 100%)',
+      },
       colors: {
         backgroundmain: "#04000f",
         purple: "#CB1EE8",
