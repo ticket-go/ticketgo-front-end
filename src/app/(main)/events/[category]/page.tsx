@@ -3,6 +3,7 @@ import { MainEvents } from "../../_components/main-events";
 import { Section } from "@/components/section";
 import { FilterEvents } from "../../_components/filter";
 import { EventCategories } from "../../_components/main-category-event";
+import { Partner } from "@/components/partner";
 
 
 export default async function EventsCategory({
@@ -31,6 +32,8 @@ export default async function EventsCategory({
 
           <MainEvents events={events} category={params.category} />
         </Section>
+
+        <Partner/>
       </div>
     </main>
   );
