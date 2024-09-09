@@ -21,6 +21,10 @@ const Images = [
     id: 5,
     path: "/assets/images/singers/5.png",
   },
+  {
+    id: 6,
+    path: "/assets/images/singers/6.jpeg",
+  },
 ];
 
 export function Singers() {
