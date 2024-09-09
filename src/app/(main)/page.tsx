@@ -6,6 +6,7 @@ import { Typography } from "@/components/typography";
 import { fetchEvents } from "@/actions/fetch-events";
 import { Section } from "@/components/section";
 import { Suspense } from "react";
+import { Partner } from "@/components/partner";
 
 export default async function Home() {
   const events = await fetchEvents();
@@ -51,6 +52,9 @@ export default async function Home() {
         </Suspense>
       </Section>
 
+      
+      <Partner></Partner>
+     
       <Section>
         <Typography fontWeight="bold">Promoções</Typography>
         <Suspense>
