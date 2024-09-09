@@ -8,8 +8,11 @@ export function useSearchBar() {
   const router = useRouter();
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (query.trim()) {
+    setQuery(e.target.value); 
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && query.trim()) {
       router.push(`/search?query=${encodeURIComponent(query.trim())}`);
     }
   };
@@ -18,5 +21,6 @@ export function useSearchBar() {
     query,
     setQuery,
     handleSearch,
+    handleKeyDown, 
   };
 }
