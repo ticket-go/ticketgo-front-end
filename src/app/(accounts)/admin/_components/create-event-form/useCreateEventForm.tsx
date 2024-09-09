@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { fetchCreateEvent } from "@/actions/fetch-create-event";
 import { Event } from "@/types/event";
@@ -12,6 +12,8 @@ export interface CreateEventFormSchema extends Omit<Event, "image"> {
 export const useCreateEventForm = () => {
   const [isTopEvent, setIsTopEvent] = useState(false);
   const [isHeroEvent, setIsHeroEvent] = useState(false);
+  const [success, setSuccess] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false); 
 
   const {
     register,
@@ -19,7 +21,7 @@ export const useCreateEventForm = () => {
     control,
     setValue,
     reset,
-    formState: { errors, isSubmitting, isLoading },
+    formState: { errors, isSubmitting },
   } = useForm<CreateEventFormSchema>({
     defaultValues: {
       category: "other",
@@ -54,6 +56,7 @@ export const useCreateEventForm = () => {
 
   const onSubmit: SubmitHandler<CreateEventFormSchema> = async (data) => {
     try {
+      setIsLoading(true); 
       const formData = new FormData();
 
       formData.append("name", data.name);
@@ -81,8 +84,11 @@ export const useCreateEventForm = () => {
       }
 
       await fetchCreateEvent(formData);
+      setSuccess(true); 
     } catch (error) {
       console.error("Error creating event:", error);
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -99,5 +105,6 @@ export const useCreateEventForm = () => {
     handleTopEventChange,
     handleHeroEventChange,
     handleCancel,
+    success, 
   };
 };

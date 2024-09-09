@@ -22,6 +22,7 @@ const config = {
         "tab-land": { max: "1440px" },
         "tab-port": { max: "1024px" },
         mobile: { max: "767px" },
+        litemobile: { max: "440px" },
       },
       colors: {
         backgroundmain: "#04000f",

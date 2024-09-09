@@ -17,32 +17,38 @@ export function TicketValueEvent({ register, errors }: TicketValueEventProps) {
         <Typography variant="h4" fontWeight="bold">
           Inteiro
         </Typography>
-        <div className="flex gap-4 w-full">
-          <InputForm
-            label="Valor do ingresso"
-            id="ticket_value"
-            name="ticket_value"
-            type="text"
-            placeholder="R$ 00,00"
-            register={register("ticket_value")}
-            icon={<DollarSign size={24} />}
-          />
-          {errors.ticket_value && (
-            <ErrorMessage error={errors.ticket_value.message} />
-          )}
+        <div className="flex flex-row mobile:flex-col tab-port:flex-row tab-land:flex-row gap-4 w-full">
+          <div className="w-full">
+            <InputForm
+              label="Valor do ingresso"
+              id="ticket_value"
+              name="ticket_value"
+              type="text"
+              placeholder="R$ 00,00"
+              register={register("ticket_value")}
+              icon={<DollarSign size={24} />}
+              className="w-full"
+            />
+            {errors.ticket_value && (
+              <ErrorMessage error={errors.ticket_value.message} />
+            )}
+          </div>
 
-          <InputForm
-            label="Quantidade de ingressos disponíveis"
-            id="ticket_quantity"
-            name="ticket_quantity"
-            type="number"
-            placeholder="00"
-            register={register("ticket_quantity")}
-            icon={<TicketPlus size={24} />}
-          />
-          {errors.ticket_quantity && (
-            <ErrorMessage error={errors.ticket_quantity.message} />
-          )}
+          <div className="w-full">
+            <InputForm
+              label="Quantidade de ingressos disponíveis"
+              id="ticket_quantity"
+              name="ticket_quantity"
+              type="number"
+              placeholder="00"
+              register={register("ticket_quantity")}
+              icon={<TicketPlus size={24} />}
+              className="w-full"
+            />
+            {errors.ticket_quantity && (
+              <ErrorMessage error={errors.ticket_quantity.message} />
+            )}
+          </div>
         </div>
       </div>
     </>

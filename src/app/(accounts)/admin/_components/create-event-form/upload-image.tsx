@@ -20,8 +20,9 @@ export function UploadImageFile({ register }: UploadImageFileProps) {
       setImagePreview(URL.createObjectURL(file));
     }
   };
+
   return (
-    <div className="flex justify-center items-center w-full h-[480px] rounded-md bg-white/20">
+    <div className="flex justify-center items-center w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-[480px] rounded-md bg-white/20">
       <Label
         htmlFor="image"
         className="flex flex-col justify-center items-center w-full h-full cursor-pointer"
@@ -39,10 +40,11 @@ export function UploadImageFile({ register }: UploadImageFileProps) {
             <Image
               src="/assets/images/image-down.svg"
               alt="Upload Image"
-              width={100}
-              height={100}
+              width={80} 
+              height={80} 
+              className="sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40"
             />
-            <span className="text-white text-xl font-bold mt-4">
+            <span className="text-white text-lg sm:text-xl md:text-2xl font-bold mt-4 text-center">
               Clique para fazer upload de uma imagem
             </span>
           </>
