@@ -1,8 +1,10 @@
 import { fetchEvents } from "@/actions/fetch-events";
-import SearchResultsClient from "./search-results-client"; 
+import { SearchResults } from "./search-results";
 
-export default async function SearchResults() {
+
+export default async function SearchResultsPage() {  
   const events = await fetchEvents(); 
 
-  return <SearchResultsClient events={events}/>
+  return <SearchResults events={events}/>; 
+
 }
