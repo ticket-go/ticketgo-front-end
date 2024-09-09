@@ -18,6 +18,10 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL(ROUTES.login, req.url));
   }
 
+  if (!isAuthenticated && req.nextUrl.pathname === PRIVATE_ROUTES.admin) {
+    return NextResponse.redirect(new URL(ROUTES.login, req.url));
+  }
+
   if (
     !isAuthenticated &&
     req.nextUrl.pathname === PRIVATE_ROUTES.myAccountPath("edit")
@@ -58,9 +62,9 @@ export const config = {
     "/register",
     "/payment",
     "/payment/:id",
-    PRIVATE_ROUTES.myAccount,
-    PRIVATE_ROUTES.myAccountPath("edit"),
-    PRIVATE_ROUTES.changePassword,
-    PRIVATE_ROUTES.payment,
+    "/change-password/:id",
+    "/my-account",
+    "/my-account/edit",
+    "/admin",
   ],
 };
