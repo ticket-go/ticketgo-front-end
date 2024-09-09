@@ -51,9 +51,8 @@ export default async function Home() {
         </Suspense>
       </Section>
 
-      
-      <Partner></Partner>
-     
+      <Partner />
+
       <Section>
         <Typography fontWeight="bold">Promoções</Typography>
         <Suspense>
