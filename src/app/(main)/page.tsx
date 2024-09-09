@@ -11,7 +11,6 @@ export default async function Home() {
   const events = await fetchEvents();
 
   const topEvents = events.filter((event) => event.is_top_event);
-
   const heroEvent = events.find((event) => event.is_hero_event);
 
   return (
