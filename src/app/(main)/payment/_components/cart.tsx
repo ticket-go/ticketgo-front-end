@@ -6,13 +6,14 @@ import { useCart } from "@/hooks/useCart";
 import { Ticket } from "@/types/ticket";
 import { usePayment } from "@/hooks/usePayment";
 import { Payment } from "@/types/payment";
+import { ItemCart } from "./item-cart";
 
 interface CartProps {
   payment: Payment;
 }
 
 export function Cart({ payment }: CartProps) {
-  const { cartTotalAmount } = useCart();
+  const { cartTotalAmount, tickets } = useCart();
   const { currentPaymentId, generateInvoice, isSubmitting } = usePayment();
 
   const handlePurchase = async () => {
@@ -26,8 +27,8 @@ export function Cart({ payment }: CartProps) {
   return (
     <div className="flex justify-between items-center w-full h-[250px] gap-4">
       <div className="flex flex-col w-3/4 h-full bg-background border-[2px] border-gray-200 rounded-md p-4">
-        {payment.tickets.map((ticket) => (
-          <CartItem key={ticket} ticket={ticket} />
+        {tickets.map((ticket) => (
+          <ItemCart key={ticket.uuid} ticket={ticket} />
         ))}
       </div>
 
@@ -52,16 +53,16 @@ export function Cart({ payment }: CartProps) {
     </div>
   );
 }
-
-function CartItem({ ticket }: { ticket: Ticket["uuid"] }) {
-  return (
-    <div className="flex items-center justify-around w-full h-fit">
-      <Typography variant={"h6"} fontWeight={"medium"}>
-        {ticket}
-      </Typography>
-    </div>
-  );
-}
+//
+// function CartItem({ ticket }: { ticket: Ticket["uuid"] }) {
+//   return (
+//     <div className="flex items-center justify-around w-full h-fit">
+//       <Typography variant={"h6"} fontWeight={"medium"}>
+//         {ticket}
+//       </Typography>
+//     </div>
+//   );
+// }
 
 function Separator() {
   return <div className="w-full h-[1px] bg-gray-200 mt-2" />;

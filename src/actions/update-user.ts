@@ -3,7 +3,7 @@
 import { User } from "@/types/user";
 import { cookies } from "next/headers";
 
-export async function fetchUpdateUser(userId: string, data: User) {
+export async function fetchUpdateUser(userId: User["user_id"], data: User) {
   try {
     const cookieStore = cookies();
     const token = cookieStore.get("access_token")?.value;
@@ -14,7 +14,7 @@ export async function fetchUpdateUser(userId: string, data: User) {
     }
 
     const response = await fetch(`${process.env.API_HOST}/users/${userId}/`, {
-      method: "PUT",
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -22,7 +22,10 @@ export async function fetchUpdateUser(userId: string, data: User) {
       body: JSON.stringify(data),
     });
 
+    console.log(data);
+
     const result = await response.json();
+    console.log(result);
     return result;
   } catch (error) {
     console.error(error);

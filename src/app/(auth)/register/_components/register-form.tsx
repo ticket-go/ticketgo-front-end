@@ -62,6 +62,15 @@ export function RegisterForm() {
     formState: { isSubmitting, isLoading, errors },
   } = useForm<RegisterFormSchema>({
     resolver: zodResolver(RegisterFormSchema),
+    defaultValues: {
+      username: "",
+      first_name: "",
+      last_name: "",
+      birth_date: "",
+      cpf: "",
+      email: "",
+      password: "",
+    },
   });
 
   const firstName = watch("first_name");

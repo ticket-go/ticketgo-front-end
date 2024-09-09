@@ -5,13 +5,13 @@ import { IconInput } from "./icon-input";
 import { cn } from "@/lib/utils";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 
-interface InputCodeProps {
+interface InputFormProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   id: string;
   type?: string;
-  name: string;
+  name?: string;
   placeholder?: string;
-  register: any;
+  register?: UseFormRegister<FieldValues>;
   icon?: ReactNode;
   textColor?: boolean;
   isSmall?: boolean;
