@@ -53,7 +53,7 @@ export const CartPaymentProvider = ({ children }: { children: ReactNode }) => {
           setTickets((prevTickets) => [...prevTickets, ticketResponse]);
 
           setIsVisible(true);
-          setTimeout(() => setIsVisible(false), 3000);
+          setTimeout(() => setIsVisible(false), 2000);
 
           handlePaymentGenerateInvoice(paymentResponse);
         } else {

@@ -1,15 +1,23 @@
 "use server";
 
+import { longerRevalidateTime } from "@/const/cache";
 import { Event } from "../types/event";
 
 export async function fetchEvents(): Promise<Event[]> {
   try {
-    const response = await fetch(`${process.env.API_HOST}/events/`, {
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+    };
+    const fetchOptions: RequestInit = {
+      next: { tags: ["events"], revalidate: longerRevalidateTime },
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+      headers,
+    };
+
+    const response = await fetch(
+      `${process.env.API_HOST}/events/`,
+      fetchOptions
+    );
 
     if (!response.ok) {
       throw new Error(`Error: ${response.statusText}`);
