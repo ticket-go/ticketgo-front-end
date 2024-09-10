@@ -33,12 +33,6 @@ const TABS_ACCOUNT = [
     activeIcon: <HomeIcon size={24} color="#CB1EE8" />,
     component: <Address />,
   },
-  {
-    name: "Sair",
-    icon: <LogOutIcon size={24} />,
-    activeIcon: <LogOutIcon size={24} color="#CB1EE8" />,
-    component: <ModalLogout isPageAccount={true} />,
-  },
 ];
 
 export default function MyAccount() {

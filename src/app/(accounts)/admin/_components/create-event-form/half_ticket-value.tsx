@@ -27,38 +27,46 @@ export function HalfTicketValueEvent({
     handleHeroEventChange,
     handleTopEventChange,
   } = useCreateEventForm();
+
   return (
     <div className="flex flex-col gap-2 w-full">
       <Typography variant="h4" fontWeight="bold">
         Meia Entrada
       </Typography>
-      <div className="flex gap-4 w-full">
-        <InputForm
-          label="Valor do ingresso de meia entrada"
-          id="half_ticket_value"
-          name="half_ticket_value"
-          type="text"
-          placeholder="R$ 00,00"
-          register={register("half_ticket_value")}
-          icon={<DollarSign size={24} />}
-        />
-        {errors.half_ticket_value && (
-          <ErrorMessage error={errors.half_ticket_value.message} />
-        )}
+      <div className="flex flex-row mobile:flex-col tab-land:flex-col gap-4 w-full">
+        <div className="w-full">
+          <InputForm
+            label="Valor do ingresso de meia entrada"
+            id="half_ticket_value"
+            name="half_ticket_value"
+            type="text"
+            placeholder="R$ 00,00"
+            register={register("half_ticket_value")}
+            icon={<DollarSign size={24} />}
+            className="w-full"
+          />
+          {errors.half_ticket_value && (
+            <ErrorMessage error={errors.half_ticket_value.message} />
+          )}
+        </div>
 
-        <InputForm
-          label="Quantidade de ingressos meia entrada disponíveis"
-          id="half_ticket_quantity"
-          name="half_ticket_quantity"
-          type="number"
-          placeholder="00"
-          register={register("half_ticket_quantity")}
-          icon={<TicketPlus size={24} />}
-        />
-        {errors.half_ticket_quantity && (
-          <ErrorMessage error={errors.half_ticket_quantity.message} />
-        )}
+        <div className="w-full">
+          <InputForm
+            label="Quantidade de ingressos meia entrada disponíveis"
+            id="half_ticket_quantity"
+            name="half_ticket_quantity"
+            type="number"
+            placeholder="00"
+            register={register("half_ticket_quantity")}
+            icon={<TicketPlus size={24} />}
+            className="w-full"
+          />
+          {errors.half_ticket_quantity && (
+            <ErrorMessage error={errors.half_ticket_quantity.message} />
+          )}
+        </div>
       </div>
+
       <div className="flex items-center gap-2 w-full mt-4">
         <Controller
           control={control}

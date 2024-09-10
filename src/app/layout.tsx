@@ -11,6 +11,9 @@ import SessionProvider from "@/components/session-wrapper";
 import { getServerSession } from "next-auth";
 import { CartProvider } from "@/hooks/useCart";
 import { PaymentProvider } from "@/hooks/usePayment";
+import { revalidateTime } from "@/const/cache";
+
+export const revalidate = revalidateTime;
 
 const inter = Inter({ subsets: ["latin"] });
 

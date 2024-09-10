@@ -6,16 +6,21 @@ import { Typography } from "@/components/typography";
 import { fetchEvents } from "@/actions/fetch-events";
 import { Section } from "@/components/section";
 import { Suspense } from "react";
+import { Partner } from "@/components/partner";
+import { SuccessNotification } from "./_components/success";
+
 
 export default async function Home() {
   const events = await fetchEvents();
 
   const topEvents = events.filter((event) => event.is_top_event);
-
   const heroEvent = events.find((event) => event.is_hero_event);
 
   return (
     <main className="flex flex-col justify-center items-center w-full min-h-screen bg-background mt-20">
+
+      <SuccessNotification/>
+
       {heroEvent && (
         <section className="w-full h-full py-8">
           <MainHeroEvent event={heroEvent} />
@@ -50,6 +55,8 @@ export default async function Home() {
           <MainEvents events={events} />
         </Suspense>
       </Section>
+
+      <Partner />
 
       <Section>
         <Typography fontWeight="bold">Promoções</Typography>

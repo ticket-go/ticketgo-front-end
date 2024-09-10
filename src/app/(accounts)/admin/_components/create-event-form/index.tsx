@@ -21,7 +21,7 @@ export function CreateEventForm({ address }: CreateEventFormProps) {
 
   return (
     <form
-      className="flex flex-col justify-center items-start w-full h-fit gap-10 p-2.5"
+      className="flex flex-col w-full justify-center items-start h-fit gap-10"
       onSubmit={handleSubmit(onSubmit)}
     >
       <Typography variant="h2" fontWeight="bold" className="leading-[60px]">

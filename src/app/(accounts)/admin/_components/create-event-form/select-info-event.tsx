@@ -35,7 +35,7 @@ export function SelectInfoEvent({
 }: SelectInfoEventProps) {
   return (
     <div className="flex flex-col gap-4 w-full h-fit">
-      <div className="flex items-center gap-2 w-full h-full">
+      <div className="flex mobile:flex-col tab-land:flex-row gap-2 w-full h-full">
         <div className="flex flex-col gap-2 w-full">
           <Label className="text-lg font-medium">Selecione uma categoria</Label>
           <Select {...register("category")}>
@@ -73,7 +73,7 @@ export function SelectInfoEvent({
         <Label className="text-lg font-medium">
           Qual o endereço do seu evento?
         </Label>
-        <div className="flex items-center w-full gap-4">
+        <div className="flex flex-row items-center w-full gap-4 litemobile:flex-col">
           <Select {...register("address")}>
             <SelectTrigger className="h-14">
               <SelectValue placeholder="Nenhum endereço selecionado" />

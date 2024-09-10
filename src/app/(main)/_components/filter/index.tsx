@@ -45,7 +45,7 @@ export function FilterEvents({
   }, [searchQuery, events]);
 
   return (
-    <div className="flex flex-col items-start w-full h-[180px] bg-background gap-4">
+    <div className="flex flex-col items-start w-full h-[100px] bg-background gap-4">
       <div className="flex items-center w-full gap-2">
         <Typography variant="h4" fontWeight="extrabold">
           {selectCategory ? `[${selectCategory}]` : "[Categoria]"}

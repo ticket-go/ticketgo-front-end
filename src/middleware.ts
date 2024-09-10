@@ -1,22 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCookie } from "cookies-next";
+
 import { ROUTES, PRIVATE_ROUTES } from "@/const/routes";
 import { revalidateToken } from "./lib/utils";
 
 export function middleware(req: NextRequest) {
   const isAuthenticated = revalidateToken(req);
 
-  if (isAuthenticated && req.nextUrl.pathname === "/login") {
+  if (isAuthenticated && req.nextUrl.pathname === ROUTES.login) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  if (isAuthenticated && req.nextUrl.pathname === "/register") {
+  if (isAuthenticated && req.nextUrl.pathname === ROUTES.register) {
     return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  if (!isAuthenticated && req.nextUrl.pathname === PRIVATE_ROUTES.myAccount) {
+    return NextResponse.redirect(new URL(ROUTES.login, req.url));
+  }
+
+  if (!isAuthenticated && req.nextUrl.pathname === PRIVATE_ROUTES.admin) {
+    return NextResponse.redirect(new URL(ROUTES.login, req.url));
   }
 
   if (
     !isAuthenticated &&
-    req.nextUrl.pathname === PRIVATE_ROUTES.myAccount("edit")
+    req.nextUrl.pathname === PRIVATE_ROUTES.myAccountPath("edit")
   ) {
     return NextResponse.redirect(new URL(ROUTES.login, req.url));
   }
@@ -26,7 +34,7 @@ export function middleware(req: NextRequest) {
       req.nextUrl.pathname.startsWith("/change-password/");
     if (
       req.nextUrl.pathname ===
-        PRIVATE_ROUTES.myAccount(`${isChangePasswordRoute}`) ||
+        PRIVATE_ROUTES.myAccountPath(`${isChangePasswordRoute}`) ||
       isChangePasswordRoute
     ) {
       return NextResponse.redirect(new URL(ROUTES.login, req.url));
@@ -52,9 +60,12 @@ export const config = {
     "/((?!api|_next/static|favicon.ico).*)",
     "/login",
     "/register",
-    "/my-account/:path*",
-    "/change-password/:id",
+    "/events",
     "/payment",
     "/payment/:id",
+    "/change-password/:id",
+    "/my-account",
+    "/my-account/edit",
+    "/admin",
   ],
 };

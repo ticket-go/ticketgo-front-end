@@ -1,9 +1,11 @@
 import { Typography } from "@/components/typography";
 import { Separator } from "./separator";
 import { useMyAccount } from "./useMyAccount";
+import { useAuth } from "@/hooks/useAuth";
 
 export function MyPayments() {
-  const { payments, loadingPayments } = useMyAccount();
+  const { user } = useAuth();
+  const { payments, loadingPayments } = useMyAccount(user?.user_id as string);
 
   if (loadingPayments) {
     return <Typography variant="h4">Carregando...</Typography>;

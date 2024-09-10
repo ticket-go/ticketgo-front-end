@@ -1,107 +1,100 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { InputForm } from "@/components/input-form";
 import { ErrorMessage } from "@/components/error-message";
-import { UserIcon } from "lucide-react";
-import { Typography } from "@/components/typography";
-import { UseFormRegister } from "react-hook-form";
+import { UseFormRegister, FieldErrors } from "react-hook-form";
 import { EditProfileFormValues } from ".";
+import { Input } from "@/components/ui/input";
+import { User } from "@/types/user";
 
 interface AddressFormProps {
+  user: User | null;
   register: UseFormRegister<EditProfileFormValues>;
-  errors: any;
+  errors: FieldErrors<EditProfileFormValues>;
 }
 
-export function AddressForm({ register, errors }: AddressFormProps) {
-  const router = useRouter();
-
+export function UserAddressForm({ user, register, errors }: AddressFormProps) {
   return (
-    <div className="flex flex-col justify-center items-start w-full h-fit gap-2">
-      <Typography variant="h3" fontWeight="semibold">
-        Endereço
-      </Typography>
-      <div className="flex flex-col justify-between items-center w-[350px] h-full gap-6">
-        <div className="flex justify-between items-center w-full gap-2">
-          <InputForm
-            label="Endereço"
-            name="street"
-            id="street"
-            placeholder="Endereço"
-            register={register("address.street")}
-            icon={<UserIcon size={24} />}
-            className="w-[250px]"
-          />
+    <div className="grid grid-cols-2 w-full h-fit gap-2 tab-port:grid-cols-1">
+      <Input
+        id="street"
+        placeholder="Endereço"
+        value={user?.address?.street}
+        {...register("address.street")}
+        className="w-full h-14"
+      />
 
-          <InputForm
-            label="Número"
-            name="number"
-            id="number"
-            placeholder="N°"
-            register={register("address.number")}
-            className="w-[100px]"
-          />
-          {errors.street && <ErrorMessage error={errors.street.message} />}
-          {errors.number && <ErrorMessage error={errors.number.message} />}
-        </div>
+      <Input
+        id="number"
+        placeholder="N°"
+        value={user?.address?.number}
+        {...register("address.number")}
+        className="w-full h-14"
+      />
 
-        <InputForm
-          label="Cidade"
-          name="city"
-          id="city"
-          type="city"
-          placeholder="Digite o nome da sua cidade"
-          register={register("address.city")}
-          className="w-full"
-        />
-        {errors.city && <ErrorMessage error={errors.city.message} />}
+      {errors.address?.street && (
+        <ErrorMessage error={errors.address.street.message} />
+      )}
 
-        <InputForm
-          label="Bairoo"
-          name="district"
-          id="district"
-          type="text"
-          placeholder="Bairro"
-          register={register("address.district")}
-          className="w-full"
-        />
-        {errors.district && <ErrorMessage error={errors.district.message} />}
+      <Input
+        id="city"
+        placeholder="Digite o nome da sua cidade"
+        value={user?.address?.city}
+        {...register("address.city")}
+        className="w-full h-14"
+      />
 
-        <InputForm
-          label="CEP"
-          name="zip_code"
-          id="zip_code"
-          type="text"
-          placeholder="CEP"
-          register={register("address.zip_code")}
-          className="w-full"
-        />
-        {errors.zip_code && <ErrorMessage error={errors.zip_code.message} />}
+      {errors.address?.city && (
+        <ErrorMessage error={errors.address.city.message} />
+      )}
 
-        <InputForm
-          label="Estado"
-          name="state"
-          id="state"
-          type="select"
-          placeholder="Informe seu estado"
-          register={register("address.state")}
-          className="w-full"
-        />
-        {errors.state && <ErrorMessage error={errors.state.message} />}
+      <Input
+        id="district"
+        placeholder="Bairro"
+        value={user?.address?.district}
+        {...register("address.district")}
+        className="w-full h-14"
+      />
 
-        <InputForm
-          label="Complemento"
-          name="complement"
-          id="complement"
-          type="text"
-          placeholder="Complemento"
-          register={register("address.complement")}
-          className="w-full"
-        />
-        {errors.complement && (
-          <ErrorMessage error={errors.complement.message} />
-        )}
-      </div>
+      {errors.address?.district && (
+        <ErrorMessage error={errors.address.district.message} />
+      )}
+
+      <Input
+        id="state"
+        placeholder="Informe seu estado"
+        value={user?.address?.state}
+        {...register("address.state")}
+        className="w-full h-14"
+      />
+
+      {errors.address?.state && (
+        <ErrorMessage error={errors.address.state.message} />
+      )}
+
+      <Input
+        id="zip_code"
+        placeholder="CEP"
+        value={user?.address?.zip_code}
+        {...register("address.zip_code")}
+        className="w-full h-14"
+      />
+
+      {errors.address?.zip_code && (
+        <ErrorMessage error={errors.address.zip_code.message} />
+      )}
+
+      <Input
+        id="complement"
+        type="text"
+        placeholder="Complemento"
+        value={user?.address?.complement}
+        {...register("address.complement")}
+        className="w-full h-14"
+      />
+
+      {errors.address?.complement && (
+        <ErrorMessage error={errors.address.complement.message} />
+      )}
     </div>
   );
 }

@@ -19,10 +19,16 @@ const loginFormSchema = z.object({
   username: z
     .string({ required_error: "O nome de usuário é obrigatório." })
     .trim()
-    .min(4, { message: "Usuário inválido, o usuário deve conter no minímo 4 caracteres." })
-    .max(20, { message: "Usuário inválido, o usuário deve ter no máximo 20 caracteres." })
+    .min(4, {
+      message:
+        "Usuário inválido, o usuário deve conter no minímo 4 caracteres.",
+    })
+    .max(20, {
+      message: "Usuário inválido, o usuário deve ter no máximo 20 caracteres.",
+    })
     .regex(/^[a-zA-Z0-9_]+$/, {
-      message: "Usuário deve conter apenas letras, números e _. Não use caracteres especiais.",
+      message:
+        "Usuário deve conter apenas letras, números e _. Não use caracteres especiais.",
     }),
   password: z.string({ required_error: "Senha é obrigatória" }).min(4, {
     message: "Senha deve conter no mínimo 4 caracteres",
@@ -68,7 +74,6 @@ export function LoginForm() {
       className="flex flex-col lg:flex-row justify-center items-center w-full h-screen bg-background gap-10"
       onSubmit={handleSubmit(onSubmit)}
     >
-     
       <div className="hidden lg:flex items-center justify-center w-fit h-fit p-2.5">
         <Image
           src={"/assets/images/login.svg"}
@@ -80,7 +85,6 @@ export function LoginForm() {
         />
       </div>
 
-     
       <div className="flex flex-col h-fit w-[600px] tab-port:w-full mobile:w-[90%] px-20 mobile:px-4 gap-2 items-center">
         <div className="flex flex-col gap-6 py-4 w-full h-fit text-center">
           <Typography variant="h3" fontWeight={"bold"} className="w-full">

@@ -38,7 +38,7 @@ export function ModalCreateAddress() {
       <DialogTrigger asChild>
         <Button
           type="button"
-          className="w-1/3 h-14 bg-purple hover:bg-purple/60"
+          className="w-full h-14 bg-purple hover:bg-purple/60"
         >
           <Typography variant="h6" fontWeight="semibold">
             Novo Endereço
