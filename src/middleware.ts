@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCookie } from "cookies-next";
+
 import { ROUTES, PRIVATE_ROUTES } from "@/const/routes";
 import { revalidateToken } from "./lib/utils";
 
@@ -60,6 +60,7 @@ export const config = {
     "/((?!api|_next/static|favicon.ico).*)",
     "/login",
     "/register",
+    "/events",
     "/payment",
     "/payment/:id",
     "/change-password/:id",
