@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { fetchAddresses } from "@/actions/fetch-addresses";
 import { fetchCreateEvent } from "@/actions/fetch-create-event"; 
+import { LoadingSpinner } from "@/components/loading-spinner"; 
 
 export default function CreateEventForm() {
   const [addresses, setAddresses] = useState([]);
@@ -99,6 +100,10 @@ export default function CreateEventForm() {
       {successMessage && (
         <p className="mb-6 text-green-600 text-center">{successMessage}</p>
       )}
+
+      {/* Spinner de carregamento */}
+      <LoadingSpinner isLoading={loading} />
+
       <form
         onSubmit={handleSubmit}
         className="grid grid-cols-1 gap-6 sm:grid-cols-2"
@@ -184,7 +189,7 @@ export default function CreateEventForm() {
             required
             className="w-full bg-white text-black font-semibold h-16 rounded-sm placeholder:text-gray placeholder:font-semibold pl-4"
           />
-        </div>
+        </div>       
 
         <div className="col-span-2 flex flex-col gap-2">
           <label className="font-medium">Descrição</label>
