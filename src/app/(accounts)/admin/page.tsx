@@ -67,10 +67,10 @@ export default function CreateEventForm() {
       await fetchCreateEvent(formDataToSend);
       setSuccessMessage("Evento criado com sucesso!");
 
-      // Salva a mensagem no localStorage
+
       localStorage.setItem("successMessage", "Evento criado com sucesso!");
 
-      // Redireciona para a home após a criação bem-sucedida
+  
       window.location.href = "/";
     } catch (error) {
       console.error("Erro ao criar o evento:", error);
@@ -86,7 +86,6 @@ export default function CreateEventForm() {
         <p className="mb-6 text-green-600 text-center">{successMessage}</p>
       )}
 
-      {/* Spinner de carregamento */}
       <LoadingSpinner isLoading={loading} />
 
       <form
