@@ -90,7 +90,7 @@ export default function CreateEventForm() {
   };
 
   return (
-    <div className="w-full flex-col bg-background mt-40 mb-40 px-[300px]">
+    <div className="w-full flex-col bg-background mt-40 mb-40 px-[300px] tab-land:px-[80px] tab-port:px-[48px] mobile:px-[32px] litemobile:px-[20px] ">
       <h1 className="text-4xl font-bold mb-6 text-start">Criar Evento</h1>
       {successMessage && (
         <p className="mb-6 text-green-600 text-center">{successMessage}</p>
@@ -115,7 +115,7 @@ export default function CreateEventForm() {
               className="object-cover w-full h-full rounded-lg"
             />
           ) : (
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center p-6">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-12 h-12 text-gray-400"
@@ -130,7 +130,7 @@ export default function CreateEventForm() {
                   d="M3 7h2l1-2h12l1 2h2a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V9a2 2 0 012-2zm9 11a4 4 0 100-8 4 4 0 000 8z"
                 />
               </svg>
-              <p className="mt-1 text-sm text-gray-300">
+              <p className="mt-1 text-sm text-gray-300 text-center">
                 Selecione um banner para seu evento no tamanho 1680x480.
               </p>
             </div>
@@ -160,7 +160,7 @@ export default function CreateEventForm() {
       />
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 mobile:col-span-2">
         <label className="font-medium">Data</label>
         <input
           type="date"
@@ -172,7 +172,7 @@ export default function CreateEventForm() {
         />
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 mobile:col-span-2">
         <label className="font-medium">Hora</label>
         <input
           type="time"
@@ -196,7 +196,7 @@ export default function CreateEventForm() {
         />
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 mobile:col-span-2">
         <label className="font-medium">Categoria</label>
         <select
           name="category"
@@ -213,7 +213,7 @@ export default function CreateEventForm() {
       </div>
 
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 mobile:col-span-2">
         <label className="font-medium">Status</label>
         <select
           name="status"
@@ -248,7 +248,7 @@ export default function CreateEventForm() {
 
       <h1 className="col-span-2 text-2xl font-bold text-start">Inteira</h1>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 mobile:col-span-2">
         <label className="font-medium">Valor do ingresso</label>
         <input
           type="number"
@@ -261,7 +261,7 @@ export default function CreateEventForm() {
         />
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 mobile:col-span-2">
         <label className="font-medium">Quantidade de Ingressos Inteiros</label>
         <input
           type="number"
@@ -276,7 +276,7 @@ export default function CreateEventForm() {
 
       <h1 className="col-span-2 text-2xl font-bold text-start">Meia</h1>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 mobile:col-span-2">
         <label className="font-medium">Valor do Ingresso Meia-Entrada</label>
         <input
           type="number"
@@ -289,7 +289,7 @@ export default function CreateEventForm() {
         />
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 mobile:col-span-2">
         <label className="font-medium">Quantidade de Ingressos Meia-Entrada</label>
         <input
           type="number"
