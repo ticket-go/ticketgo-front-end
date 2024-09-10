@@ -1,11 +1,12 @@
-"use client"; 
+"use client";
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MainEvents } from "../_components/main-events";
 import { Section } from "@/components/section";
 import { Typography } from "@/components/typography";
-import { FilterEvents } from "../_components/filter";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function SearchResults({ events }: { events: any[] }) {
   const searchParams = useSearchParams();
@@ -25,20 +26,33 @@ export function SearchResults({ events }: { events: any[] }) {
 
   if (filteredEvents.length === 0) {
     return (
-      <main className="flex flex-col justify-center items-center w-full min-h-screen bg-background">
-        <Section className="flex flex-col gap-6">        
-          <Typography variant={"h3"} fontWeight="bold">Nenhum evento encontrado para "{query}"</Typography>
-        </Section>   
-    </main>
+      <main className="flex flex-col justify-center items-center w-full h-fit bg-background">
+        <Section className="h-[400px] w-full flex flex-col justify-center items-start gap-2">
+          <Button
+            className="flex items-center w-fit h-10 bg-background hover:bg-purple/10 border border-purple gap-2"
+            onClick={() => window.history.back()}
+          >
+            <ArrowLeft size={18} className="text-white" />
+            <Typography variant={"h5"} fontWeight="bold">
+              Voltar
+            </Typography>
+          </Button>
+          <Typography variant={"h3"} fontWeight="bold">
+            Nenhum evento encontrado para "{query}"
+          </Typography>
+        </Section>
+      </main>
     );
   }
 
   return (
-    <main className="flex flex-col justify-center items-center w-full min-h-screen bg-background">
-        <Section className="flex flex-col gap-6">
-          <Typography variant={"h3"} fontWeight="bold">Enventos encontrados para "{query}":</Typography>
-          <MainEvents events={filteredEvents} />
-        </Section>   
+    <main className="flex flex-col justify-center items-center w-full min-h-screen bg-background mt-20">
+      <Section className="flex flex-col gap-6">
+        <Typography variant={"h3"} fontWeight="bold">
+          Eventos encontrados para "{query}":
+        </Typography>
+        <MainEvents events={filteredEvents} />
+      </Section>
     </main>
   );
 }

@@ -5,7 +5,6 @@ import { FilterEvents } from "../../_components/filter";
 import { EventCategories } from "../../_components/main-category-event";
 import { Partner } from "@/components/partner";
 
-
 export default async function EventsCategory({
   params,
 }: {
@@ -21,20 +20,16 @@ export default async function EventsCategory({
 
   return (
     <main className="flex flex-col justify-center items-center w-full min-h-screen bg-background mt-20">
-      <div className="w-full">
-        <Section className="flex gap-20">
-          <FilterEvents
-            selectCategory={`${selectCategoryName}`}
-            events={events}
-          />
+      <Section className="flex gap-20">
+        <FilterEvents
+          selectCategory={`${selectCategoryName}`}
+          events={events}
+        />
 
-          <EventCategories/>
+        <MainEvents events={events} category={params.category} />
+      </Section>
 
-          <MainEvents events={events} category={params.category} />
-        </Section>
-
-        <Partner/>
-      </div>
+      <Partner />
     </main>
   );
 }
