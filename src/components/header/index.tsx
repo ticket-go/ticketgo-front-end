@@ -39,7 +39,7 @@ export function Header() {
         isScroll && "bg-background/90 shadow-md",
       ])}
     >
-      <Link href="/" className="flex items-center" prefetch={false}>
+      <Link href="/" className="flex items-center">
         <Typography
           data-testid="header-title-logo"
           variant={"h3"}
@@ -61,7 +61,7 @@ export function Header() {
               variant={"secondary"}
               size={"lg"}
               onClick={() => router.push("/register")}
-              className="hidden md:block" // Esconde no mobile
+              className="hidden md:block"
             >
               Criar conta
             </Button>
