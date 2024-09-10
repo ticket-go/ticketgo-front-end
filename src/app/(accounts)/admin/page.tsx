@@ -297,32 +297,33 @@ export default function CreateEventForm() {
       </div>
 
       <div className="col-span-2">
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="flex items-center font-medium">
           <input
             type="checkbox"
             name="is_hero_event"
             checked={formData.is_hero_event}
             onChange={handleInputChange}
-            className="mr-2"
+            className="mr-2 h-5 w-5 text-purple-600 border-gray-300 rounded focus:ring-purple-500 checked:bg-purple-500"
           />
           Evento Destaque Principal
         </label>
       </div>
 
       <div className="col-span-2">
-        <label className="block text-sm font-medium text-gray-700">
+        <label className="flex items-center font-medium">
           <input
             type="checkbox"
             name="is_top_event"
             checked={formData.is_top_event}
             onChange={handleInputChange}
-            className="mr-2"
+            className="mr-2 h-5 w-5 text-purple-600 border-gray-300 rounded focus:ring-purple-500 checked:bg-purple-500"
           />
           Evento Destaque
         </label>
       </div>
 
-      <div className="col-span-2 flex justify-between">
+
+      <div className="col-span-2 flex justify-between gap-8">
         <button
           type="button"
           onClick={() =>
@@ -342,14 +343,14 @@ export default function CreateEventForm() {
               is_top_event: false,
             })
           }
-          className="py-2 px-4 bg-gray-500 text-white rounded-md hover:bg-gray-700"
+          className="w-full py-6 bg-gray-500 text-white rounded-md hover:bg-gray-700"
         >
           Cancelar
         </button>
         <button
           type="submit"
           disabled={loading}
-          className={`py-2 px-4 rounded-md text-white ${loading ? 'bg-gray-400' : 'bg-indigo-600 hover:bg-indigo-800'}`}
+          className={`w-full py-6 rounded-md text-white ${loading ? 'bg-purple-gradient' : 'bg-purple-gradient hover:bg-purple'}`}
         >
           {loading ? "Criando..." : "Criar Evento"}
         </button>
