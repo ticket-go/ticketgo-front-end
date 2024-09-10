@@ -35,11 +35,7 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
         {!isEventDetail ? (
           <div data-testid="hero-event-image">
             <Image
-              src={
-                !event.image
-                  ? `${event.image}`
-                  : "/assets/images/banner-vertical.svg"
-              }
+              src={"/assets/images/banner-vertical.svg"}
               alt={`Image of ${event.name}`}
               width={334}
               height={334}

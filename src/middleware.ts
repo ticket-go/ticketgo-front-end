@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCookie } from "cookies-next";
+
 import { ROUTES, PRIVATE_ROUTES } from "@/const/routes";
 import { revalidateToken } from "./lib/utils";
 
@@ -15,6 +15,10 @@ export function middleware(req: NextRequest) {
   }
 
   if (!isAuthenticated && req.nextUrl.pathname === PRIVATE_ROUTES.myAccount) {
+    return NextResponse.redirect(new URL(ROUTES.login, req.url));
+  }
+
+  if (!isAuthenticated && req.nextUrl.pathname === PRIVATE_ROUTES.admin) {
     return NextResponse.redirect(new URL(ROUTES.login, req.url));
   }
 
@@ -56,11 +60,12 @@ export const config = {
     "/((?!api|_next/static|favicon.ico).*)",
     "/login",
     "/register",
+    "/events",
     "/payment",
     "/payment/:id",
-    PRIVATE_ROUTES.myAccount,
-    PRIVATE_ROUTES.myAccountPath("edit"),
-    PRIVATE_ROUTES.changePassword,
-    PRIVATE_ROUTES.payment,
+    "/change-password/:id",
+    "/my-account",
+    "/my-account/edit",
+    "/admin",
   ],
 };
