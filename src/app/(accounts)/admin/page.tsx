@@ -67,26 +67,11 @@ export default function CreateEventForm() {
       await fetchCreateEvent(formDataToSend);
       setSuccessMessage("Evento criado com sucesso!");
 
+      // Salva a mensagem no localStorage
+      localStorage.setItem("successMessage", "Evento criado com sucesso!");
+
       // Redireciona para a home após a criação bem-sucedida
       window.location.href = "/";
-
-      setFormData({
-        name: "",
-        date: "",
-        time: "",
-        description: "",
-        category: "other",
-        status: "scheduled",
-        ticket_value: "",
-        half_ticket_value: "",
-        ticket_quantity: "",
-        half_ticket_quantity: "",
-        address: "",
-        image: null,
-        is_hero_event: false,
-        is_top_event: false,
-      });
-      setImagePreview(null);
     } catch (error) {
       console.error("Erro ao criar o evento:", error);
     } finally {
