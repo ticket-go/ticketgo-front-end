@@ -91,7 +91,7 @@ export default function CreateEventForm() {
 
   return (
     <div className="w-full flex-col bg-background mt-40 mb-40 px-[300px]">
-      <h1 className="text-3xl font-bold mb-6 text-center">Criar Evento</h1>
+      <h1 className="text-4xl font-bold mb-6 text-start">Criar Evento</h1>
       {successMessage && (
         <p className="mb-6 text-green-600 text-center">{successMessage}</p>
       )}
@@ -244,6 +244,10 @@ export default function CreateEventForm() {
         </select>
       </div>
 
+      <h1 className="col-span-2 text-4xl font-bold mb-6 mt-6 text-start">Ingresoss</h1>
+
+      <h1 className="col-span-2 text-2xl font-bold text-start">Inteira</h1>
+
       <div className="flex flex-col gap-2">
         <label className="font-medium">Valor do ingresso</label>
         <input
@@ -269,6 +273,8 @@ export default function CreateEventForm() {
           className="w-full bg-white text-black font-semibold h-16 rounded-sm placeholder:text-gray placeholder:font-semibold pl-4 pr-4"
         />
       </div>
+
+      <h1 className="col-span-2 text-2xl font-bold text-start">Meia</h1>
 
       <div className="flex flex-col gap-2">
         <label className="font-medium">Valor do Ingresso Meia-Entrada</label>
