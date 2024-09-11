@@ -10,12 +10,11 @@ export async function EventCategories() {
   );
 
   return (
-    <div className="flex overflow-x-auto gap-2 sm:gap-4 justify-between items-center w-full h-full">
-      {uniqueCategories.map((category) => (
-        category && (
-          <EventCategory key={category.category} event={category} />
-        )
-      ))}
+    <div className="flex overflow-x-hidden gap-2 sm:gap-4 justify-between items-center w-full h-full">
+      {uniqueCategories.map(
+        (category) =>
+          category && <EventCategory key={category.category} event={category} />
+      )}
     </div>
   );
 }

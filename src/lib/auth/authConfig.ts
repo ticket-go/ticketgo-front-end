@@ -1,14 +1,10 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { pool } from "@/lib/postgres";
-import PostgresAdapter from "@auth/pg-adapter";
-import { Adapter } from "next-auth/adapters";
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
 
 export const authOptions: NextAuthOptions = {
-  // adapter: PostgresAdapter(pool) as Adapter,
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     maxAge: 30 * 24 * 60 * 60,
@@ -22,7 +18,6 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      allowDangerousEmailAccountLinking: true,
     }),
   ],
   callbacks: {

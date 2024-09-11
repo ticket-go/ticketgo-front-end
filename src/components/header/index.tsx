@@ -25,10 +25,11 @@ export function Header() {
   const router = useRouter();
   const { isAuthenticated, user } = useAuth();
   const { data: session } = useSession();
-  const { payment, cartTotalItems, cartCountItems } = useCartPayment();
 
+  const { payment, cartTotalItems } = useCartPayment();
   const { isScroll } = useHeader();
 
+  const userId = user?.user_id as string;
   const displayName = session?.user?.name || user?.username;
 
   return (
@@ -75,7 +76,7 @@ export function Header() {
           <ModeToggle />
 
           {isAuthenticated || session ? (
-            <UserMenuOptions username={`${displayName}`} />
+            <UserMenuOptions username={`${displayName}`} userId={userId} />
           ) : (
             <Button
               data-testid="header-button"
@@ -97,7 +98,7 @@ function CartIndicator({ totalItems, paymentId }: CartIndicatorProps) {
     <Button
       variant={"outline"}
       size={"icon"}
-      className="relative bg-background hover:bg-transparent/10 mobile:hidden"
+      className="relative bg-background hover:bg-transparent/10 hover:dark:bg-purple mobile:hidden"
     >
       <Link href={"/payment"}>
         <ShoppingCart size={24} />

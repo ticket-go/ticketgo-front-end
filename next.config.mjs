@@ -17,6 +17,10 @@ const nextConfig = {
         hostname: "ticketgo-backend-dev.onrender.com",
         pathname: "/media/**",
       },
+
+      {
+        hostname: process.env.IMAGES_HOST || "",
+      },
     ],
   },
   eslint: {
