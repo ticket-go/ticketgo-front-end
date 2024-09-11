@@ -3,16 +3,10 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Typography } from "@/components/typography";
-import {
-  UserCogIcon,
-  DollarSignIcon,
-  LogOutIcon,
-  HomeIcon,
-} from "lucide-react";
+import { UserCogIcon, DollarSignIcon, HomeIcon } from "lucide-react";
 import AccountInformation from "./_components/account-information";
 import { MyPayments } from "./_components/my-payments";
 import { Address } from "./_components/address";
-import { ModalLogout } from "@/components/modal-logout";
 
 const TABS_ACCOUNT = [
   {
@@ -47,7 +41,7 @@ export default function MyAccount() {
 
   return (
     <main className="relative flex flex-col min-h-screen bg-background overflow-hidden">
-      <div className="box-border mx-auto mt-40 flex items-start justify-center h-full max-w-[76rem] w-full flex-grow tab-port:mt-10">
+      <div className="box-border mx-auto mt-40 flex items-start justify-center h-full max-w-[76rem] w-full flex-grow tab-port:mt-20">
         <div
           key="content"
           className="flex gap-8 w-full h-full tab-land:flex-col tab-land:px-6 pb-6 mobile:pb-2"

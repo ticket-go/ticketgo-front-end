@@ -18,7 +18,7 @@ export function UserAddressForm({ user, register, errors }: AddressFormProps) {
       <Input
         id="street"
         placeholder="Endereço"
-        value={user?.address?.street}
+        defaultValue={user?.address?.street}
         {...register("address.street")}
         className="w-full h-14"
       />
@@ -26,7 +26,7 @@ export function UserAddressForm({ user, register, errors }: AddressFormProps) {
       <Input
         id="number"
         placeholder="N°"
-        value={user?.address?.number}
+        defaultValue={user?.address?.number}
         {...register("address.number")}
         className="w-full h-14"
       />
@@ -38,7 +38,7 @@ export function UserAddressForm({ user, register, errors }: AddressFormProps) {
       <Input
         id="city"
         placeholder="Digite o nome da sua cidade"
-        value={user?.address?.city}
+        defaultValue={user?.address?.city}
         {...register("address.city")}
         className="w-full h-14"
       />
@@ -50,7 +50,7 @@ export function UserAddressForm({ user, register, errors }: AddressFormProps) {
       <Input
         id="district"
         placeholder="Bairro"
-        value={user?.address?.district}
+        defaultValue={user?.address?.district}
         {...register("address.district")}
         className="w-full h-14"
       />
@@ -62,7 +62,7 @@ export function UserAddressForm({ user, register, errors }: AddressFormProps) {
       <Input
         id="state"
         placeholder="Informe seu estado"
-        value={user?.address?.state}
+        defaultValue={user?.address?.state}
         {...register("address.state")}
         className="w-full h-14"
       />
@@ -74,7 +74,7 @@ export function UserAddressForm({ user, register, errors }: AddressFormProps) {
       <Input
         id="zip_code"
         placeholder="CEP"
-        value={user?.address?.zip_code}
+        defaultValue={user?.address?.zip_code}
         {...register("address.zip_code")}
         className="w-full h-14"
       />
@@ -87,7 +87,7 @@ export function UserAddressForm({ user, register, errors }: AddressFormProps) {
         id="complement"
         type="text"
         placeholder="Complemento"
-        value={user?.address?.complement}
+        defaultValue={user?.address?.complement}
         {...register("address.complement")}
         className="w-full h-14"
       />

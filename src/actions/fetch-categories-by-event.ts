@@ -1,11 +1,12 @@
 "use server";
 
+import { revalidateTime } from "@/const/cache";
 import { Event } from "@/types/event";
 
 export async function fetchCategoryByEvents(): Promise<Event[]> {
   try {
     const fetchOptions: RequestInit = {
-      next: { tags: ["category"] },
+      next: { tags: ["category"], revalidate: revalidateTime },
     };
 
     const response = await fetch(
@@ -18,7 +19,7 @@ export async function fetchCategoryByEvents(): Promise<Event[]> {
     }
 
     const data = await response.json();
-    return data || [];
+    return data.results || [];
   } catch (error) {
     console.error("Failed to fetch events:", error);
     throw new Error("Failed to fetch events");

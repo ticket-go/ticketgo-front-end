@@ -5,13 +5,28 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { Separator } from "./separator";
 import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { fetchUser } from "@/actions/fetch-user";
+import { set } from "zod";
 
 export default function AccountInformation() {
-  const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+  const { user, setUser, isAuthenticated } = useAuth();
   const router = useRouter();
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
+    const fetchData = async () => await fetchUser(user?.user_id as string);
+    fetchData().then((data) => {
+      setUser(data);
+      setIsLoading(false);
+    });
+  }, [isAuthenticated]);
+
   return (
-    <>
+    <Suspense fallback="Carregando...">
       <Typography
         variant="h3"
         fontWeight="semibold"
@@ -74,6 +89,6 @@ export default function AccountInformation() {
       >
         Alterar dados pessoais
       </Button>
-    </>
+    </Suspense>
   );
 }

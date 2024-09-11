@@ -13,10 +13,10 @@ export default async function UserAdm({ event }: UserAdmProps) {
       <Suspense fallback={<div>Loading...</div>}>
         <div className="flex items-center gap-6">
           <Image
-            src={"/assets/images/house.webp"}
+            src={"/assets/images/icons/pin.webp"}
             alt={`Imagem do usuário`}
-            width={200}
-            height={200}
+            width={100}
+            height={100}
             className="rounded-full"
           />
           <div className="flex flex-col gap-2">

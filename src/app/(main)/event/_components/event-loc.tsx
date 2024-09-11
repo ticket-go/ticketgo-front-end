@@ -24,13 +24,13 @@ export function EventLocation({ event }: EventLocationProps) {
           <Typography fontWeight={"bold"} color={"white"} variant={"h4"}>
             Localização
           </Typography>
-          <div className="flex items-center gap-6 ">
+          <div className="flex items-center gap-6">
             <div className="flex justify-center item-center p-6 rounded-full">
               <Image
-                src={"/assets/images/loc_icon.svg"}
+                src={"/assets/images/icons/pin.webp"}
                 alt={`icon`}
-                width={25}
-                height={25}
+                width={50}
+                height={50}
                 className="rounded-md"
               />
             </div>
@@ -52,7 +52,8 @@ export function EventLocation({ event }: EventLocationProps) {
           src={mapUrl}
           width="450"
           height="200"
-          loading="lazy"
+          allowFullScreen={true}
+          name="Localização do evento"
         />
       </div>
     </div>

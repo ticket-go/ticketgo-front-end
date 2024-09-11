@@ -5,17 +5,19 @@ import { Typography } from "@/components/typography";
 import { InputCodeForm } from "@/components/input-code";
 import { GenericButton } from "@/components/generic-button";
 import { Event } from "@/types/event";
-import { useCart } from "@/hooks/useCart";
+import { useCartPayment } from "@/hooks/useCartPayment";
 import { LoadingSpinner } from "../loading-spinner";
+
+type TicketType = "Inteira" | "Meia";
 
 interface TicketProps {
   event: Event;
-  type: "Inteira" | "Meia";
+  type: TicketType;
   parcels?: string;
 }
 
 export function AddTicket({ event, type, parcels }: TicketProps) {
-  const { addTicketToCart, isLoading } = useCart();
+  const { addTicketToCart, isLoading } = useCartPayment();
 
   return (
     <div className="w-full rounded-md shadow-lg flex flex-col p-6 bg-background gap-4 border-l-4 border-purple">
@@ -44,12 +46,19 @@ export function AddTicket({ event, type, parcels }: TicketProps) {
 
         <GenericButton
           title="ADICIONAR AO CARRINHO"
-          onClick={() => addTicketToCart(event.uuid, false)}
+          onClick={
+            type === "Inteira"
+              ? () => addTicketToCart(event.uuid, false)
+              : () => addTicketToCart(event.uuid, true)
+          }
         />
 
         <div className="flex justify-between">
           <Typography fontWeight={"light"} variant={"h5"}>
-            Disponíveis: {event.tickets_available}
+            Disponíveis:{" "}
+            {type === "Inteira"
+              ? event.tickets_available
+              : event.half_tickets_available}
           </Typography>
 
           <Typography fontWeight={"light"} variant={"h5"}>

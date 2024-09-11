@@ -6,13 +6,14 @@ import { EventDesc } from "../_components/event-desc";
 import { EventLocation } from "../_components/event-loc";
 import UserAdm from "../_components/user-adm";
 import { Singers } from "../_components/singers";
+import { Typography } from "@/components/typography";
 
 export default async function Event({ params }: { params: { id: string } }) {
   const { id } = params;
   const event = await fetchEventDetail(id);
 
   if (!event) {
-    return <div>Event not found</div>;
+    return <Typography>Event not found</Typography>;
   }
 
   return (
@@ -25,7 +26,9 @@ export default async function Event({ params }: { params: { id: string } }) {
         <Section className="gap-10">
           <div className="flex gap-6 w-full">
             <AddTicket type="Inteira" event={event} parcels="10" />
-            <AddTicket type="Meia" event={event} parcels="10" />
+            {event.half_tickets_available !== 0 && (
+              <AddTicket type="Meia" event={event} parcels="10" />
+            )}
           </div>
         </Section>
 
@@ -36,7 +39,7 @@ export default async function Event({ params }: { params: { id: string } }) {
 
           <EventLocation event={event} />
 
-          <UserAdm event={event}></UserAdm>
+          <UserAdm event={event} />
         </Section>
       </div>
     </main>
