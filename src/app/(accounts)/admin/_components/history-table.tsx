@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import { fetchAuditHistory } from "@/actions/fetch-audit-history";
+import { Typography } from "@/components/typography";
 import {
   Table,
   TableBody,
@@ -10,33 +11,35 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useAuth } from "@/hooks/useAuth";
 import { Change, History } from "@/types/history";
+import { useEffect, useState } from "react";
 
-interface HistoryTableProps {
-  historyData: History[];
-}
+export function HistoryTable() {
+  const { user } = useAuth();
 
-export function HistoryTable({ historyData }: HistoryTableProps) {
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleString("pt-BR", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
-  };
+  const [historyData, setHistoryData] = useState<History[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const ChangeRow: React.FC<{ change: Change }> = ({ change }) => (
-    <TableRow>
-      <TableCell>{change.field || "N/A"}</TableCell>
-      <TableCell>{change.old_value?.toString() || "N/A"}</TableCell>
-      <TableCell>{change.new_value?.toString() || "N/A"}</TableCell>
-    </TableRow>
-  );
+  const isUserPrivileged = user?.privileged;
+
+  useEffect(() => {
+    if (!isUserPrivileged) {
+      return;
+    }
+
+    if (isUserPrivileged) {
+      const fetchData = async () => await fetchAuditHistory();
+      fetchData().then((data) => {
+        setHistoryData(data);
+        setIsLoading(false);
+      });
+    }
+  }, [isUserPrivileged]);
+
+  if (isLoading) {
+    return <Typography>Carregando...</Typography>;
+  }
 
   return (
     <Table className="bg-background">
@@ -59,7 +62,7 @@ export function HistoryTable({ historyData }: HistoryTableProps) {
         {historyData.map((entry) => (
           <TableRow key={entry.history_id}>
             <TableCell>{entry.history_id}</TableCell>
-            <TableCell>{formatDate(entry.history_date)}</TableCell>
+            <TableCell>{entry.history_date}</TableCell>
             <TableCell>
               {typeof entry.changes === "string" ? (
                 entry.changes
@@ -86,3 +89,11 @@ export function HistoryTable({ historyData }: HistoryTableProps) {
     </Table>
   );
 }
+
+const ChangeRow: React.FC<{ change: Change }> = ({ change }) => (
+  <TableRow>
+    <TableCell>{change.field || "N/A"}</TableCell>
+    <TableCell>{change.old_value?.toString() || "N/A"}</TableCell>
+    <TableCell>{change.new_value?.toString() || "N/A"}</TableCell>
+  </TableRow>
+);
