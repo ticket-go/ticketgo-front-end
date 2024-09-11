@@ -16,9 +16,14 @@ import { User2Icon } from "lucide-react";
 interface UserMenuOptionsProps {
   username: string;
   userId: string;
+  isUserPrivileged: boolean;
 }
 
-export function UserMenuOptions({ username, userId }: UserMenuOptionsProps) {
+export function UserMenuOptions({
+  username,
+  userId,
+  isUserPrivileged,
+}: UserMenuOptionsProps) {
   const router = useRouter();
   const { isModalOpen, openModal } = useModal();
 
@@ -59,6 +64,17 @@ export function UserMenuOptions({ username, userId }: UserMenuOptionsProps) {
               Segurança
             </Button>
           </DropdownMenuItem>
+          {isUserPrivileged && (
+            <DropdownMenuItem>
+              <Button
+                variant={"default"}
+                className="w-full"
+                onClick={() => router.push(`/admin`)}
+              >
+                Administração
+              </Button>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem>
             <Button
               variant={"destructive"}

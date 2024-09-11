@@ -15,6 +15,7 @@ import { useHeader } from "./useHeader";
 import { cn } from "@/lib/utils";
 
 import { useCartPayment } from "@/hooks/useCartPayment";
+import { useMemo } from "react";
 
 interface CartIndicatorProps {
   totalItems: number;
@@ -29,7 +30,14 @@ export function Header() {
   const { payment, cartTotalItems } = useCartPayment();
   const { isScroll } = useHeader();
 
-  const userId = user?.user_id as string;
+  const userId = useMemo(() => {
+    return user?.user_id as string;
+  }, [user, session]);
+
+  const isUserPrivileged = useMemo(() => {
+    return user?.privileged as boolean;
+  }, [user]);
+
   const displayName = session?.user?.name || user?.username;
 
   return (
@@ -76,7 +84,11 @@ export function Header() {
           <ModeToggle />
 
           {isAuthenticated || session ? (
-            <UserMenuOptions username={`${displayName}`} userId={userId} />
+            <UserMenuOptions
+              username={`${displayName}`}
+              userId={userId}
+              isUserPrivileged={isUserPrivileged}
+            />
           ) : (
             <Button
               data-testid="header-button"

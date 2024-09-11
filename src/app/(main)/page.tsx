@@ -4,12 +4,14 @@ import { EventCategories } from "./_components/main-category-event";
 import { Carousel } from "@/components/carousel";
 import { Typography } from "@/components/typography";
 import { fetchEvents, fetchSimpleEvents } from "@/actions/fetch-events";
+import { fetchEvents, fetchSimpleEvents } from "@/actions/fetch-events";
 import { Section } from "@/components/section";
 import { Suspense } from "react";
 import { Partner } from "@/components/partner";
 import { SuccessNotification } from "./_components/success";
 
 export default async function Home() {
+  const events = await fetchSimpleEvents();
   const events = await fetchSimpleEvents();
 
   const topEvents = events.filter((event) => event.is_top_event);
@@ -87,26 +89,6 @@ export default async function Home() {
         <Typography fontWeight="bold">Outros</Typography>
         <Suspense>
           <MainEvents fetchData={() => fetchEvents({})} />
-        </Suspense>
-      </Section>
-
-      <Partner.Root>
-        <Partner.Content>
-          <Partner.Text
-            text="Evite dor de cabeça, compre com segurança"
-            className="text-center"
-          />
-          <Partner.Text
-            text="Comprando pelo nosso site oficial você garante a legitimidade do seu ingresso."
-            className="text-center text-[24px] mobile:text-[18px] font-semibold"
-          />
-        </Partner.Content>
-      </Partner.Root>
-
-      <Section>
-        <Typography fontWeight="bold">Outros</Typography>
-        <Suspense>
-          <MainEvents events={events} />
         </Suspense>
       </Section>
     </main>

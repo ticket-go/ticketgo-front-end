@@ -9,7 +9,7 @@ export async function fetchPaymentsUser(userId: string) {
     const token = cookieStore.get("access_token")?.value;
 
     const fetchOptions: RequestInit = {
-      next: { tags: ["payments"], revalidate: 120 },
+      next: { tags: ["payments"], revalidate: 10 },
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -1,9 +1,10 @@
-import { fetchEvents } from "@/actions/fetch-events";
+import { fetchSimpleEvents } from "@/actions/fetch-events";
 import { MainEvents } from "../../_components/main-events";
 import { Section } from "@/components/section";
 import { FilterEvents } from "../../_components/filter";
 import { EventCategories } from "../../_components/main-category-event";
 import { Partner } from "@/components/partner";
+import { EventsBySearch } from "../../_components/filter/events-by-search";
 
 export default async function EventsCategory({
   params,
@@ -11,7 +12,7 @@ export default async function EventsCategory({
   params: { category: string };
 }) {
   const { category } = params;
-  const events = await fetchEvents();
+  const events = await fetchSimpleEvents();
 
   const matchedCategoryEvent = events.find(
     (event) => event.category === category
@@ -26,10 +27,8 @@ export default async function EventsCategory({
           events={events}
         />
 
-        <MainEvents events={events} category={params.category} />
+        <EventsBySearch events={events} category={params.category} />
       </Section>
-
-      <Partner />
     </main>
   );
 }
