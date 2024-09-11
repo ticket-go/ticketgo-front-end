@@ -15,13 +15,13 @@ export function MainEvents({ category, name }: MainEventsProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1); 
   const [loading, setLoading] = useState(false);
-  const eventsPerPage = 5; 
+  const eventsPerPage = 5;
 
   const fetchEvents = async (page: number) => {
     setLoading(true);
     try {
       let url = `${process.env.NEXT_PUBLIC_API_HOST}/events/?page=${page}&page_size=${eventsPerPage}`;
-      
+
       if (category) {
         url += `&category=${category}`;
       }
@@ -31,8 +31,8 @@ export function MainEvents({ category, name }: MainEventsProps) {
 
       const res = await fetch(url);
       const data = await res.json();
-      setEvents(data.results); 
-      setTotalPages(Math.ceil(data.count / eventsPerPage)); 
+      setEvents((prevEvents) => [...prevEvents, ...data.results]); 
+      setTotalPages(Math.ceil(data.count / eventsPerPage));
     } catch (error) {
       console.error("Error fetching events:", error);
     } finally {
@@ -42,19 +42,20 @@ export function MainEvents({ category, name }: MainEventsProps) {
 
   useEffect(() => {
     fetchEvents(currentPage);
-  }, [currentPage, category, name]);
+  }, [category, name]);
 
-  const paginate = (pageNumber: number) => {
-    if (pageNumber > 0 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
+  const loadMoreEvents = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      fetchEvents(currentPage + 1);
     }
   };
 
   return (
     <div>
-      {loading ? (
+      {loading && currentPage === 1 ? (
         <div className="flex justify-center items-center h-32">
-          <LoadingSpinner isLoading={loading} />
+          <LoadingSpinner isLoading={loading} /> 
         </div>
       ) : (
         <div>
@@ -70,46 +71,15 @@ export function MainEvents({ category, name }: MainEventsProps) {
             )}
           </div>
 
-          {totalPages > 1 && (
+          {currentPage < totalPages && (
             <div className="flex justify-center mt-4">
-              <ul className="flex space-x-2">
-                <li>
-                  <button
-                    onClick={() => paginate(currentPage - 1)}
-                    className={`px-4 py-2 border rounded ${
-                      currentPage === 1 ? "bg-gray-300 cursor-not-allowed" : "bg-white text-purple"
-                    }`}
-                    disabled={currentPage === 1}
-                  >
-                    ANTERIOR
-                  </button>
-                </li>
-
-                {[...Array(totalPages)].map((_, index) => (
-                  <li key={index}>
-                    <button
-                      onClick={() => paginate(index + 1)}
-                      className={`px-4 py-2 border rounded ${
-                        currentPage === index + 1 ? "bg-purple text-white" : "bg-white text-purple"
-                      }`}
-                    >
-                      {index + 1}
-                    </button>
-                  </li>
-                ))}
-
-                <li>
-                  <button
-                    onClick={() => paginate(currentPage + 1)}
-                    className={`px-4 py-2 border rounded ${
-                      currentPage === totalPages ? "bg-gray-300 cursor-not-allowed" : "bg-white text-purple"
-                    }`}
-                    disabled={currentPage === totalPages}
-                  >
-                    PRÓXIMO
-                  </button>
-                </li>
-              </ul>
+              <button
+                onClick={loadMoreEvents}
+                className="px-4 py-2 bg-purple text-white rounded-md hover:bg-purple-dark"
+                disabled={loading}
+              >
+                {loading ? "Carregando..." : "Ver Mais"}
+              </button>
             </div>
           )}
         </div>
