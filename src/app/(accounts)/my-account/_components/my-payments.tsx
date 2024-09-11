@@ -4,8 +4,7 @@ import { useMyAccount } from "./useMyAccount";
 import { TicketPayment } from "./ticket-payment";
 
 export function MyPayments() {
-  const { user } = useAuth();
-  const { payments, loadingPayments } = useMyAccount(user?.user_id as string);
+  const { payments, loadingPayments } = useMyAccount();
 
   if (loadingPayments) {
     return <Typography>Carregando...</Typography>;
