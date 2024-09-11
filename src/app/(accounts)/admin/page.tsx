@@ -4,10 +4,29 @@ import { useState, useEffect } from "react";
 import { fetchAddresses } from "@/actions/fetch-addresses";
 import { fetchCreateEvent } from "@/actions/fetch-create-event"; 
 import { LoadingSpinner } from "@/components/loading-spinner"; 
+import { Address } from "@/types/address"; 
+
+
+type FormDataState = {
+  name: string;
+  date: string;
+  time: string;
+  description: string;
+  category: string;
+  status: string;
+  ticket_value: string;
+  half_ticket_value: string;
+  ticket_quantity: string;
+  half_ticket_quantity: string;
+  address: string;
+  image: File | null;
+  is_hero_event: boolean;
+  is_top_event: boolean;
+};
 
 export default function CreateEventForm() {
-  const [addresses, setAddresses] = useState([]);
-  const [formData, setFormData] = useState({
+  const [addresses, setAddresses] = useState<Address[]>([]); 
+  const [formData, setFormData] = useState<FormDataState>({
     name: "",
     date: "",
     time: "",
@@ -23,43 +42,60 @@ export default function CreateEventForm() {
     is_hero_event: false,
     is_top_event: false,
   });
-  const [imagePreview, setImagePreview] = useState(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     const loadAddresses = async () => {
-      const data = await fetchAddresses();
+      const data: Address[] = await fetchAddresses(); 
       setAddresses(data);
     };
     loadAddresses();
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value, type } = e.target;
+
+  
+    if (type === "checkbox") {
+      const { checked } = e.target as HTMLInputElement;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: checked,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
     setFormData((prevData) => ({
       ...prevData,
       image: file,
     }));
-    setImagePreview(URL.createObjectURL(file));
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+    } else {
+      setImagePreview(null);
+    }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     const formDataToSend = new FormData();
 
     Object.keys(formData).forEach((key) => {
-      if (formData[key] !== null) {
-        formDataToSend.append(key, formData[key]);
+      const value = (formData as any)[key];
+      if (value !== null) {
+        formDataToSend.append(key, value);
       }
     });
 
@@ -67,10 +103,7 @@ export default function CreateEventForm() {
       await fetchCreateEvent(formDataToSend);
       setSuccessMessage("Evento criado com sucesso!");
 
-
       localStorage.setItem("successMessage", "Evento criado com sucesso!");
-
-  
       window.location.href = "/";
     } catch (error) {
       console.error("Erro ao criar o evento:", error);
