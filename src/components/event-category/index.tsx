@@ -17,25 +17,27 @@ const categoryIcons: { [key: string]: string } = {
 };
 
 export function EventCategory({ event }: EventCategoryProps) {
-  const iconSrc = categoryIcons[event.category.toLowerCase()] || "/assets/images/icons/event-image.svg";
+  const iconSrc =
+    categoryIcons[event.category.toLowerCase()] ||
+    "/assets/images/icons/event-image.svg";
 
   return (
     <Link href={`/events/${event.category}`} passHref>
       <div
         data-testid="event-category-container"
-        className="flex flex-col gap-1 sm:gap-2 items-center justify-center text-center w-fit h-fit"
+        className="flex flex-col gap-1 sm:gap-2 items-center justify-center text-center w-fit h-fit transition-transform duration-300 ease-in-out hover:-translate-y-2 hover:opacity-90"
       >
         <Image
           data-testid="event-category-image"
           src={iconSrc}
           alt={`Ícone da categoria ${event.category_display}`}
-          width={80}  
-          height={80}
-          className="rounded-full w-20 h-20 sm:w-36 sm:h-36 object-cover"
+          width={150}
+          height={150}
+          className="rounded-full object-cover transition-transform duration-300 ease-in-out tab-port:w-20 tab-port:h-20 mobile:w-12 mobile:h-12"
         />
         <Typography
           data-testid="event-category-name"
-          className="text-sm sm:text-lg font-semibold tracking-tight"
+          className="text-sm sm:text-lg font-semibold tracking-tight transition-transform duration-300 ease-in-out"
         >
           {event.category_display}
         </Typography>

@@ -18,14 +18,12 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <Card
       data-testid="event-card-container"
-      className="flex flex-col items-center w-full max-w-[500px] rounded-sm border-0 border-l-4 border-purple bg-white"
+      className="flex flex-col items-center w-full max-w-[500px] rounded-sm border-0 border-l-4 border-purple bg-white transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg"
     >
       <div className="p-4 w-full">
         <Image
           data-testid="event-card-image"
-          src={
-            "/assets/images/event-destaque.png"
-          }
+          src={"/assets/images/event-destaque.png"}
           alt={`Imagem do evento ${event.name}`}
           width={500}
           height={300}

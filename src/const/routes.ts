@@ -1,3 +1,5 @@
+import MyAccount from "@/app/(accounts)/my-account/page";
+
 export const ROUTES = {
   login: "/login",
   register: "/register",
@@ -6,9 +8,9 @@ export const ROUTES = {
 
 export const PRIVATE_ROUTES = {
   admin: "/admin",
+  audit: "/admin/audit",
   myAccount: "/my-account",
-  myAccountPath: (path = "") => `/my-account/${path}`,
+  MyAccountEdit: "/my-account/edit/:id",
   changePassword: "/change-password/:id",
-  payment: "/payment/:id",
-  invoice: (path = "") => `/payment/${path}`,
+  payment: "/payment",
 };
