@@ -1,27 +1,39 @@
 "use client";
 
-import { useContext, createContext, useState, useMemo, ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useMemo,
+  useEffect,
+} from "react";
 import { createEventTicket } from "@/actions/create-event-ticket";
 import { createNewPayment } from "@/actions/new-payment";
-import { useRouter } from "next/navigation";
-import { Event } from "@/types/event";
-import { Ticket } from "@/types/ticket";
 import { paymentGenerateInvoice } from "@/actions/payments-generate-invoice";
-import { ShoppingCartComponent } from "@/components/shopping-cart";
+import { fetchPaymentsUser } from "@/actions/fetch-payments-user"; // Importe a função de fetch
+import { useRouter } from "next/navigation";
+import { Ticket } from "@/types/ticket";
 import { Payment } from "@/types/payment";
+import { ShoppingCartComponent } from "@/components/shopping-cart";
+import { useAuth } from "./useAuth";
+import { deleteEventTicket } from "@/actions/delele-event-ticket";
 
 interface CartPaymentContextType {
+  payment: Payment | null;
   tickets: Ticket[];
+  payments: Payment[];
+  cartCountItems: number;
+  cartTotalItems: number;
   isLoading: boolean;
-  setIsLoading: (value: boolean) => void;
-  handleAddTicketToCart: (
-    eventId: Event["uuid"],
-    isHalfTicket: boolean
-  ) => Promise<Ticket | void>;
-  handlePaymentGenerateInvoice: (cartPayment: Payment["uuid"]) => void;
-  handleRemoveTicketFromCart: (itemId: Ticket) => void;
-  handleClearCart: () => void;
-  cartTotalAmount: number;
+  isSubmitting: boolean;
+  addTicketToCart: (eventId: string, halfTicket: boolean) => Promise<void>;
+  removeTicketFromCart: (eventId: string, ticketId: string) => void;
+  generateInvoice: (
+    cartPaymentId: string,
+    callback: (invoice: Payment["invoiceUrl"]) => void
+  ) => Promise<void>;
+  fetchUserPayments: (userId: string) => Promise<void>;
 }
 
 const CartPaymentContext = createContext<CartPaymentContextType | undefined>(
@@ -30,77 +42,120 @@ const CartPaymentContext = createContext<CartPaymentContextType | undefined>(
 
 export const CartPaymentProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
+  const { user } = useAuth();
 
+  const [payment, setPayment] = useState<Payment | null>(null);
   const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [payments, setPayments] = useState<Payment[]>([]);
+  const [cartTotalItems, setCartTotalItems] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  async function handleAddTicketToCart(
-    eventId: Event["uuid"],
-    isHalfTicket: boolean
-  ) {
+  const ensurePaymentExists = async () => {
+    if (!payment) {
+      setIsLoading(true);
+      try {
+        const newPayment = await createNewPayment(0);
+        setPayment(newPayment);
+        setIsLoading(false);
+        return newPayment;
+      } catch (error) {
+        console.error("Erro ao criar pagamento", error);
+        setIsLoading(false);
+        throw error;
+      }
+    }
+    return payment;
+  };
+
+  const addTicketToCart = async (eventId: string, halfTicket: boolean) => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
     setIsLoading(true);
     try {
-      const paymentResponse = await createNewPayment();
-
-      if (paymentResponse) {
-        const ticketResponse = await createEventTicket(eventId, {
-          half_ticket: isHalfTicket,
-          cart_payment: paymentResponse.toString(),
-        });
-
-        if (ticketResponse) {
-          setTickets((prevTickets) => [...prevTickets, ticketResponse]);
-
-          setIsVisible(true);
-          setTimeout(() => setIsVisible(false), 2000);
-
-          handlePaymentGenerateInvoice(paymentResponse);
-        } else {
-          console.error("Falha ao criar o ingresso.");
-        }
-        setIsLoading(false);
+      const currentPayment = await ensurePaymentExists();
+      const newTicket = await createEventTicket(eventId, {
+        half_ticket: halfTicket,
+        cart_payment: currentPayment.uuid,
+      });
+      if (newTicket) {
+        setTickets((prevTickets) => [...prevTickets, newTicket]);
+        setCartTotalItems((prevTotal) => prevTotal + 1);
       }
     } catch (error) {
-      console.error("Erro ao processar a compra:", error);
+      console.error("Erro ao adicionar ingresso ao carrinho", error);
     }
-  }
+    setIsLoading(false);
+  };
 
-  async function handlePaymentGenerateInvoice(cartPaymentId: string) {
-    setIsLoading(true);
+  const removeTicketFromCart = async (eventId: string, ticketId: string) => {
+    if (tickets) {
+      const deleteTicket = await deleteEventTicket(eventId, ticketId);
+      if (deleteTicket) {
+        setTickets((prevTickets) =>
+          prevTickets.filter((ticket) => ticket.uuid !== ticketId)
+        );
+        setCartTotalItems((prevTotal) => prevTotal - 1);
+      }
+    }
+  };
+
+  const generateInvoice = async (
+    cartPaymentId: Payment["uuid"],
+    callback: (invoice: Payment["invoiceUrl"]) => void
+  ) => {
     try {
-      const invoiceData = await paymentGenerateInvoice(cartPaymentId);
-      if (invoiceData) {
+      setIsSubmitting(true);
+      const invoiceResponse = await paymentGenerateInvoice(cartPaymentId);
+      if (invoiceResponse) {
+        callback(invoiceResponse.invoiceUrl);
         router.push(`/payment/${cartPaymentId}`);
       }
     } catch (error) {
       console.error("Erro ao gerar fatura:", error);
+    } finally {
+      setIsSubmitting(false);
     }
-  }
+  };
 
-  function handleRemoveFromCart(itemId: Ticket) {
-    setTickets(tickets.filter((item) => item.uuid !== itemId.uuid));
-  }
+  const cartCountItems = useMemo(() => tickets.length, [tickets]);
 
-  function handleClearCart() {
-    setTickets([]);
-  }
+  const fetchUserPayments = async (userId: string) => {
+    setIsLoading(true);
+    try {
+      const userPayments = await fetchPaymentsUser(user?.user_id as string);
+      if (userPayments) {
+        setPayments(userPayments);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar pagamentos do usuário", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const cartTotalAmount = useMemo(() => {
-    return tickets.length;
-  }, [tickets]);
+  useEffect(() => {
+    if (user?.user_id) {
+      fetchUserPayments(user.user_id);
+    }
+  }, [user]);
 
   return (
     <CartPaymentContext.Provider
       value={{
+        payment,
         tickets,
+        payments,
         isLoading,
-        setIsLoading,
-        handleAddTicketToCart,
-        handlePaymentGenerateInvoice,
-        handleRemoveTicketFromCart: handleRemoveFromCart,
-        handleClearCart,
-        cartTotalAmount,
+        isSubmitting,
+        addTicketToCart,
+        removeTicketFromCart,
+        generateInvoice,
+        cartCountItems,
+        cartTotalItems,
+        fetchUserPayments,
       }}
     >
       {children}
@@ -111,9 +166,8 @@ export const CartPaymentProvider = ({ children }: { children: ReactNode }) => {
 
 export const useCartPayment = () => {
   const context = useContext(CartPaymentContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error("useCartPayment must be used within a CartPaymentProvider");
   }
-
   return context;
 };

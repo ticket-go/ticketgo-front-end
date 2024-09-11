@@ -3,17 +3,17 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart } from "lucide-react";
-import { useCart } from "@/hooks/useCart";
+import { useCartPayment } from "@/hooks/useCartPayment";
 import { Typography } from "../typography";
 
 export function ShoppingCartComponent() {
   const [isVisible, setIsVisible] = useState(false);
-  const { tickets } = useCart();
+  const { tickets } = useCartPayment();
 
   useEffect(() => {
     if (tickets.length > 0) {
       setIsVisible(true);
-      const timer = setTimeout(() => setIsVisible(false), 3000);
+      const timer = setTimeout(() => setIsVisible(false), 2000);
       return () => clearTimeout(timer);
     }
   }, [tickets]);
@@ -46,7 +46,8 @@ export function ShoppingCartComponent() {
                     key={ticket.uuid}
                     className="flex flex-col text-background font-medium gap-2"
                   >
-                    {ticket.event} - {ticket.half_ticket ? "Meia" : "Inteira"}
+                    {ticket.event_data.name} -{" "}
+                    {ticket.half_ticket ? "Meia" : "Inteira"}
                   </li>
                 ))}
               </ul>

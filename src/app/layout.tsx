@@ -7,10 +7,9 @@ import { Header } from "@/components/header";
 import NextTopLoader from "nextjs-toploader";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ModalProvider } from "@/hooks/useModal";
+import { CartPaymentProvider } from "@/hooks/useCartPayment";
 import SessionProvider from "@/components/session-wrapper";
 import { getServerSession } from "next-auth";
-import { CartProvider } from "@/hooks/useCart";
-import { PaymentProvider } from "@/hooks/usePayment";
 import { revalidateTime } from "@/const/cache";
 
 export const revalidate = revalidateTime;
@@ -31,30 +30,28 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <AuthProvider>
-        <PaymentProvider>
-          <CartProvider>
-            <body
-              className={cn(
-                "min-h-screen bg-background font-sans antialiased",
-                inter.className
-              )}
-            >
-              <SessionProvider session={session}>
-                <ModalProvider>
-                  <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                  >
-                    <NextTopLoader color="#CB1EE8" showSpinner={false} />
-                    <Header />
-                    {children}
-                  </ThemeProvider>
-                </ModalProvider>
-              </SessionProvider>
-            </body>
-          </CartProvider>
-        </PaymentProvider>
+        <CartPaymentProvider>
+          <body
+            className={cn(
+              "w-full min-h-screen bg-background font-sans antialiased overflow-x-hidden",
+              inter.className
+            )}
+          >
+            <SessionProvider session={session}>
+              <ModalProvider>
+                <ThemeProvider
+                  attribute="class"
+                  defaultTheme="system"
+                  enableSystem
+                >
+                  <NextTopLoader color="#CB1EE8" showSpinner={false} />
+                  <Header />
+                  {children}
+                </ThemeProvider>
+              </ModalProvider>
+            </SessionProvider>
+          </body>
+        </CartPaymentProvider>
       </AuthProvider>
     </html>
   );

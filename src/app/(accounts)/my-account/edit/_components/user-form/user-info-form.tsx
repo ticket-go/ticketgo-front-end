@@ -18,7 +18,7 @@ export function UserInfoForm({ user, register, errors }: UserInfoFormProps) {
       <Input
         id="first_name"
         placeholder="Nome"
-        value={user?.first_name}
+        defaultValue={user?.first_name}
         {...register("first_name")}
         className="w-full h-14"
       />
@@ -27,7 +27,7 @@ export function UserInfoForm({ user, register, errors }: UserInfoFormProps) {
       <Input
         id="last_name"
         placeholder="Sobrenome"
-        value={user?.last_name}
+        defaultValue={user?.last_name}
         {...register("last_name")}
         className="w-full h-14"
       />
@@ -37,7 +37,7 @@ export function UserInfoForm({ user, register, errors }: UserInfoFormProps) {
         id="email"
         type="email"
         placeholder="Email"
-        value={user?.email}
+        defaultValue={user?.email}
         {...register("email")}
         className="w-full h-14"
       />
@@ -47,7 +47,7 @@ export function UserInfoForm({ user, register, errors }: UserInfoFormProps) {
         id="phone"
         type="phone"
         placeholder="Telefone"
-        value={user?.phone}
+        defaultValue={user?.phone}
         {...register("phone")}
         className="w-full h-14"
       />

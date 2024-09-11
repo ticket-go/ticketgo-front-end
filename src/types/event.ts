@@ -2,7 +2,7 @@ import { Address } from "./address";
 import { User } from "./user";
 
 export interface Event {
-  uuid?: string;
+  uuid: string;
   name: string;
   date: string | Date;
   time: string;

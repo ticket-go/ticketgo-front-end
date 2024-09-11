@@ -1,20 +1,19 @@
 import Image from "next/image";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Event } from "@/types/event";
 import { Typography } from "@/components/typography";
 import { Ticket } from "@/types/ticket";
 
 interface ItemCartProps {
   ticket: Ticket;
-  onChangeQuantity?: (novaQuantidade: number) => void;
+  removeTicket: () => void;
 }
 
-export function ItemCart({ ticket, onChangeQuantity }: ItemCartProps) {
+export function ItemCart({ ticket, removeTicket }: ItemCartProps) {
   return (
-    <Card className="w-full mx-auto">
-      <CardContent className="grid grid-flow-col items-center w-full h-full p-4 ">
+    <Card className="w-full bg-backgroundCard">
+      <CardContent className="grid grid-flow-col items-center w-full h-full p-4 tab-port:gap-4 mobile:p-0">
         <div className="flex-shrink-0">
           <Image
             src={"/assets/images/banner-vertical.svg"}
@@ -30,19 +29,42 @@ export function ItemCart({ ticket, onChangeQuantity }: ItemCartProps) {
           fontWeight={"medium"}
           className="text-lg font-semibold"
         >
-          {ticket.event}
+          {ticket.event_data.name}
         </Typography>
 
-        <div className="flex items-center space-x-2">
-          <Button variant="outline" size="icon" className="h-8 w-8">
-            <Minus className="h-4 w-4" />
-          </Button>
+        <Typography
+          variant={"h4"}
+          fontWeight={"medium"}
+          className="text-lg font-semibold"
+        >
+          {ticket.event_data.address_data.city},{" "}
+          {ticket.event_data.address_data.state}
+        </Typography>
 
-          <Button variant="outline" size="icon" className="h-8 w-8">
-            <Plus className="h-4 w-4" />
-          </Button>
-        </div>
-        <div className="text-lg font-semibold">R$ {ticket.half_ticket}</div>
+        <Typography
+          variant={"h4"}
+          fontWeight={"medium"}
+          className="text-lg font-semibold"
+        >
+          {ticket.event_data.status_display}
+        </Typography>
+
+        <Typography
+          variant={"h4"}
+          fontWeight={"medium"}
+          className="text-lg font-semibold"
+        >
+          R$ {ticket.event_data.ticket_value}
+        </Typography>
+
+        <Button
+          variant="destructive"
+          size="icon"
+          className="h-8 w-8"
+          onClick={() => removeTicket()}
+        >
+          <Trash className="h-4 w-4" />
+        </Button>
       </CardContent>
     </Card>
   );
