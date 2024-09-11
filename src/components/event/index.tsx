@@ -14,16 +14,14 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
       <div className="w-1/2 h-full">
         <Image
           data-testid="hero-event-image"
-          src={
-              "/assets/images/event-destaque.png"
-          }
+          src={"/assets/images/event-destaque.png"}
           alt="Event image"
           width={800}
           height={500}
           className="object-cover w-full h-full rounded-tl-lg rounded-bl-lg"
         />
       </div>
-      <div className="w-1/2 h-full flex flex-col justify-center bg-white p-6 text-black rounded-tr-lg rounded-br-lg shadow-lg g-2">
+      <div className="w-1/2 h-full flex flex-col justify-center bg-white p-10 text-black rounded-tr-lg rounded-br-lg shadow-lg gap-2">
         <Typography
           data-testid="hero-event-name"
           variant={"h3"}
@@ -37,7 +35,7 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
           data-testid="hero-event-description"
           variant={"h5"}
           fontWeight={"regular"}
-          className="leading-[24px] text-black"
+          className="leading-[24px] text-black line-clamp-4"
         >
           {event.description}
         </Typography>
@@ -70,7 +68,7 @@ export function FeaturedEvent({ event }: FeaturedEventProps) {
               data-testid="hero-event-address"
               variant={"h5"}
               fontWeight={"medium"}
-              className="leading-[33px] text-black"
+              className="leading-[33px] text-black tab-port:truncate"
             >
               {`${event.address_data.city}, ${event.address_data.number}, ${event.address_data.city}, ${event.address_data.state}`}
             </Typography>

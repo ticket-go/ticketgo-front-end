@@ -37,10 +37,9 @@ export function ModalLogout({ isPageAccount = false }: ModalLogoutProps) {
   const handleLogout = async () => {
     if (!isAuthenticated) {
       return;
-    } else {
-      await logout();
-      await signOut();
     }
+    await logout();
+    await signOut();
 
     closeModal();
     if (!isPageAccount) {

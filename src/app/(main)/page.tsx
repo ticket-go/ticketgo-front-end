@@ -9,7 +9,6 @@ import { Suspense } from "react";
 import { Partner } from "@/components/partner";
 import { SuccessNotification } from "./_components/success";
 
-
 export default async function Home() {
   const events = await fetchEvents();
 
@@ -18,8 +17,7 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col justify-center items-center w-full min-h-screen bg-background mt-20">
-
-      <SuccessNotification/>
+      <SuccessNotification />
 
       {heroEvent && (
         <section className="w-full h-full py-8">
@@ -56,10 +54,39 @@ export default async function Home() {
         </Suspense>
       </Section>
 
-      <Partner />
+      <Partner.Root>
+        <Partner.Content>
+          <Partner.Text text="Seja nosso parceiro(a)" />
+          <Partner.Text
+            text="Tenha seu evento em nossa plataforma!"
+            className="text-center text-[24px] mobile:text-[18px] font-semibold"
+          />
+        </Partner.Content>
+        <Partner.Action title="Crie uma conta" href="/register" />
+      </Partner.Root>
 
       <Section>
         <Typography fontWeight="bold">Promoções</Typography>
+        <Suspense>
+          <MainEvents events={events} />
+        </Suspense>
+      </Section>
+
+      <Partner.Root>
+        <Partner.Content>
+          <Partner.Text
+            text="Evite dor de cabeça, compre com segurança"
+            className="text-center"
+          />
+          <Partner.Text
+            text="Comprando pelo nosso site oficial você garante a legitimidade do seu ingresso."
+            className="text-center text-[24px] mobile:text-[18px] font-semibold"
+          />
+        </Partner.Content>
+      </Partner.Root>
+
+      <Section>
+        <Typography fontWeight="bold">Outros</Typography>
         <Suspense>
           <MainEvents events={events} />
         </Suspense>

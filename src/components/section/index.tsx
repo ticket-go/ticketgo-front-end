@@ -9,7 +9,7 @@ export function Section({ children, className }: SectionProps) {
   return (
     <section
       className={cn([
-        "flex flex-col w-full h-full py-8 px-20 gap-4",
+        "flex flex-col w-full h-full py-8 px-20 gap-4 mobile:px-4",
         className,
       ])}
     >
