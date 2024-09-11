@@ -7,6 +7,8 @@ import { Section } from "@/components/section";
 import { Typography } from "@/components/typography";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { fetchEvents } from "@/actions/fetch-events";
+import { EventsBySearch } from "../_components/filter/events-by-search";
 
 export function SearchResults({ events }: { events: any[] }) {
   const searchParams = useSearchParams();
@@ -51,7 +53,7 @@ export function SearchResults({ events }: { events: any[] }) {
         <Typography variant={"h3"} fontWeight="bold">
           Eventos encontrados para "{query}":
         </Typography>
-        <MainEvents events={filteredEvents} />
+        <EventsBySearch events={filteredEvents} />
       </Section>
     </main>
   );

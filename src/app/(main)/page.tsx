@@ -3,18 +3,17 @@ import { MainHeroEvent } from "./_components/main-hero-event";
 import { EventCategories } from "./_components/main-category-event";
 import { Carousel } from "@/components/carousel";
 import { Typography } from "@/components/typography";
-import { fetchEvents } from "@/actions/fetch-events";
+import { fetchEvents, fetchSimpleEvents } from "@/actions/fetch-events";
 import { Section } from "@/components/section";
 import { Suspense } from "react";
 import { Partner } from "@/components/partner";
 import { SuccessNotification } from "./_components/success";
 
 export default async function Home() {
-  const events = await fetchEvents();
+  const events = await fetchSimpleEvents();
 
   const topEvents = events.filter((event) => event.is_top_event);
   const heroEvent = events.find((event) => event.is_hero_event);
-
   return (
     <main className="flex flex-col justify-center items-center w-full min-h-screen bg-background mt-20">
       <SuccessNotification />
@@ -32,9 +31,9 @@ export default async function Home() {
       </Section>
 
       <Section>
-        <Typography fontWeight="bold">Eventos do mês</Typography>
+        <Typography fontWeight="bold">Promoções</Typography>
         <Suspense>
-          <MainEvents events={events} />
+          <MainEvents fetchData={() => fetchEvents({})} />
         </Suspense>
       </Section>
 
@@ -50,7 +49,7 @@ export default async function Home() {
       <Section>
         <Typography fontWeight="bold">Eventos mais badalados</Typography>
         <Suspense>
-          <MainEvents events={events} />
+          <MainEvents fetchData={() => fetchEvents({})} />
         </Suspense>
       </Section>
 
@@ -66,9 +65,8 @@ export default async function Home() {
       </Partner.Root>
 
       <Section>
-        <Typography fontWeight="bold">Promoções</Typography>
         <Suspense>
-          <MainEvents events={events} />
+          <MainEvents fetchData={() => fetchEvents({})} />
         </Suspense>
       </Section>
 
@@ -88,7 +86,7 @@ export default async function Home() {
       <Section>
         <Typography fontWeight="bold">Outros</Typography>
         <Suspense>
-          <MainEvents events={events} />
+          <MainEvents fetchData={() => fetchEvents({})} />
         </Suspense>
       </Section>
     </main>

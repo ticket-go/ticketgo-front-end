@@ -8,7 +8,12 @@ interface PartnerTextProps {
 
 export function PartnerText({ text, className }: PartnerTextProps) {
   return (
-    <Typography variant={"h3"} fontWeight={"bold"} className={cn(className)}>
+    <Typography
+      variant={"h3"}
+      fontWeight={"bold"}
+      color={"white"}
+      className={cn(className)}
+    >
       {text}
     </Typography>
   );
