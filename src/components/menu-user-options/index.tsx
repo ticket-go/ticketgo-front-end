@@ -13,22 +13,12 @@ import { useModal } from "@/hooks/useModal";
 import { useRouter } from "next/navigation";
 import { User2Icon } from "lucide-react";
 
-const MENU_OPTIONS = [
-  {
-    name: "Conta",
-    path: "/my-account",
-  },
-  {
-    name: "Sair",
-  },
-];
-
 interface UserMenuOptionsProps {
   username: string;
-  children?: React.ReactNode;
+  userId: string;
 }
 
-export function UserMenuOptions({ username, children }: UserMenuOptionsProps) {
+export function UserMenuOptions({ username, userId }: UserMenuOptionsProps) {
   const router = useRouter();
   const { isModalOpen, openModal } = useModal();
 
@@ -51,27 +41,33 @@ export function UserMenuOptions({ username, children }: UserMenuOptionsProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent sideOffset={10}>
-          {MENU_OPTIONS.map((option) => (
-            <DropdownMenuItem key={option.name}>
-              {option.name !== "Sair" ? (
-                <Button
-                  variant={"default"}
-                  className="w-full"
-                  onClick={() => router.push(`${option.path}`)}
-                >
-                  {option.name}
-                </Button>
-              ) : (
-                <Button
-                  variant={"destructive"}
-                  className="w-full"
-                  onClick={() => openModal()}
-                >
-                  Sair
-                </Button>
-              )}
-            </DropdownMenuItem>
-          ))}
+          <DropdownMenuItem>
+            <Button
+              variant={"default"}
+              className="w-full"
+              onClick={() => router.push("/my-account")}
+            >
+              Conta
+            </Button>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Button
+              variant={"default"}
+              className="w-full"
+              onClick={() => router.push(`/change-password/${userId}`)}
+            >
+              Segurança
+            </Button>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Button
+              variant={"destructive"}
+              className="w-full"
+              onClick={() => openModal()}
+            >
+              Sair
+            </Button>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
 

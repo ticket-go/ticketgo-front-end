@@ -19,11 +19,14 @@ export function SearchBar({ placeholder, type, className }: SearchBarProps) {
         type={type || "search"}
         placeholder={placeholder || "Buscar eventos"}
         value={query}
-        onChange={handleSearch} 
-        onKeyDown={handleKeyDown} 
-        className={cn(["pr-10 h-10", className])}
+        onChange={handleSearch}
+        onKeyDown={handleKeyDown}
+        className={cn([
+          "pr-10 h-10 placeholder:dark:text-white placeholder:text-black",
+          className,
+        ])}
       />
-      <SearchIcon className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+      <SearchIcon className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5" />
     </div>
   );
 }

@@ -30,7 +30,7 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
 
       <div
         data-testid="hero-event-container"
-        className="relative flex w-full h-full items-center justify-start gap-10 py-10 z-10"
+        className="relative flex w-full h-full items-center justify-start gap-10 py-10 z-10 tab-port:gap-8"
       >
         {!isEventDetail ? (
           <div data-testid="hero-event-image">
@@ -39,16 +39,16 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
               alt={`Image of ${event.name}`}
               width={334}
               height={334}
-              className="rounded-lg h-fit"
+              className="rounded-lg h-fit mobile:hidden"
             />
           </div>
         ) : null}
-        <div className="flex flex-col items-start w-fit h-full gap-4">
+        <div className="flex flex-col items-start w-fit h-full gap-4 tab-port:gap-2">
           <Typography
             data-testid="hero-event-name"
             variant={"h3"}
             fontWeight={"extrabold"}
-            className="text-white"
+            className="tab-port:text-[20px]"
           >
             {event.name}
           </Typography>
@@ -57,7 +57,7 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
             data-testid="hero-event-description"
             variant={"h5"}
             fontWeight={"regular"}
-            className="leading-[24px] text-white"
+            className="leading-[24px] text-white tab-port:line-clamp-4 mobile:line-clamp-2"
           >
             {event.description}
           </Typography>
@@ -69,7 +69,7 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
                 data-testid="hero-event-time"
                 variant={"h5"}
                 fontWeight={"medium"}
-                className="leading-[33px] text-white"
+                className="leading-[33px] tab-port:leading-[20px] text-white"
               >
                 {event.time}
               </Typography>
@@ -79,7 +79,7 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
               <Typography
                 variant={"h5"}
                 fontWeight={"medium"}
-                className="leading-[33px] text-white"
+                className="leading-[33px] tab-port:leading-[20px] text-white"
               >
                 {event.date.toLocaleString("pt-BR", {
                   day: "numeric",
@@ -94,7 +94,7 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
                 data-testid="hero-event-address"
                 variant={"h5"}
                 fontWeight={"medium"}
-                className="leading-[33px] text-white"
+                className="leading-[33px] tab-port:leading-[20px] text-white"
               >
                 {event.address_data.street}, {event.address_data.district},{" "}
                 {event.address_data.city}, {event.address_data.state}
@@ -105,7 +105,7 @@ export function HeroEvent({ event, isEventDetail = false }: HeroEventProps) {
           {!isEventDetail && (
             <Button
               data-testid="hero-event-buy-button"
-              className="min-w-[300px] h-16 bg-[#E85AFF] hover:bg-purple/80 rounded-sm"
+              className="min-w-[300px] h-16 bg-[#E85AFF] hover:bg-purple/80 rounded-sm tab-port:h-12"
               onClick={() => router.push(`/event/${event.uuid}`)}
             >
               <Typography

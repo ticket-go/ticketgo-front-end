@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-
 import { ROUTES, PRIVATE_ROUTES } from "@/const/routes";
 import { revalidateToken } from "./lib/utils";
 
@@ -19,11 +18,11 @@ export function middleware(req: NextRequest) {
 
   const privateRoutes = [
     PRIVATE_ROUTES.myAccount,
-    PRIVATE_ROUTES.myAccountPath("edit"),
+    PRIVATE_ROUTES.MyAccountEdit,
     PRIVATE_ROUTES.admin,
+    PRIVATE_ROUTES.audit,
     PRIVATE_ROUTES.payment,
-    PRIVATE_ROUTES.invoice("id"),
-    `/change-password/${req.nextUrl.pathname.split("/").pop()}`,
+    PRIVATE_ROUTES.changePassword,
   ];
 
   if (!authenticated && privateRoutes.includes(req.nextUrl.pathname)) {
@@ -38,13 +37,9 @@ export const config = {
     "/((?!api|_next|static|public|assets|favicon.ico).*)",
     "/login",
     "/register",
-    "/my-account/:path*",
-    "/change-password/:id",
+    "/change-password",
     "/payment",
-    "/payment/:id",
-    "/change-password/:id",
     "/my-account",
-    "/my-account/edit",
     "/admin",
   ],
 };

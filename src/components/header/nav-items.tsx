@@ -10,7 +10,7 @@ export function HeaderNavItems({ children, href }: HeaderNavItemsProps) {
   return (
     <Link
       href={href}
-      className="hover:underline decoration-purple underline-offset-4 hidden lg:flex"
+      className="hover:underline decoration-purple underline-offset-8 hidden lg:flex"
       prefetch={false}
     >
       <Typography

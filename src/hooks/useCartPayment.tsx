@@ -111,7 +111,6 @@ export const CartPaymentProvider = ({ children }: { children: ReactNode }) => {
       const invoiceResponse = await paymentGenerateInvoice(cartPaymentId);
       if (invoiceResponse) {
         callback(invoiceResponse.invoiceUrl);
-        router.push(`/payment/${cartPaymentId}`);
       }
     } catch (error) {
       console.error("Erro ao gerar fatura:", error);

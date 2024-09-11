@@ -13,6 +13,7 @@ import { useState } from "react";
 import { createUser } from "@/actions/create-user";
 import { ErrorMessage } from "../../../../components/error-message";
 import { InputForm } from "@/components/input-form";
+import { GenericButton } from "@/components/generic-button";
 
 const RegisterFormSchema = z.object({
   username: z
@@ -195,16 +196,27 @@ export function RegisterForm() {
                 />
                 {errors.cpf && <ErrorMessage error={errors.cpf.message} />}
               </div>
-              <Button
-                type="button"
-                disabled={!allFieldsFilled}
-                className="w-full h-14 bg-purple hover:bg-purple/60"
-                onClick={() => handleForm()}
-              >
-                <Typography variant={"h5"} fontWeight={"semibold"}>
-                  Continuar
-                </Typography>
-              </Button>
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  className="w-full h-14 border-[1px] border-purple bg-transparent hover:bg-purple/10"
+                  onClick={() => router.back()}
+                >
+                  <Typography variant={"h5"} fontWeight={"semibold"}>
+                    Cancelar
+                  </Typography>
+                </Button>
+                <Button
+                  type="button"
+                  disabled={!allFieldsFilled}
+                  className="w-full h-14 bg-purple hover:bg-purple/60"
+                  onClick={() => handleForm()}
+                >
+                  <Typography variant={"h5"} fontWeight={"semibold"}>
+                    Continuar
+                  </Typography>
+                </Button>
+              </div>
             </div>
           </div>
         ) : (
