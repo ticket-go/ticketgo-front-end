@@ -3,52 +3,30 @@ import { NextRequest, NextResponse } from "next/server";
 import { ROUTES, PRIVATE_ROUTES } from "@/const/routes";
 import { revalidateToken } from "./lib/utils";
 
+function isAuthenticated(req: NextRequest): boolean {
+  return revalidateToken(req);
+}
+
 export function middleware(req: NextRequest) {
-  const isAuthenticated = revalidateToken(req);
+  const authenticated = isAuthenticated(req);
 
-  if (isAuthenticated && req.nextUrl.pathname === ROUTES.login) {
+  if (
+    authenticated &&
+    [ROUTES.login, ROUTES.register].includes(req.nextUrl.pathname)
+  ) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  if (isAuthenticated && req.nextUrl.pathname === ROUTES.register) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
+  const privateRoutes = [
+    PRIVATE_ROUTES.myAccount,
+    PRIVATE_ROUTES.myAccountPath("edit"),
+    PRIVATE_ROUTES.admin,
+    PRIVATE_ROUTES.payment,
+    PRIVATE_ROUTES.invoice("id"),
+    `/change-password/${req.nextUrl.pathname.split("/").pop()}`,
+  ];
 
-  if (!isAuthenticated && req.nextUrl.pathname === PRIVATE_ROUTES.myAccount) {
-    return NextResponse.redirect(new URL(ROUTES.login, req.url));
-  }
-
-  if (!isAuthenticated && req.nextUrl.pathname === PRIVATE_ROUTES.admin) {
-    return NextResponse.redirect(new URL(ROUTES.login, req.url));
-  }
-
-  if (
-    !isAuthenticated &&
-    req.nextUrl.pathname === PRIVATE_ROUTES.myAccountPath("edit")
-  ) {
-    return NextResponse.redirect(new URL(ROUTES.login, req.url));
-  }
-
-  if (!isAuthenticated) {
-    const isChangePasswordRoute =
-      req.nextUrl.pathname.startsWith("/change-password/");
-    if (
-      req.nextUrl.pathname ===
-        PRIVATE_ROUTES.myAccountPath(`${isChangePasswordRoute}`) ||
-      isChangePasswordRoute
-    ) {
-      return NextResponse.redirect(new URL(ROUTES.login, req.url));
-    }
-  }
-
-  if (!isAuthenticated && req.nextUrl.pathname === PRIVATE_ROUTES.payment) {
-    return NextResponse.redirect(new URL(ROUTES.login, req.url));
-  }
-
-  if (
-    !isAuthenticated &&
-    req.nextUrl.pathname === PRIVATE_ROUTES.invoice("id")
-  ) {
+  if (!authenticated && privateRoutes.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL(ROUTES.login, req.url));
   }
 
@@ -57,7 +35,7 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|favicon.ico).*)",
+    "/((?!api|_next|static|public|assets|favicon.ico).*)",
     "/login",
     "/register",
     "/events",

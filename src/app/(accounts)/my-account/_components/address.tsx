@@ -1,13 +1,34 @@
+"use client";
+
 import { Typography } from "@/components/typography";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { Separator } from "./separator";
 import { Edit2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { fetchUser } from "@/actions/fetch-user";
 
 export function Address() {
-  const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+  const { user, setUser, isAuthenticated } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
+    const fetchData = async () => await fetchUser(user?.user_id as string);
+    fetchData().then((data) => {
+      setUser(data);
+      setIsLoading(false);
+    });
+  }, [isAuthenticated]);
+
+  if (isLoading) {
+    return <Typography>Carregando...</Typography>;
+  }
+
   return (
     <>
       <div className="flex justify-between items-center pr-6">

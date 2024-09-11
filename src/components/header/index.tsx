@@ -11,10 +11,10 @@ import { UserMenuOptions } from "../menu-user-options";
 import { useAuth } from "@/hooks/useAuth";
 import { useSession } from "next-auth/react";
 import { ShoppingCart } from "lucide-react";
-import { useCart } from "@/hooks/useCart";
 import { useHeader } from "./useHeader";
 import { cn } from "@/lib/utils";
-import { usePayment } from "@/hooks/usePayment";
+
+import { useCartPayment } from "@/hooks/useCartPayment";
 
 interface CartIndicatorProps {
   totalItems: number;
@@ -25,8 +25,8 @@ export function Header() {
   const router = useRouter();
   const { isAuthenticated, user } = useAuth();
   const { data: session } = useSession();
-  const { cartTotalAmount } = useCart();
-  const { currentPaymentId } = usePayment();
+  const { payment, cartTotalItems, cartCountItems } = useCartPayment();
+
   const { isScroll } = useHeader();
 
   const displayName = session?.user?.name || user?.username;
@@ -35,11 +35,11 @@ export function Header() {
     <header
       data-testid="header-container"
       className={cn([
-        "fixed top-0 right-0 left-0 flex items-center justify-between bg-background px-6 py-4 lg:px-8 lg:py-8 z-20",
+        "fixed top-0 right-0 left-0 flex items-center justify-between bg-background w-full h-fit px-6 py-8 z-20",
         isScroll && "bg-background/90 shadow-md",
       ])}
     >
-      <Link href="/" className="flex items-center" prefetch={false}>
+      <Link href="/" prefetch={false}>
         <Typography
           data-testid="header-title-logo"
           variant={"h3"}
@@ -49,10 +49,10 @@ export function Header() {
         </Typography>
       </Link>
 
-      <nav className="md:flex items-center space-x-8 mb-4">
+      <nav className="flex items-center gap-6">
         <SearchBar />
 
-        <HeaderNavItems children="Eventos" href="/" />
+        <HeaderNavItems children="Eventos" href="/events" />
 
         <div className="flex items-center w-fit h-fit space-x-4">
           {!isAuthenticated && !session ? (
@@ -61,14 +61,14 @@ export function Header() {
               variant={"secondary"}
               size={"lg"}
               onClick={() => router.push("/register")}
-              className="hidden md:block" // Esconde no mobile
+              className="hidden md:block"
             >
               Criar conta
             </Button>
           ) : (
             <CartIndicator
-              totalItems={cartTotalAmount}
-              paymentId={`${currentPaymentId}`}
+              totalItems={cartTotalItems}
+              paymentId={payment?.uuid || ""}
             />
           )}
 
@@ -97,9 +97,9 @@ function CartIndicator({ totalItems, paymentId }: CartIndicatorProps) {
     <Button
       variant={"outline"}
       size={"icon"}
-      className="relative bg-background hover:bg-transparent/10"
+      className="relative bg-background hover:bg-transparent/10 mobile:hidden"
     >
-      <Link href={`/payment/${paymentId}`}>
+      <Link href={"/payment"}>
         <ShoppingCart size={24} />
       </Link>
       {totalItems > 0 && (

@@ -22,16 +22,17 @@ interface CartContextType {
     ticketId: Ticket["uuid"]
   ) => void;
   clearCart: () => void;
-  cartTotalAmount: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
+  const router = useRouter();
+
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
   const { currentPaymentId, createPayment } = usePayment();
-  const router = useRouter();
   const { isAuthenticated } = useAuth();
 
   async function addTicketToCart(
@@ -86,8 +87,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setTickets([]);
   }
 
-  const cartTotalAmount = useMemo(() => tickets.length, [tickets]);
-
   return (
     <CartContext.Provider
       value={{
@@ -96,7 +95,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         addTicketToCart,
         removeTicketFromCart,
         clearCart,
-        cartTotalAmount,
       }}
     >
       {children}
