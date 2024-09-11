@@ -19,10 +19,14 @@ export async function fetchCreateEvent(formData: FormData): Promise<void> {
       body: formData,
     });
 
+    if (!response.ok) {
+      throw new Error("Erro ao criar o evento.");
+    }
+
     const result = await response.json();
     return result;
   } catch (error) {
-    console.error(error);
+    console.error("Erro ao enviar dados:", error);
     throw error;
   }
 }
