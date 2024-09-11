@@ -3,15 +3,13 @@ import { MainHeroEvent } from "./_components/main-hero-event";
 import { EventCategories } from "./_components/main-category-event";
 import { Carousel } from "@/components/carousel";
 import { Typography } from "@/components/typography";
-import { fetchEvents, fetchSimpleEvents } from "@/actions/fetch-events";
-import { fetchEvents, fetchSimpleEvents } from "@/actions/fetch-events";
 import { Section } from "@/components/section";
 import { Suspense } from "react";
 import { Partner } from "@/components/partner";
 import { SuccessNotification } from "./_components/success";
+import { fetchEvents, fetchSimpleEvents } from "@/actions/fetch-events";
 
 export default async function Home() {
-  const events = await fetchSimpleEvents();
   const events = await fetchSimpleEvents();
 
   const topEvents = events.filter((event) => event.is_top_event);
