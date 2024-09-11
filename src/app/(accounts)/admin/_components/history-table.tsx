@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/table";
 import { useAuth } from "@/hooks/useAuth";
 import { Change, History } from "@/types/history";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export function HistoryTable() {
   const { user } = useAuth();
@@ -21,7 +21,9 @@ export function HistoryTable() {
   const [historyData, setHistoryData] = useState<History[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const isUserPrivileged = user?.privileged;
+  const isUserPrivileged = useMemo(() => {
+    return user?.privileged as boolean;
+  }, [user]);
 
   useEffect(() => {
     if (!isUserPrivileged) {
@@ -37,8 +39,22 @@ export function HistoryTable() {
     }
   }, [isUserPrivileged]);
 
+  if (!isUserPrivileged) {
+    return (
+      <div className="flex justify-center items-center w-full h-full m-auto">
+        <Typography fontWeight={"bold"}>
+          Você não tem permissão para acessar essa página
+        </Typography>
+      </div>
+    );
+  }
+
   if (isLoading) {
-    return <Typography>Carregando...</Typography>;
+    return (
+      <div className="flex justify-center items-center w-full h-full m-auto">
+        <Typography fontWeight={"bold"}>Carregando...</Typography>
+      </div>
+    );
   }
 
   return (
