@@ -25,8 +25,8 @@ export function Header() {
   const router = useRouter();
   const { isAuthenticated, user } = useAuth();
   const { data: session } = useSession();
-  const { payment, cartTotalItems } = useCartPayment();
 
+  const { payment, cartTotalItems } = useCartPayment();
   const { isScroll } = useHeader();
 
   const userId = user?.user_id as string;

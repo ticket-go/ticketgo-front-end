@@ -15,7 +15,7 @@ export function middleware(req: NextRequest) {
   ) {
     return NextResponse.redirect(new URL("/", req.url));
   }
-
+  
   const privateRoutes = [
     PRIVATE_ROUTES.myAccount,
     PRIVATE_ROUTES.MyAccountEdit,
