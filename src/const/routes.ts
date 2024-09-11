@@ -9,6 +9,6 @@ export const PRIVATE_ROUTES = {
   myAccount: "/my-account",
   myAccountPath: (path = "") => `/my-account/${path}`,
   changePassword: "/change-password/:id",
-  payment: "/payment",
+  payment: "/payment/:id",
   invoice: (path = "") => `/payment/${path}`,
 };
