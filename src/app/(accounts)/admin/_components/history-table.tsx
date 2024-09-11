@@ -12,7 +12,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useAuth } from "@/hooks/useAuth";
-import { useAuth } from "@/hooks/useAuth";
 import { Change, History } from "@/types/history";
 import { useEffect, useMemo, useState } from "react";
 
