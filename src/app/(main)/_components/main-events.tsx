@@ -18,7 +18,7 @@ export function MainEvents({ category, name }: MainEventsProps) {
   const eventsPerPage = 5;
 
   const fetchEvents = async (page: number) => {
-    setLoading(true);
+    setLoading(true); 
     try {
       let url = `${process.env.NEXT_PUBLIC_API_HOST}/events/?page=${page}&page_size=${eventsPerPage}`;
 
@@ -36,7 +36,7 @@ export function MainEvents({ category, name }: MainEventsProps) {
     } catch (error) {
       console.error("Error fetching events:", error);
     } finally {
-      setLoading(false);
+      setLoading(false); 
     }
   };
 
@@ -53,9 +53,9 @@ export function MainEvents({ category, name }: MainEventsProps) {
 
   return (
     <div>
-      {loading && currentPage === 1 ? (
+      {events.length === 0 && loading ? ( 
         <div className="flex justify-center items-center h-32">
-          <LoadingSpinner isLoading={loading} /> 
+          <LoadingSpinner isLoading={loading} delay={100} /> 
         </div>
       ) : (
         <div>
@@ -71,12 +71,18 @@ export function MainEvents({ category, name }: MainEventsProps) {
             )}
           </div>
 
+          {loading && currentPage > 1 && ( 
+            <div className="flex justify-center items-center h-32">
+              <LoadingSpinner isLoading={loading} delay={100} />
+            </div>
+          )}
+
           {currentPage < totalPages && (
             <div className="flex justify-center mt-4">
               <button
                 onClick={loadMoreEvents}
                 className="px-4 py-2 bg-purple text-white rounded-md hover:bg-purple-dark"
-                disabled={loading}
+                disabled={loading} 
               >
                 {loading ? "Carregando..." : "Ver Mais"}
               </button>
