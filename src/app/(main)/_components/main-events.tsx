@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { EventCard } from "@/components/event-card";
 import { Event } from "@/types/event";
 import { LoadingSpinner } from "@/components/loading-spinner"; 
+import { Button } from "@/components/button"; 
 
 interface MainEventsProps {
   category?: string;
@@ -14,11 +15,10 @@ export function MainEvents({ category, name }: MainEventsProps) {
   const [events, setEvents] = useState<Event[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1); 
-  const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false); 
   const eventsPerPage = 5;
 
   const fetchEvents = async (page: number) => {
-    setLoading(true); 
     try {
       let url = `${process.env.NEXT_PUBLIC_API_HOST}/events/?page=${page}&page_size=${eventsPerPage}`;
 
@@ -35,61 +35,53 @@ export function MainEvents({ category, name }: MainEventsProps) {
       setTotalPages(Math.ceil(data.count / eventsPerPage));
     } catch (error) {
       console.error("Error fetching events:", error);
-    } finally {
-      setLoading(false); 
     }
   };
 
   useEffect(() => {
-    fetchEvents(currentPage);
+    fetchEvents(currentPage); 
   }, [category, name]);
 
-  const loadMoreEvents = () => {
+  const loadMoreEvents = async () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      fetchEvents(currentPage + 1);
+      setLoadingMore(true); 
+      await fetchEvents(currentPage + 1); 
+      setCurrentPage((prevPage) => prevPage + 1);
+      setLoadingMore(false); 
     }
   };
 
   return (
     <div>
-      {events.length === 0 && loading ? ( 
-        <div className="flex justify-center items-center h-32">
-          <LoadingSpinner isLoading={loading} delay={100} /> 
+      <div>
+        <div className="grid grid-cols-1 mobile:grid-cols-1 tab-port:grid-cols-2 tab-land:grid-cols-3 lg:grid-cols-5 gap-8 w-full">
+          {events.length > 0 ? (
+            events.map((event) => (
+              <EventCard event={event} key={event.uuid} />
+            ))
+          ) : (
+            <div className="col-span-full text-center text-gray-500">
+              Carregando eventos...
+            </div>
+          )}
         </div>
-      ) : (
-        <div>
-          <div className="grid grid-cols-1 mobile:grid-cols-1 tab-port:grid-cols-2 tab-land:grid-cols-3 lg:grid-cols-5 gap-8 w-full">
-            {events.length > 0 ? (
-              events.map((event) => (
-                <EventCard event={event} key={event.uuid} />
-              ))
+
+        {currentPage < totalPages && (
+          <div className="flex justify-center mt-4">
+            {!loadingMore ? ( 
+              <Button
+                text="VER MAIS" 
+                onClick={loadMoreEvents} 
+                className="px-4 py-2 w-[25%] h-[70px] bg-purple text-white hover:bg-purple-dark tab-land:w-[50%] tab-port:w-[50%] mobile:w-[60%]" 
+                textColor="text-white" 
+                fontWeight="bold" 
+              />
             ) : (
-              <div className="col-span-full text-center text-gray-500">
-                Não existem eventos disponíveis
-              </div>
+              <LoadingSpinner isLoading={loadingMore} delay={0} /> 
             )}
           </div>
-
-          {loading && currentPage > 1 && ( 
-            <div className="flex justify-center items-center h-32">
-              <LoadingSpinner isLoading={loading} delay={100} />
-            </div>
-          )}
-
-          {currentPage < totalPages && (
-            <div className="flex justify-center mt-4">
-              <button
-                onClick={loadMoreEvents}
-                className="px-4 py-2 bg-purple text-white rounded-md hover:bg-purple-dark"
-                disabled={loading} 
-              >
-                {loading ? "Carregando..." : "Ver Mais"}
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
