@@ -2,17 +2,22 @@
 
 import { useState, useEffect } from "react";
 
-export function LoadingSpinner({ isLoading }: { isLoading: boolean }) {
+interface LoadingSpinnerProps {
+  isLoading: boolean;
+  delay?: number; 
+}
+
+export function LoadingSpinner({ isLoading, delay = 300 }: LoadingSpinnerProps) { 
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (isLoading) {
-      const timer = setTimeout(() => setShow(true), 300);
+      const timer = setTimeout(() => setShow(true), delay); 
       return () => clearTimeout(timer);
     } else {
       setShow(false);
     }
-  }, [isLoading]);
+  }, [isLoading, delay]); 
 
   if (!show) return null;
 
