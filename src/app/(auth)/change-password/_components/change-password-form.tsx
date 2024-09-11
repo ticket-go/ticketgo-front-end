@@ -70,7 +70,7 @@ export function ChangePasswordForm({ userId }: ChangePasswordFormProps) {
     >
       <div className="flex items-center justify-center w-fit h-fit p-2.5 tab-port:hidden">
         <Image
-          src={"/assets/images/left.svg"}
+          src={"/assets/images/register.svg"}
           width={700}
           height={700}
           alt="Sessão de login"

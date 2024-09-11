@@ -1,12 +1,12 @@
 import { EventCard } from "@/components/event-card";
 import { Event } from "@/types/event";
 
-interface MainEventsProps {
+interface EventsBySearchProps {
   events: Event[];
   category?: string;
 }
 
-export function EventsBySearch({ events, category }: MainEventsProps) {
+export function EventsBySearch({ events, category }: EventsBySearchProps) {
   const filteredEvents = category
     ? events.filter((event) => event.category === category)
     : events;

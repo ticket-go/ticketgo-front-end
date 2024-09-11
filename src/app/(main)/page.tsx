@@ -89,26 +89,6 @@ export default async function Home() {
           <MainEvents fetchData={() => fetchEvents({})} />
         </Suspense>
       </Section>
-
-      <Partner.Root>
-        <Partner.Content>
-          <Partner.Text
-            text="Evite dor de cabeça, compre com segurança"
-            className="text-center"
-          />
-          <Partner.Text
-            text="Comprando pelo nosso site oficial você garante a legitimidade do seu ingresso."
-            className="text-center text-[24px] mobile:text-[18px] font-semibold"
-          />
-        </Partner.Content>
-      </Partner.Root>
-
-      <Section>
-        <Typography fontWeight="bold">Outros</Typography>
-        <Suspense>
-          <MainEvents events={events} />
-        </Suspense>
-      </Section>
     </main>
   );
 }
