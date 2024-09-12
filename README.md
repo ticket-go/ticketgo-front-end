@@ -56,5 +56,5 @@ Este projeto é o frontend da plataforma web do <strong>TicketGO</strong>, desen
 
 ### Login de test
 
- - admin
- - @Admin
+ - username: admin
+ - password: @Admin
