@@ -53,3 +53,8 @@ Este projeto é o frontend da plataforma web do <strong>TicketGO</strong>, desen
     # or
     bun dev
 ```
+
+### Login de test
+
+ - admin
+ - @Admin
